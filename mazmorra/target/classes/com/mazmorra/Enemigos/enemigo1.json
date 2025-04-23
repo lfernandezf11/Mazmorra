@@ -1,0 +1,26 @@
+[
+    {
+      "nombre": "Goblin",
+      "ataque": 1,
+      "vida": 3,
+      "defensa": 1,
+      "velocidad": 2,
+      "percepcion": 2
+    },
+    {
+      "nombre": "Orco",
+      "ataque": 2,
+      "vida": 5,
+      "defensa": 2,
+      "velocidad": 3,
+      "percepcion": 2
+    },
+    {
+      "nombre": "Dragón",
+      "ataque": 3,
+      "vida": 10,
+      "defensa": 3,
+      "velocidad": 5,
+      "percepcion": 3
+    }
+]
