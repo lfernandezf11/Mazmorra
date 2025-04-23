@@ -1,6 +1,7 @@
-package com.mazmorra;
+package com.mazmorra.Controllers;
 
 import java.io.IOException;
+import com.mazmorra.App;
 import javafx.fxml.FXML;
 
 public class PrimaryController {
