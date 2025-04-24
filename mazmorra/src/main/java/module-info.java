@@ -3,5 +3,7 @@ module com.mazmorra {
     requires javafx.fxml;
 
     opens com.mazmorra to javafx.fxml;
+    opens com.mazmorra.Controllers to javafx.fxml;
     exports com.mazmorra;
+    exports com.mazmorra.Controllers;
 }

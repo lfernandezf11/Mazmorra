@@ -1,5 +1,6 @@
 package com.mazmorra;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,9 +19,18 @@ public class App extends Application {
     @SuppressWarnings("exports")
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+        // Obtiene la instancia del SceneManager
+        SceneManager sm = SceneManager.getInstance();
+        
+        // Inicializa el SceneManager con el stage y una ruta de estilos
+        sm.init(stage);
+        
+        // Configura las escenas con identificadores y tamaños
+        sm.setScene(SceneID.INICIO, "inicio");
+        sm.setScene(SceneID.PERSONAJE, "personaje");
+        
+        // Carga la escena principal
+        sm.loadScene(SceneID.INICIO);
     }
 
     public static void setRoot(String fxml) throws IOException {
@@ -28,7 +38,7 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/mazmorra/views/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
