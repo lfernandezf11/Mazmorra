@@ -17,6 +17,7 @@ public class Personaje {
     protected int defensa;
     protected int vida;
     protected int velocidad;
+    private static int puntosRestantes = 5;
 
     private Image imagen;
     private ImageView imageView;
@@ -30,6 +31,13 @@ public class Personaje {
         setImagen(rutaImagen); // inicializa imagen e imageView
     }
 
+    public Personaje(int ataque, int defensa, int vida, int velocidad) {
+        this.ataque = ataque;
+        this.defensa = defensa;
+        this.vida = vida;
+        this.velocidad = velocidad;
+    }
+
     public void setImagen(String rutaImagen) {
         this.imagen = new Image("file:" + rutaImagen); // o usa getClass().getResource() si es un recurso
         this.imageView = new ImageView(this.imagen);
@@ -39,6 +47,14 @@ public class Personaje {
 
     public Image getImagen() {
         return this.imagen;
+    }
+
+    public int getPuntosRestantes(){
+        return Personaje.puntosRestantes;
+    }
+
+    public void setPuntosRestantes(int puntosRestantes){
+        Personaje.puntosRestantes = puntosRestantes;
     }
 
     public ImageView getImageView() {

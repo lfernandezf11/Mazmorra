@@ -2,9 +2,6 @@ package com.mazmorra;
 
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -13,8 +10,6 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-
-    private static Scene scene;
 
     @SuppressWarnings("exports")
     @Override
@@ -28,7 +23,7 @@ public class App extends Application {
         // Configura las escenas con identificadores y tamaños
         sm.setScene(SceneID.INICIO, "inicio");
         sm.setScene(SceneID.PERSONAJE, "personaje");
-        //sm.setScene(SceneID.JUEGO, "juego");
+        sm.setScene(SceneID.JUEGO, "juego");
         
         // Carga la escena principal
         sm.loadScene(SceneID.INICIO);

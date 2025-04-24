@@ -1,14 +1,15 @@
 package com.mazmorra.Controllers;
 
-import java.io.IOException;
-import com.mazmorra.App;
+import com.mazmorra.SceneID;
+import com.mazmorra.SceneManager;
+import com.mazmorra.Interfaces.Observer;
 import com.mazmorra.Model.Personaje;
-
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class PersonajeController {
-    private Personaje personaje;
+public class PersonajeController implements Observer {
+
     protected int puntosDisponibles = 5;
     protected int vida = 5;
     protected int ataque = 0;
@@ -16,100 +17,105 @@ public class PersonajeController {
     protected int velocidad = 0;
 
     @FXML
-    private Label vidaLabel;
+    private Label puntosVida;
     @FXML
-    private Label ataqueLabel;
+    private Label puntosAtaque;
     @FXML
-    private Label defensaLabel;
+    private Label puntosDefensa;
     @FXML
-    private Label velocidadLabel;
+    private Label puntosVelocidad;
     @FXML
     private Label puntosRestantes;
+    @FXML
+    private Button iniciarJuego;
+    @FXML
+    private Button addVida;
+    @FXML
+    private Button restVida;
+    @FXML
+    private Button addAtaque;
+    @FXML
+    private Button restAtaque;
+    @FXML
+    private Button addDefensa;
+    @FXML
+    private Button restDefensa;
+    @FXML
+    private Button addVelocidad;
+    @FXML
+    private Button restVelocidad;
+
+    private Personaje personajeUno;
 
     @FXML
     public void initialize() {
-        actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
+        personajeUno = new Personaje(ataque, defensa, vida, velocidad);
+        personajeUno.suscribe(this);
+        onChange();
 
+        iniciarJuego.setOnAction(event -> {
+            SceneManager.getInstance().loadScene(SceneID.JUEGO);
+        });
+
+        addVida.setOnAction(event -> {
+            personajeUno.setVida(personajeUno.getVida()+1);
+            puntosVida.setText(String.valueOf(personajeUno.getVida()));
+            personajeUno.setPuntosRestantes(personajeUno.getPuntosRestantes()-1);
+            puntosRestantes.setText(String.valueOf(personajeUno.getPuntosRestantes()));
+        });
+
+        restVida.setOnAction(event -> {
+            personajeUno.setVida(personajeUno.getVida()-1);
+            puntosVida.setText(String.valueOf(personajeUno.getVida()));
+            personajeUno.setPuntosRestantes(personajeUno.getPuntosRestantes()+1);
+            puntosRestantes.setText(String.valueOf(personajeUno.getPuntosRestantes()));
+        });
+
+        addAtaque.setOnAction(event -> {
+            personajeUno.setAtaque(personajeUno.getAtaque()+1);
+            puntosAtaque.setText(String.valueOf(personajeUno.getAtaque()));
+            personajeUno.setPuntosRestantes(personajeUno.getPuntosRestantes()-1);
+            puntosRestantes.setText(String.valueOf(personajeUno.getPuntosRestantes()));
+        });
+
+        restAtaque.setOnAction(event -> {
+            personajeUno.setAtaque(personajeUno.getAtaque()-1);
+            puntosAtaque.setText(String.valueOf(personajeUno.getAtaque()));
+            personajeUno.setPuntosRestantes(personajeUno.getPuntosRestantes()+1);
+            puntosRestantes.setText(String.valueOf(personajeUno.getPuntosRestantes()));
+        });
+
+        addDefensa.setOnAction(event -> {
+            personajeUno.setDefensa(personajeUno.getDefensa()+1);
+            puntosDefensa.setText(String.valueOf(personajeUno.getDefensa()));
+            personajeUno.setPuntosRestantes(personajeUno.getPuntosRestantes()-1);
+            puntosRestantes.setText(String.valueOf(personajeUno.getPuntosRestantes()));
+        });
+
+        restDefensa.setOnAction(event -> {
+            personajeUno.setDefensa(personajeUno.getDefensa()-1);
+            puntosDefensa.setText(String.valueOf(personajeUno.getDefensa()));
+            personajeUno.setPuntosRestantes(personajeUno.getPuntosRestantes()+1);
+            puntosRestantes.setText(String.valueOf(personajeUno.getPuntosRestantes()));
+        });
+
+        addVelocidad.setOnAction(event -> {
+            personajeUno.setVelocidad(personajeUno.getVelocidad()+1);
+            puntosVelocidad.setText(String.valueOf(personajeUno.getVelocidad()));
+            personajeUno.setPuntosRestantes(personajeUno.getPuntosRestantes()-1);
+            puntosRestantes.setText(String.valueOf(personajeUno.getPuntosRestantes()));
+        });
+
+        restVelocidad.setOnAction(event -> {
+            personajeUno.setVelocidad(personajeUno.getVelocidad()-1);
+            puntosVelocidad.setText(String.valueOf(personajeUno.getVelocidad()));
+            personajeUno.setPuntosRestantes(personajeUno.getPuntosRestantes()+1);
+            puntosRestantes.setText(String.valueOf(personajeUno.getPuntosRestantes()));
+        });
     }
 
-    private void actualizarStats(int vida, int ataque, int defensa, int velocidad, int puntosDisponibles) {
-        vidaLabel.setText("Vida: " + vida);
-        ataqueLabel.setText("Ataque: " + ataque);
-        defensaLabel.setText("Defensa: " + defensa);
-        velocidadLabel.setText("Velocidad: " + velocidad);
-        puntosRestantes.setText("Puntos disponibles: " + puntosDisponibles);
+    @Override
+    public void onChange() {
+        personajeUno.setVida(personajeUno.getVida());
     }
-
-    @FXML
-    private void addVida() {
-        if (puntosDisponibles > 0) {
-            vida++;
-            puntosDisponibles--;
-            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
-        }
-    }
-
-    @FXML
-    private void restVida() {
-        if (vida > 5) {
-            vida--;
-            puntosDisponibles++;
-            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
-        }
-    }
-
-    @FXML
-    private void addAtaque() {
-        if (puntosDisponibles > 0) {
-            ataque++;
-            puntosDisponibles--;
-            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
-        }
-    }
-
-    @FXML
-    private void restAtaque() {
-        if (ataque > 0) {
-            ataque--;
-            puntosDisponibles++;
-            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
-        }
-    }
-
-    @FXML
-    private void addDefensa() {
-        if (puntosDisponibles > 0) {
-            defensa++;
-            puntosDisponibles--;
-            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
-        }
-    }
-
-    @FXML
-    private void restDefensa() {
-        if (defensa > 0) {
-            defensa--;
-            puntosDisponibles++;
-            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
-        }
-    }
-
-    @FXML
-    private void addVel() {
-        if (puntosDisponibles > 0) {
-            velocidad++;
-            puntosDisponibles--;
-            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
-        }
-    }
-
-    @FXML
-    private void restVel() {
-        if (velocidad > 0) {
-            velocidad--;
-            puntosDisponibles++;
-            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
-        }
-    }
-
 }
