@@ -55,6 +55,7 @@ public class Personaje {
 
     public void setPuntosRestantes(int puntosRestantes){
         Personaje.puntosRestantes = puntosRestantes;
+        notifyObservers();
     }
 
     public ImageView getImageView() {
@@ -87,6 +88,7 @@ public class Personaje {
 
     public void setTipo(TipoPersonaje tipo) {
         this.tipo = tipo;
+        notifyObservers();
     }
 
     public int getAtaque() {
@@ -95,6 +97,7 @@ public class Personaje {
 
     public void setAtaque(int ataque) {
         this.ataque = ataque;
+        notifyObservers();
     }
 
     public int getDefensa() {
@@ -103,6 +106,7 @@ public class Personaje {
 
     public void setDefensa(int defensa) {
         this.defensa = defensa;
+        notifyObservers();
     }
 
     public int getVida() {
@@ -111,6 +115,7 @@ public class Personaje {
 
     public void setVida(int vida) {
         this.vida = vida;
+        notifyObservers();
     }
 
     public int getVelocidad() {
@@ -119,31 +124,7 @@ public class Personaje {
 
     public void setVelocidad(int velocidad) {
         this.velocidad = velocidad;
-    }
-
-    public Personaje tipo(TipoPersonaje tipo) {
-        setTipo(tipo);
-        return this;
-    }
-
-    public Personaje ataque(int ataque) {
-        setAtaque(ataque);
-        return this;
-    }
-
-    public Personaje defensa(int defensa) {
-        setDefensa(defensa);
-        return this;
-    }
-
-    public Personaje vida(int vida) {
-        setVida(vida);
-        return this;
-    }
-
-    public Personaje velocidad(int velocidad) {
-        setVelocidad(velocidad);
-        return this;
+        notifyObservers();
     }
 
     @Override
@@ -171,5 +152,69 @@ public class Personaje {
             ", vida='" + getVida() + "'" +
             ", velocidad='" + getVelocidad() + "'" +
             "}";
+    }
+
+    public void incrementarAtaque() {
+        if(puntosRestantes > 0) {
+            ataque++;
+            puntosRestantes--;
+            notifyObservers(); 
+        }
+    }
+    
+    public void decrementarAtaque() {
+        if(ataque > 0) {
+            ataque--;
+            puntosRestantes++;
+            notifyObservers();
+        }
+    }
+
+    public void incrementarDefensa() {
+        if(puntosRestantes > 0) {
+            defensa++;
+            puntosRestantes--;
+            notifyObservers(); 
+        }
+    }
+    
+    public void decrementarDefensa() {
+        if(defensa > 0) {
+            defensa--;
+            puntosRestantes++;
+            notifyObservers();
+        }
+    }
+
+    public void incrementarVida() {
+        if(puntosRestantes > 0) {
+            vida++;
+            puntosRestantes--;
+            notifyObservers(); 
+        }
+    }
+    
+    public void decrementarVida() {
+        if(vida > 0) {
+            vida--;
+            puntosRestantes++;
+            notifyObservers();
+        }
+    }
+
+    public void incrementarVelocidad() {
+        if(puntosRestantes > 0) {
+            velocidad++;
+            puntosRestantes--;
+            notifyObservers(); 
+        }
+    }
+    
+    public void decrementarVelocidad() {
+        if(velocidad > 0) {
+            velocidad--;
+            puntosRestantes++;
+            notifyObservers();
+        }
     }
 }

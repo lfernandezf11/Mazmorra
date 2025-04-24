@@ -72,10 +72,10 @@ public class PersonajeController implements Observer {
         });
 
         addAtaque.setOnAction(event -> {
-            personajeUno.setAtaque(personajeUno.getAtaque()+1);
-            puntosAtaque.setText(String.valueOf(personajeUno.getAtaque()));
-            personajeUno.setPuntosRestantes(personajeUno.getPuntosRestantes()-1);
-            puntosRestantes.setText(String.valueOf(personajeUno.getPuntosRestantes()));
+            personajeUno.setAtaque(personajeUno.getAtaque() + 1);
+            personajeUno.setPuntosRestantes(personajeUno.getPuntosRestantes() - 1);
+            
+            personajeUno.notifyObservers();
         });
 
         restAtaque.setOnAction(event -> {
