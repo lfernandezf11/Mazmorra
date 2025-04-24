@@ -1,7 +1,6 @@
 package com.mazmorra.Model;
 
 
-
 public class Proveedor {
     private static Proveedor instance;
     private Personaje personaje;
