@@ -19,9 +19,18 @@ public class App extends Application {
     @SuppressWarnings("exports")
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("inicio"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+        // Obtiene la instancia del SceneManager
+        SceneManager sm = SceneManager.getInstance();
+        
+        // Inicializa el SceneManager con el stage y una ruta de estilos
+        sm.init(stage);
+        
+        // Configura las escenas con identificadores y tamaños
+        sm.setScene(SceneID.INICIO, "inicio");
+        sm.setScene(SceneID.PERSONAJE, "personaje");
+        
+        // Carga la escena principal
+        sm.loadScene(SceneID.INICIO);
     }
 
     public static void setRoot(String fxml) throws IOException {

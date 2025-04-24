@@ -15,7 +15,7 @@ public class InicioController {
     public void initialize() {
         cambiarAPersonaje.setOnAction(event -> {
 
-            SceneManager.getInstance().loadScene(SceneID.PERSONAJE);
+        SceneManager.getInstance().loadScene(SceneID.PERSONAJE);
         });
     }
 }

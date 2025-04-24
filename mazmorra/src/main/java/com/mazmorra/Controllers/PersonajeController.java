@@ -26,10 +26,10 @@ public class PersonajeController {
 
     @FXML
     public void initialize() {
-        actualizarStats();
+        actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
     }
 
-    private void actualizarStats() {
+    private void actualizarStats(int vida, int ataque, int defensa, int velocidad, int puntosDisponibles) {
         vidaLabel.setText("Vida: " + vida);
         ataqueLabel.setText("Ataque: " + ataque);
         defensaLabel.setText("Defensa: " + defensa);
@@ -42,7 +42,7 @@ public class PersonajeController {
         if (puntosDisponibles > 0) {
             vida++;
             puntosDisponibles--;
-            actualizarStats();
+            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
         }
     }
 
@@ -51,7 +51,7 @@ public class PersonajeController {
         if (vida > 5) {
             vida--;
             puntosDisponibles++;
-            actualizarStats();
+            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
         }
     }
 
@@ -60,7 +60,7 @@ public class PersonajeController {
         if (puntosDisponibles > 0) {
             ataque++;
             puntosDisponibles--;
-            actualizarStats();
+            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
         }
     }
 
@@ -69,7 +69,7 @@ public class PersonajeController {
         if (ataque > 0) {
             ataque--;
             puntosDisponibles++;
-            actualizarStats();
+            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
         }
     }
 
@@ -78,7 +78,7 @@ public class PersonajeController {
         if (puntosDisponibles > 0) {
             defensa++;
             puntosDisponibles--;
-            actualizarStats();
+            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
         }
     }
 
@@ -87,7 +87,7 @@ public class PersonajeController {
         if (defensa > 0) {
             defensa--;
             puntosDisponibles++;
-            actualizarStats();
+            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
         }
     }
 
@@ -96,7 +96,7 @@ public class PersonajeController {
         if (puntosDisponibles > 0) {
             velocidad++;
             puntosDisponibles--;
-            actualizarStats();
+            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
         }
     }
 
@@ -105,7 +105,7 @@ public class PersonajeController {
         if (velocidad > 0) {
             velocidad--;
             puntosDisponibles++;
-            actualizarStats();
+            actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
         }
     }
 
@@ -113,8 +113,4 @@ public class PersonajeController {
     private void cambiarAJuego() throws IOException {
         App.setRoot("juego");
     }
-
-    // addDefensa.setOnAction(event -> {
-
-    // });
 }

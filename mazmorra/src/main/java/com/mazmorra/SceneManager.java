@@ -54,19 +54,16 @@ public class SceneManager {
      * 
      * @param sceneID el identificador único de la escena.
      * @param fxml    el nombre del archivo FXML que define la vista de la escena.
-     * @param width   el ancho de la escena.
-     * @param height  el alto de la escena.
      */
 
-    public void setScene(SceneID sceneID, String fxml, int width, int height) {
+    public void setScene(SceneID sceneID, String fxml) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views" + fxml + ".fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/" + fxml + ".fxml"));
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, width, height);
+            Scene scene = new Scene(root);
 
             // Guardar el FXMLLoader en la escena para recuperar el controlador después
             scene.setUserData(fxmlLoader);
-
             scenes.put(sceneID, scene);
         } catch (IOException e) {
             e.printStackTrace();
