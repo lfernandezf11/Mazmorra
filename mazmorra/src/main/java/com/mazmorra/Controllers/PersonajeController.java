@@ -1,14 +1,14 @@
 package com.mazmorra.Controllers;
 
-import java.io.IOException;
-import com.mazmorra.App;
-import com.mazmorra.Model.Personaje;
+import com.mazmorra.SceneID;
+import com.mazmorra.SceneManager;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class PersonajeController {
-    private Personaje personaje;
+
     protected int puntosDisponibles = 5;
     protected int vida = 5;
     protected int ataque = 0;
@@ -25,11 +25,16 @@ public class PersonajeController {
     private Label velocidadLabel;
     @FXML
     private Label puntosRestantes;
+    @FXML
+    private Button iniciarJuego;
 
     @FXML
     public void initialize() {
         actualizarStats(vida, ataque, defensa, velocidad, puntosDisponibles);
 
+        iniciarJuego.setOnAction(event -> {
+        SceneManager.getInstance().loadScene(SceneID.JUEGO);
+        });
     }
 
     private void actualizarStats(int vida, int ataque, int defensa, int velocidad, int puntosDisponibles) {
