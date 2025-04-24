@@ -14,7 +14,7 @@ public class Proveedor {
     }
     
     private Proveedor(){
-        Proveedor personaje = new ArrayList<>();/*????*/
+        //Proveedor personaje = //new ArrayList<>();/*????*/
     }
 
     public Personaje getPersonaje(){

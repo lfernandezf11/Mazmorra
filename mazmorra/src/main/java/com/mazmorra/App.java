@@ -28,19 +28,14 @@ public class App extends Application {
         // Configura las escenas con identificadores y tamaños
         sm.setScene(SceneID.INICIO, "inicio");
         sm.setScene(SceneID.PERSONAJE, "personaje");
+        //sm.setScene(SceneID.JUEGO, "juego");
         
         // Carga la escena principal
         sm.loadScene(SceneID.INICIO);
     }
 
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/mazmorra/views/" + fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
+    
+    
 
     public static void main(String[] args) {
         launch();

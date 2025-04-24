@@ -37,7 +37,7 @@
          <children>
             <HBox prefHeight="30.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="vida" prefHeight="30.0" prefWidth="60.0" text="Vida" />
+                  <Label fx:id="vidaLabel" prefHeight="30.0" prefWidth="60.0" text="Vida" />
                   <Label fx:id="puntosVida" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="50.0" text="5" textAlignment="CENTER" />
                   <Button fx:id="addVida" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" />
                   <Button fx:id="restVida" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" />
@@ -45,7 +45,7 @@
             </HBox>
             <HBox prefHeight="30.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="ataque" prefHeight="30.0" prefWidth="60.0" text="Ataque" />
+                  <Label fx:id="ataqueLabel" prefHeight="30.0" prefWidth="60.0" text="Ataque" />
                   <Label fx:id="puntosAtaque" alignment="CENTER" prefHeight="33.0" prefWidth="50.0" text="0" />
                   <Button fx:id="addAtaque" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" />
                   <Button fx:id="restAtaque" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" />
@@ -53,7 +53,7 @@
             </HBox>
             <HBox prefHeight="30.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="defensa" prefHeight="30.0" prefWidth="60.0" text="Defensa" />
+                  <Label fx:id="defensaLabel" prefHeight="30.0" prefWidth="60.0" text="Defensa" />
                   <Label fx:id="puntosDefensa" alignment="CENTER" prefHeight="38.0" prefWidth="50.0" text="0" />
                   <Button fx:id="addDefensa" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" />
                   <Button fx:id="restDefensa" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" />
@@ -61,7 +61,7 @@
             </HBox>
             <HBox prefHeight="30.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="velocidad" prefHeight="30.0" prefWidth="60.0" text="Velocidad" />
+                  <Label fx:id="velocidadLabel" prefHeight="30.0" prefWidth="60.0" text="Velocidad" />
                   <Label fx:id="puntosVelocidad" alignment="CENTER" prefHeight="37.0" prefWidth="50.0" text="0" />
                   <Button fx:id="addVel" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" />
                   <Button fx:id="restVel" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" />
