@@ -3,11 +3,118 @@ package com.mazmorra.Controllers;
 import java.io.IOException;
 import com.mazmorra.App;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 public class PersonajeController {
 
+    protected int puntosDisponibles = 5;
+    protected int vida = 5;
+    protected int ataque = 0;
+    protected int defensa = 0;
+    protected int velocidad = 0;
+
     @FXML
-    private void switchToPrimary() throws IOException {
-        App.setRoot("primary");
+    private Label vidaLabel;
+    @FXML
+    private Label ataqueLabel;
+    @FXML
+    private Label defensaLabel;
+    @FXML
+    private Label velocidadLabel;
+    @FXML
+    private Label puntosRestantes;
+
+    @FXML
+    public void initialize() {
+        actualizarStats();
     }
+
+    private void actualizarStats() {
+        vidaLabel.setText("Vida: " + vida);
+        ataqueLabel.setText("Ataque: " + ataque);
+        defensaLabel.setText("Defensa: " + defensa);
+        velocidadLabel.setText("Velocidad: " + velocidad);
+        puntosRestantes.setText("Puntos disponibles: " + puntosDisponibles);
+    }
+
+    @FXML
+    private void addVida() {
+        if (puntosDisponibles > 0) {
+            vida++;
+            puntosDisponibles--;
+            actualizarStats();
+        }
+    }
+
+    @FXML
+    private void restVida() {
+        if (vida > 5) {
+            vida--;
+            puntosDisponibles++;
+            actualizarStats();
+        }
+    }
+
+    @FXML
+    private void addAtaque() {
+        if (puntosDisponibles > 0) {
+            ataque++;
+            puntosDisponibles--;
+            actualizarStats();
+        }
+    }
+
+    @FXML
+    private void restAtaque() {
+        if (ataque > 0) {
+            ataque--;
+            puntosDisponibles++;
+            actualizarStats();
+        }
+    }
+
+    @FXML
+    private void addDefensa() {
+        if (puntosDisponibles > 0) {
+            defensa++;
+            puntosDisponibles--;
+            actualizarStats();
+        }
+    }
+
+    @FXML
+    private void restDefensa() {
+        if (defensa > 0) {
+            defensa--;
+            puntosDisponibles++;
+            actualizarStats();
+        }
+    }
+
+    @FXML
+    private void addVel() {
+        if (puntosDisponibles > 0) {
+            velocidad++;
+            puntosDisponibles--;
+            actualizarStats();
+        }
+    }
+
+    @FXML
+    private void restVel() {
+        if (velocidad > 0) {
+            velocidad--;
+            puntosDisponibles++;
+            actualizarStats();
+        }
+    }
+
+    @FXML
+    private void cambiarAJuego() throws IOException {
+        App.setRoot("juego");
+    }
+
+    // addDefensa.setOnAction(event -> {
+
+    // });
 }
