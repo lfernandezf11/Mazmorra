@@ -1,5 +1,7 @@
 package com.mazmorra.Model;
 
+import java.util.ArrayList;
+
 public class Proveedor {
     private static Proveedor instance;
     private Personaje personaje;
@@ -12,6 +14,7 @@ public class Proveedor {
     }
     
     private Proveedor(){
+        Proveedor personaje = new ArrayList<>();/*????*/
     }
 
     public Personaje getPersonaje(){
