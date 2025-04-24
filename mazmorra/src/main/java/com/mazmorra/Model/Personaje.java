@@ -1,27 +1,54 @@
 package com.mazmorra.Model;
+
 import java.util.ArrayList;
 import java.util.Objects;
+
 import com.mazmorra.TipoPersonaje;
 import com.mazmorra.Interfaces.Observer;
 
-public class Personaje  {
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+public class Personaje {
     private ArrayList<Observer> observers = new ArrayList<>();
+
     protected TipoPersonaje tipo;
     protected int ataque; 
     protected int defensa;
     protected int vida;
     protected int velocidad;
 
-    public Personaje(int ataque, int defensa, int vida, int velocidad, TipoPersonaje tipo) {
+    private Image imagen;
+    private ImageView imageView;
+
+    public Personaje(int ataque, int defensa, int vida, int velocidad, TipoPersonaje tipo, String rutaImagen) {
         this.tipo = tipo;
         this.ataque = ataque;
         this.defensa = defensa;
         this.vida = vida;
         this.velocidad = velocidad;
+        setImagen(rutaImagen); // inicializa imagen e imageView
     }
+
+    public void setImagen(String rutaImagen) {
+        this.imagen = new Image("file:" + rutaImagen); // o usa getClass().getResource() si es un recurso
+        this.imageView = new ImageView(this.imagen);
+        this.imageView.setFitWidth(32);
+        this.imageView.setFitHeight(32);
+    }
+
+    public Image getImagen() {
+        return this.imagen;
+    }
+
+    public ImageView getImageView() {
+        return this.imageView;
+    }
+
     public void suscribe(Observer observer){
         observers.add(observer);
     }
+
     public void unsuscribe(Observer observer){
         observers.remove(observer);
     }
@@ -33,6 +60,7 @@ public class Personaje  {
     public void setObservers(ArrayList<Observer> observers) {
         this.observers = observers;
     }
+
     public void notifyObservers(){
         observers.forEach(x -> x.onChange());
     }
@@ -128,6 +156,4 @@ public class Personaje  {
             ", velocidad='" + getVelocidad() + "'" +
             "}";
     }
-    
-
 }
