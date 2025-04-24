@@ -30,44 +30,45 @@
          </children>
       </HBox>
         <Button fx:id="iniciarJuego" layoutX="248.0" layoutY="357.0" text="Iniciar Juego" />
-        <Label fx:id="tituloUno" layoutX="232.0" layoutY="14.0" text="Elección de Personaje" />
-      <Label fx:id="tituloUno1" layoutX="187.0" layoutY="208.0" text="Estadisticas" />
-      <Label fx:id="puntosRestantes" layoutX="319.0" layoutY="208.0" text="Puntos disponibles: 5" />
+        <Label layoutX="232.0" layoutY="14.0" text="Elección de Personaje" />
+      <Label layoutX="187.0" layoutY="208.0" text="Estadisticas" />
+      <Label layoutX="283.0" layoutY="208.0" text="Puntos disponibles:" />
       <VBox layoutX="189.0" layoutY="225.0" prefHeight="118.0" prefWidth="257.0">
          <children>
             <HBox prefHeight="30.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="vidaLabel" prefHeight="30.0" prefWidth="60.0" text="Vida" />
+                  <Label prefHeight="30.0" prefWidth="60.0" text="Vida" />
                   <Label fx:id="puntosVida" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="50.0" text="5" textAlignment="CENTER" />
-                  <Button fx:id="addVida" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" />
                   <Button fx:id="restVida" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" />
+                  <Button fx:id="addVida" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" />
                </children>
             </HBox>
             <HBox prefHeight="30.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="ataqueLabel" prefHeight="30.0" prefWidth="60.0" text="Ataque" />
+                  <Label prefHeight="30.0" prefWidth="60.0" text="Ataque" />
                   <Label fx:id="puntosAtaque" alignment="CENTER" prefHeight="33.0" prefWidth="50.0" text="0" />
-                  <Button fx:id="addAtaque" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" />
                   <Button fx:id="restAtaque" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" />
+                  <Button fx:id="addAtaque" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" />
                </children>
             </HBox>
             <HBox prefHeight="30.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="defensaLabel" prefHeight="30.0" prefWidth="60.0" text="Defensa" />
+                  <Label prefHeight="30.0" prefWidth="60.0" text="Defensa" />
                   <Label fx:id="puntosDefensa" alignment="CENTER" prefHeight="38.0" prefWidth="50.0" text="0" />
-                  <Button fx:id="addDefensa" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" />
                   <Button fx:id="restDefensa" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" />
+                  <Button fx:id="addDefensa" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" />
                </children>
             </HBox>
             <HBox prefHeight="30.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="velocidadLabel" prefHeight="30.0" prefWidth="60.0" text="Velocidad" />
+                  <Label prefHeight="30.0" prefWidth="60.0" text="Velocidad" />
                   <Label fx:id="puntosVelocidad" alignment="CENTER" prefHeight="37.0" prefWidth="50.0" text="0" />
-                  <Button fx:id="addVel" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" />
-                  <Button fx:id="restVel" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" />
+                  <Button fx:id="restVelocidad" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" />
+                  <Button fx:id="addVelocidad" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" />
                </children>
             </HBox>
          </children>
       </VBox>
+      <Label fx:id="PuntosRestantes" alignment="CENTER" contentDisplay="CENTER" layoutX="396.0" layoutY="203.0" prefHeight="27.0" prefWidth="50.0" text="5" textAlignment="CENTER" />
    </children>
 </Pane>
