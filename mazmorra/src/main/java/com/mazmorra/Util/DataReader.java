@@ -6,47 +6,49 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mazmorra.Model.Mapa;
+
 public class DataReader {
 
-    public static int[][] leerMapaDesdeArchivo(String rutaArchivo) throws IOException {
-        List<String> lineas = new ArrayList<>();
+    public static int[][] leerMapa(String path) throws IOException {
+        List<String> tuplas = new ArrayList<>();
 
         // Leer líneas del archivo
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 if (!linea.trim().isEmpty()) {
-                    lineas.add(linea.trim());
+                    tuplas.add(linea.trim());
                 }
             }
         }
 
-        int tamaño = lineas.size(); // Asumimos que el mapa es cuadrado
-        int[][] matriz = new int[tamaño][tamaño];
+        int tam = tuplas.size(); // Asumimos que el mapa es cuadrado
+        int[][] matrizMapa = new int[tam][tam];
 
-        for (int i = 0; i < tamaño; i++) {
-            String fila = lineas.get(i);
-            if (fila.length() != tamaño) {
-                throw new IllegalArgumentException("El mapa no es cuadrado: fila " + i + " tiene longitud " + fila.length());
+        for (int i = 0; i < tam; i++) {
+            String tupla = tuplas.get(i);
+            if (tupla.length() != tam) {
+                throw new IllegalArgumentException("Las proporciones del mapa no son correctas");
             }
 
-            for (int j = 0; j < tamaño; j++) {
-                char c = fila.charAt(j);
-                if (c == 'S') {
-                    matriz[i][j] = 0;
-                } else if (c == 'P') {
-                    matriz[i][j] = 1;
+            for (int j = 0; j < tam; j++) {
+                String c = "" + tupla.charAt(j);
+                if (c.toUpperCase().equals('S')) {
+                    matrizMapa[i][j] = 0;
+                } else if (c.toUpperCase().equals('P')) {
+                    matrizMapa[i][j] = 1;
                 } else {
-                    throw new IllegalArgumentException("Carácter no reconocido: '" + c + "' en (" + i + ", " + j + ")");
+                    throw new IllegalArgumentException("Carácter inválido en la coordenada " + matrizMapa[i][j]);
                 }
             }
         }
 
-        return matriz;
+        return matrizMapa;
     }
 }
 
     
-    // int [][] leerMapa(String path);
+  
     // List <Enemigo> leerEnemigos(String path);
 
