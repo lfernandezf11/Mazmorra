@@ -1,18 +1,40 @@
 package com.mazmorra.Model;
 
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+ /**
+  * Gestiona la construcción gráfica del tablero de juego a partir de una matriz de números enteros proveniente del DataReader.
+  * <p>
+  * Las imágenes correspondientes a "suelo" y "pared" son enrutadas de forma estática desde Resources. <br>
+  * La matriz se dibuja programáticamente mediante la creación de un elemento de tipo Grid, <br>
+  * que posteriormente conecta con la escena a través de un AnchorPane.
+  * </p>
+  * 
+  * @author Miguel González Seguro
+  * @author Lucía Fernández Florencio
+  * 
+  */
 
 public class Mapa {
-    private static String paredPath = "./../../../../resources/com/mazmorra/Images/pared.png";
+    private static String paredPath = "./../../../../resources/com/mazmorra/Images/pared.png"; //Guardamos las rutas en una variable, por legibilidad.
     private static String sueloPath = "./../../../../resources/com/mazmorra/Images/suelo.png";
-    private int[][] mapaMatriz; 
+    private int[][] mapaMatriz; //Matriz de datos procedente de DataReader.java
 
+    /*Constructor parametrizado */
     public Mapa(int[][] mapaMatriz) {
         this.mapaMatriz = mapaMatriz;
     }
 
+    /**
+     * Recupera la información de la matriz del mapa.
+     * @return la matriz del mapa.
+     */
+    public int[][] getMapaMatriz() {
+        return mapaMatriz;
+    }
+    
     public void generarTablero(GridPane gridPane) {
 
         for (int i = 0; i < mapaMatriz.length; i++) {
@@ -38,7 +60,7 @@ public class Mapa {
 
     private void actualizarTamCelda(GridPane gridPane, int size, double anchoAnchor){
          {
-            double tamañoCelda = anchoDisponible / size; // size = filas = columnas
+            double tamañoCelda = anchoAnchor / size; // size = filas = columnas
         
             for (Node node : gridPane.getChildren()) {
                 if (node instanceof ImageView) {
@@ -53,6 +75,3 @@ public class Mapa {
 
 }
 
-
-
-/**Crea el grid a partir de los datos del tjt, recogidos desde DataReader.  */
