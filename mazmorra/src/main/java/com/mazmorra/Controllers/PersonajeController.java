@@ -116,6 +116,6 @@ public class PersonajeController implements Observer {
 
     @Override
     public void onChange() {
-        personajeUno.setVida(personajeUno.getVida());
+        personajeUno.setVida(personajeUno.getVida()); //¿TENEMOS QUE TRAERLO TODO? HAY QUE MANEJAR LOS MOVIMIENTOS Y LAS BATALLAS DEPENDIENDO DE LA FUERZA, VELOCIDAD ETC
     }
 }

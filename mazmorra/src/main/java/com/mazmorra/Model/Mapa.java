@@ -40,19 +40,19 @@ public class Mapa {
      * @param gridPane estructura de tipo GridPane donde se dispondrán las imágenes. 
      * @param anchoAnchor espacio disponible en el PaneAnchor que ancla el GridPane en la escena.
      */
-    public void generarTablero(GridPane gridPane, double anchoAnchor) throws Exception{
+    public void generarTablero(GridPane gridPaneJuego, double anchoAnchor) throws Exception{
         for (int i = 0; i < mapaMatriz.length; i++) { 
                 for (int j = 0; j < mapaMatriz[i].length; j++) {
                     int celda = mapaMatriz[i][j];
-                    ImageView imageView = new ImageView(); //Crea la vista para las celdas gráficas
+                    ImageView imageView = new ImageView(); //Crea una vista gráfica por cada celda.
     
                     if (celda == 0) {
                         imageView.setImage(new Image(paredPath));
                     } else {
                         imageView.setImage(new Image(sueloPath));
                     }
-                    gridPane.add(imageView, j, i); // GridPane: (NodeChild, int columna, int fila): j se tiene que especificar antes que i.
-                    actualizarTamCelda(gridPane, mapaMatriz.length, anchoAnchor); //Establece el tamaño de las celdas en función del tamaño del mapa.
+                    gridPaneJuego.add(imageView, j, i); // GridPane: (NodeChild, int columna, int fila): j se tiene que especificar antes que i.
+                    actualizarTamCelda(gridPaneJuego, mapaMatriz.length, anchoAnchor); //Establece el tamaño de las celdas en función del tamaño del mapa.
                 }
         }
     }
@@ -63,11 +63,11 @@ public class Mapa {
      * @param size tamaño del mapa, suponiendo que es un cuadrado perfecto.
      * @param anchoAnchor ancho disponible en la estructura AnchorPane para distribuir las celdas.
      */
-    private void actualizarTamCelda(GridPane gridPane, int size, double anchoAnchor){
+    private void actualizarTamCelda(GridPane gridPaneJuego, int size, double anchoAnchor){
          {
             double tamCelda = anchoAnchor / size; // size = filas = columnas
         
-            for (Node node : gridPane.getChildren()) {
+            for (Node node : gridPaneJuego.getChildren()) {
                 if (node instanceof ImageView) {
                     ((ImageView) node).setFitWidth(tamCelda);
                     ((ImageView) node).setFitHeight(tamCelda);
