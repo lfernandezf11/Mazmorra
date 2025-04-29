@@ -35,43 +35,45 @@ public class Mapa {
         return mapaMatriz;
     }
     
-    public void generarTablero(GridPane gridPane) {
-
-        for (int i = 0; i < mapaMatriz.length; i++) {
-            for (int j = 0; j < mapaMatriz[i].length; j++) {
-                int celda = mapaMatriz[i][j];
-                ImageView imageView = new ImageView();
-
-                if (celda == 0) {
-                    imageView.setImage(new Image(paredPath));
-                } else {
-                    imageView.setImage(new Image(sueloPath));
-                }
-
-                gridPane.add(imageView, j, i); // GridPane: (NodeChild, int columna, int fila): j se tiene que especificar antes que i.
-
-                actualizarTamCelda(gridPane, mapaMatriz.length, 10);
-            }
-        }
+    /**
+     * Traslada la disposición de las celdas de tipo suelo y techo a formato gráfico en Scene Builder.
+     * @param gridPane estructura de tipo GridPane donde se dispondrán las imágenes. 
+     * @param anchoAnchor espacio disponible en el PaneAnchor que ancla el GridPane en la escena.
+     */
+    public void generarTablero(GridPane gridPane, double anchoAnchor) throws Exception{
+        for (int i = 0; i < mapaMatriz.length; i++) { 
+                for (int j = 0; j < mapaMatriz[i].length; j++) {
+                    int celda = mapaMatriz[i][j];
+                    ImageView imageView = new ImageView(); //Crea la vista para las celdas gráficas
     
-
+                    if (celda == 0) {
+                        imageView.setImage(new Image(paredPath));
+                    } else {
+                        imageView.setImage(new Image(sueloPath));
+                    }
+                    gridPane.add(imageView, j, i); // GridPane: (NodeChild, int columna, int fila): j se tiene que especificar antes que i.
+                    actualizarTamCelda(gridPane, mapaMatriz.length, anchoAnchor); //Establece el tamaño de las celdas en función del tamaño del mapa.
+                }
+        }
     }
 
-
+    /**
+     * Calcula el tamaño de cada celda del tablero en función de las dimensiones obtenidas del txt Mapa.
+     * @param gridPane estructura de tipo GridPane donde se dispondrán las imágenes de tipo suelo y pared. 
+     * @param size tamaño del mapa, suponiendo que es un cuadrado perfecto.
+     * @param anchoAnchor ancho disponible en la estructura AnchorPane para distribuir las celdas.
+     */
     private void actualizarTamCelda(GridPane gridPane, int size, double anchoAnchor){
          {
-            double tamañoCelda = anchoAnchor / size; // size = filas = columnas
+            double tamCelda = anchoAnchor / size; // size = filas = columnas
         
             for (Node node : gridPane.getChildren()) {
                 if (node instanceof ImageView) {
-                    ((ImageView) node).setFitWidth(tamañoCelda);
-                    ((ImageView) node).setFitHeight(tamañoCelda);
+                    ((ImageView) node).setFitWidth(tamCelda);
+                    ((ImageView) node).setFitHeight(tamCelda);
                 }
             }
         }
     }
-
-
-
 }
 
