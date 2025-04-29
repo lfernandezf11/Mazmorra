@@ -2,6 +2,7 @@ package com.mazmorra.Model;
 
 
 public class Proveedor {
+
     private static Proveedor instance;
     private Personaje personaje;
 
@@ -13,7 +14,7 @@ public class Proveedor {
     }
     
     private Proveedor(){
-        new Personaje(0, 0, 0, 0);
+        this.personaje = new Personaje(0, 0, 0, 0);
     }
 
     public Personaje getPersonaje(){
