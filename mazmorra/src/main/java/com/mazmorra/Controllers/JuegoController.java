@@ -5,6 +5,7 @@ import com.mazmorra.Model.Personaje;
 import com.mazmorra.Model.Proveedor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 public class JuegoController implements Observer {
 
@@ -16,8 +17,10 @@ public class JuegoController implements Observer {
     private Label defensaJugador;
     @FXML
     private Label nombreJugador;
-    @FXML 
+    @FXML
     private Label velocidadJugador;
+    @FXML
+    private ImageView imagenJugador;
 
     private Personaje personaje;
 
@@ -28,21 +31,18 @@ public class JuegoController implements Observer {
 
         // Suscribirse a cambios
         personaje.suscribe(this);
-
-        // Mostrar datos iniciales
-        actualizarDatos();
+        actualizarStats();
     }
 
     @Override
     public void onChange() {
-        actualizarDatos(); // Actualizar UI cuando hay cambios
+        actualizarStats();
     }
 
-    private void actualizarDatos() {
-        if (personaje != null) {
-            vidaJugador.setText("Vida: " + personaje.getVida());
-            ataqueJugador.setText("Ataque: " + personaje.getAtaque());
-            defensaJugador.setText("Defensa: " + personaje.getDefensa());
-        }
+    private void actualizarStats() {
+        vidaJugador.setText(String.valueOf(personaje.getVida()));
+        ataqueJugador.setText(String.valueOf(personaje.getAtaque()));
+        defensaJugador.setText(String.valueOf(personaje.getDefensa()));
+        velocidadJugador.setText(String.valueOf(personaje.getVelocidad()));
     }
 }
