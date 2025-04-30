@@ -3,7 +3,10 @@ package com.mazmorra.Model;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
+
  /**
   * Gestiona la construcción gráfica del tablero de juego a partir de una matriz de números enteros proveniente del DataReader.
   * <p>
@@ -37,35 +40,78 @@ public class Mapa {
     
     /**
      * Traslada la disposición de las celdas de tipo suelo y techo a formato gráfico en Scene Builder.
-     * @param gridPane estructura de tipo GridPane donde se dispondrán las imágenes. 
-     * @param anchoAnchor espacio disponible en el PaneAnchor que ancla el GridPane en la escena.
+     * @param gridPaneJuego estructura de tipo GridPane donde se dispondrán las imágenes. 
+     * @param anchoStack espacio disponible en el nodo padre del grid, para la generación de un tablero adaptativo.
      */
-    public void generarTablero(GridPane gridPaneJuego, double anchoAnchor) throws Exception{
+    public void generarTablero(GridPane gridPaneJuego, double anchoStack){
+        resetearGridPane(gridPaneJuego); //Limpia el tablero antes de cada regeneración.
+        if(resetearGridPane(gridPaneJuego) != null) {
+            addConstraints(gridPaneJuego);
+        }
+
         for (int i = 0; i < mapaMatriz.length; i++) { 
-                for (int j = 0; j < mapaMatriz[i].length; j++) {
-                    int celda = mapaMatriz[i][j];
-                    ImageView imageView = new ImageView(); //Crea una vista gráfica por cada celda.
+            for (int j = 0; j < mapaMatriz[i].length; j++) {
+                int celda = mapaMatriz[i][j];
+                ImageView imageView = new ImageView(); //Crea una vista gráfica por cada celda.
     
-                    if (celda == 0) {
-                        imageView.setImage(new Image(paredPath));
-                    } else {
-                        imageView.setImage(new Image(sueloPath));
-                    }
-                    gridPaneJuego.add(imageView, j, i); // GridPane: (NodeChild, int columna, int fila): j se tiene que especificar antes que i.
-                    actualizarTamCelda(gridPaneJuego, mapaMatriz.length, anchoAnchor); //Establece el tamaño de las celdas en función del tamaño del mapa.
+                if (celda == 0) {
+                    imageView.setImage(new Image(paredPath));
+                } else {
+                    imageView.setImage(new Image(sueloPath));
                 }
+                gridPaneJuego.add(imageView, j, i); // GridPane: (NodeChild, int columna, int fila): j se tiene que especificar antes que i.
+                actualizarTamCelda(gridPaneJuego, mapaMatriz.length, anchoStack); //Establece el tamaño de las celdas en función del tamaño del mapa.
+            // Ajusta el tamaño de las imágenes para que rellenen su celda
+            /*imageView.setPreserveRatio(false); // opcional: fuerza ajuste exacto sin mantener proporción
+            imageView.fitWidthProperty().bind(gridPane.widthProperty().divide(columnas));
+            imageView.fitHeightProperty().bind(gridPane.heightProperty().divide(filas));
+
+            gridPane.add(imageView, j, i);
+            }*/
+        
+            }
         }
     }
 
     /**
+     * Limpia el contenido y las restricciones del GridPane.
+     * @param gridPaneJuego el GridPane que va a ser limpiado.
+     * @return el GridPane sin contenido.
+     * 
+     */
+    private GridPane resetearGridPane(GridPane gridPaneJuego){
+        gridPaneJuego.getChildren().clear();
+        gridPaneJuego.getColumnConstraints().clear();
+        gridPaneJuego.getRowConstraints().clear();
+
+        return gridPaneJuego;
+    }
+    /**
+     * Añade las restricciones en las columnas y filas del GridPane sobre el que se trabaja.
+     * @param gridPaneJuego el GridPane del tablero de juego.
+     */
+    private void addConstraints(GridPane gridPaneJuego){
+        for (int i = 0; i < mapaMatriz.length; i++) { //Asume que el tablero es cuadrado.
+            ColumnConstraints cc = new ColumnConstraints(); 
+            RowConstraints rc = new RowConstraints();
+            
+            cc.setPercentWidth(100.0 / mapaMatriz.length);//Establece que el grid tiene que ocupar todo el espacio disponible.
+            rc.setPercentHeight(100.0 / mapaMatriz.length);
+            
+            gridPaneJuego.getColumnConstraints().add(cc);//Añade las restricciones al grid.
+            gridPaneJuego.getRowConstraints().add(rc);
+        }
+    }
+    
+    /**
      * Calcula el tamaño de cada celda del tablero en función de las dimensiones obtenidas del txt Mapa.
      * @param gridPane estructura de tipo GridPane donde se dispondrán las imágenes de tipo suelo y pared. 
      * @param size tamaño del mapa, suponiendo que es un cuadrado perfecto.
-     * @param anchoAnchor ancho disponible en la estructura AnchorPane para distribuir las celdas.
+     * @param anchoStack ancho disponible en la estructura AnchorPane para distribuir las celdas.
      */
-    private void actualizarTamCelda(GridPane gridPaneJuego, int size, double anchoAnchor){
-         {
-            double tamCelda = anchoAnchor / size; // size = filas = columnas
+    private void actualizarTamCelda(GridPane gridPaneJuego, int size, double anchoStack){
+         
+            double tamCelda = anchoStack / size; // size = mapaMatriz.length = columnas
         
             for (Node node : gridPaneJuego.getChildren()) {
                 if (node instanceof ImageView) {
@@ -75,5 +121,8 @@ public class Mapa {
             }
         }
     }
-}
+
+
+
+
 
