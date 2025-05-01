@@ -14,7 +14,7 @@ public class Proveedor {
     }
     
     private Proveedor(){
-        this.personaje = new Personaje(0, 0, 0, 0);
+        this.personaje = new Personaje("", 0, 0, 0, 0);
     }
 
     public Personaje getPersonaje(){

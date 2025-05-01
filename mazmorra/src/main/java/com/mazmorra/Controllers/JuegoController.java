@@ -40,6 +40,7 @@ public class JuegoController implements Observer {
     }
 
     private void actualizarStats() {
+        nombreJugador.setText(personaje.getNombre());
         vidaJugador.setText(String.valueOf(personaje.getVida()));
         ataqueJugador.setText(String.valueOf(personaje.getAtaque()));
         defensaJugador.setText(String.valueOf(personaje.getDefensa()));

@@ -9,6 +9,7 @@ import com.mazmorra.Model.Proveedor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class PersonajeController implements Observer {
 
@@ -22,6 +23,8 @@ public class PersonajeController implements Observer {
     private Label puntosVelocidad;
     @FXML
     private Label PuntosRestantes;
+    @FXML
+    private TextField introNombre;
 
     @FXML
     private Button addVida;
@@ -51,7 +54,7 @@ public class PersonajeController implements Observer {
         Proveedor proveedor = Proveedor.getInstance();
 
         // Inicialización con 5 puntos en vida
-        personajeUno = new Personaje(0, 0, 5, 0);
+        personajeUno = new Personaje("", 0, 0, 5, 0);
         proveedor.setPersonaje(personajeUno); // Guarda en el Proveedor
         personajeUno.suscribe(this);
 
@@ -86,21 +89,22 @@ public class PersonajeController implements Observer {
         });
         restDefensa.setOnAction(e -> {
             personajeUno.decrementarDefensa();
-            Proveedor.getInstance().setPersonaje(personajeUno); 
+            Proveedor.getInstance().setPersonaje(personajeUno);
         });
 
         addVelocidad.setOnAction(e -> {
             personajeUno.incrementarVelocidad();
-            Proveedor.getInstance().setPersonaje(personajeUno); 
+            Proveedor.getInstance().setPersonaje(personajeUno);
         });
-        
+
         restVelocidad.setOnAction(e -> {
             personajeUno.decrementarVelocidad();
-            Proveedor.getInstance().setPersonaje(personajeUno); 
+            Proveedor.getInstance().setPersonaje(personajeUno);
         });
 
         iniciarJuego.setOnAction(e -> {
             // Guarda cambios finales antes de cambiar
+            personajeUno.setNombre(introNombre.getText());
             Proveedor.getInstance().setPersonaje(personajeUno);
             SceneManager.getInstance().loadScene(SceneID.JUEGO);
         });

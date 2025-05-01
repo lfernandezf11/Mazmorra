@@ -13,6 +13,7 @@ public class Personaje {
     private ArrayList<Observer> observers = new ArrayList<>();
 
     protected TipoPersonaje tipo;
+    protected String nombre;
     protected int ataque; 
     protected int defensa;
     protected int vida;
@@ -22,7 +23,8 @@ public class Personaje {
     private Image imagen;
     private ImageView imageView;
 
-    public Personaje(int ataque, int defensa, int vida, int velocidad, TipoPersonaje tipo, String rutaImagen) {
+    public Personaje(String nombre, int ataque, int defensa, int vida, int velocidad, TipoPersonaje tipo, String rutaImagen) {
+        this.nombre = nombre;
         this.tipo = tipo;
         this.ataque = ataque;
         this.defensa = defensa;
@@ -31,7 +33,8 @@ public class Personaje {
         setImagen(rutaImagen); // inicializa imagen e imageView
     }
 
-    public Personaje(int ataque, int defensa, int vida, int velocidad) {
+    public Personaje(String nombre, int ataque, int defensa, int vida, int velocidad) {
+        this.nombre = nombre;
         this.ataque = ataque;
         this.defensa = defensa;
         this.vida = vida;
@@ -91,6 +94,15 @@ public class Personaje {
         notifyObservers();
     }
 
+    public String getNombre(){
+        return this.nombre;
+    }
+
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+        notifyObservers();
+    }
+    
     public int getAtaque() {
         return this.ataque;
     }
