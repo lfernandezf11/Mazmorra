@@ -22,8 +22,8 @@ import javafx.scene.layout.StackPane;
   */
 
 public class Mapa {
-    private static String paredPath = "mazmorra/src/main/resources/com/mazmorra/Images/pared.png"; //Guardamos las rutas en una variable, por legibilidad.
-    private static String sueloPath = "mazmorra/src/main/resources/com/mazmorra/Images/pared.png";
+    private static String paredPath = "/com/mazmorra/Images/pared.png"; //La ruta relativa de img prescinde de src/main/resources, porque se recupera desde el classpath (desde target/classes)
+    private static String sueloPath = "/com/mazmorra/Images/suelo.png";
     private int[][] mapaMatriz; //Matriz de datos procedente de DataReader.java
 
     /*Constructor parametrizado */
@@ -59,12 +59,13 @@ public class Mapa {
                 ImageView imageView = new ImageView(); //Crea una vista gráfica por cada celda.
     
                 if (celda == 0) {
-                    imageView.setImage(new Image(paredPath));
+                    imageView.setImage(new Image(getClass().getResource(paredPath).toExternalForm()));
+                    //Obtiene el recurso dentro de la ruta de clase, y convierte la referencia a una URL completa que JavaFX pueda interpretar. 
                 } else {
-                    imageView.setImage(new Image(sueloPath));
+                    imageView.setImage(new Image(getClass().getResource(sueloPath).toExternalForm()));
                 }
                 gridPaneJuego.add(imageView, j, i); // GridPane: (NodeChild, int columna, int fila): j se tiene que especificar antes que i.
-                actualizarTamCelda(gridPaneJuego, mapaMatriz.length, anchoStack); //Establece el tamaño de las celdas en función del tamaño del mapa.
+                actualizarTamCelda(gridPaneJuego, mapaMatriz.length, anchoStack); 
             }
         }
     }
@@ -104,7 +105,7 @@ public class Mapa {
     }
     
     /**
-     * Calcula el tamaño de cada celda del tablero en función de las dimensiones obtenidas del txt Mapa.
+     * Calcula el tamaño de cada celda del tablero en función de las dimensiones obtenidas de la matriz.
      * 
      * @param gridPane estructura de tipo GridPane donde se dispondrán las imágenes de tipo suelo y pared. 
      * @param size tamaño del mapa, suponiendo que es un cuadrado perfecto.

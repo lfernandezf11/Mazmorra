@@ -16,8 +16,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 public class JuegoController implements Observer {
-    
-    private static final String rutaBase = "src/main/resources/com/mazmorra/Tablero/";
+    /* Para acceder a archivos físicos hay que especificar la ruta RELATIVA A LA RAÍZ DEL PROYECTO (src/main/resources[...]).
+       En tiempo de ejecución, src/main/resources se copia en target/classes. El getResources extrae de aquí las imágenes, por eso
+       se puede prescindir de src/main/resources en su ruta relativa. */
+    private static final String rutaBase = "mazmorra/src/main/resources/com/mazmorra/Tablero/"; 
     
     @FXML
     private Label vidaJugador;
