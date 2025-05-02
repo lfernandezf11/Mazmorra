@@ -8,6 +8,7 @@ import com.mazmorra.Model.Personaje;
 import com.mazmorra.Model.Proveedor;
 import com.mazmorra.Util.DataReader;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -15,6 +16,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 public class JuegoController implements Observer {
+    
+    private static final String rutaBase = "src/main/resources/com/mazmorra/Tablero/";
     
     @FXML
     private Label vidaJugador;
@@ -39,30 +42,13 @@ public class JuegoController implements Observer {
 
     @FXML
     public void initialize() {
-        
         // Obtiene el personaje e inserta sus stats en la escena
         personaje = Proveedor.getInstance().getPersonaje();
         personaje.suscribe(this);
         actualizarStats();
 
-        // Carga el mapa (como trabaja con archivos, hay que capturar errores IO)
-        String archivo = "mapa_15x15_prueba.txt";
-        String ruta = "src/main/resources/com/mazmorra/Tablero/" + archivo;
-        try {
-            int[][] mapaMatriz = DataReader.leerMapa(ruta); 
-            mapa = new Mapa(mapaMatriz);
-        } catch (IOException e) {
-            System.err.println("Error en la lectura del archivo.\n" + e.getMessage()); 
-        }
-
-        /*Añade un listener nativo de Java Fx para detectar cambios (valor observable, valor antiguo, valor nuevo) en la propiedad 'ancho'.
-          Si usásemos el stackPaneJuego.getWidht, no podríamos controlar la validez del ancho.*/
-        stackPaneJuego.widthProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal.doubleValue() > 0 && mapa != null) { //Cuando se produce un cambio y el valor es válido (>0), se genera el Tablero. 
-                mapa.generarTablero(gridPaneJuego, stackPaneJuego);
-            }
-        });
-        
+        cargarMapa();
+        cargarTablero();   
     }
 
     @Override
@@ -82,4 +68,44 @@ public class JuegoController implements Observer {
             imagenJugador.setFitHeight(32);
         }
     }
+
+    /**
+     * Genera una instancia Mapa en la que establece la correspondencia gráfica entre:
+     * - La matriz de datos de tipo Integer generada por el lector .txt (clase DataReader).
+     * - El GridPane de la escena.
+     * 
+     */
+    private void cargarMapa() {
+        String rutaArchivo = "mapa_15x15_prueba.txt";
+        try {
+            int[][] mapaMatriz = DataReader.leerMapa(rutaBase + rutaArchivo); //Ruta común declarada como variable estática de la clase.
+            mapa = new Mapa(mapaMatriz);
+        } catch (IOException e) {       // Como el método trabaja con archivos, hay que capturar errores de entrada/salida (IO)
+            System.err.println("Error en la lectura del archivo.\n" + e.getMessage()); 
+        }
+    }
+
+    /**
+     * Asegura que el método initialize del controlador del juego se haya ejecutado antes de generar la interfaz gráfica para el tablero. 
+     * El objetivo es que las propiedades de los nodos ya estén establecidas antes de extraerlas y operar sobre ellos.
+     * 
+     */
+    private void cargarTablero() {
+        /* Clase JavaFX que permite al programa comunicarse y modificar la interfaz gráfica desde otro hilo. */
+        /* Carga por primera vez el tablero DESPUÉS de que JavaFx haya terminado de cargar, asegurando que se obtienen valores válidos.
+           Si extrajeramos widht directamente, podría devolver 0.*/
+        Platform.runLater(() -> { 
+            if (stackPaneJuego.getWidth() > 0 && mapa != null) {
+                mapa.generarTablero(gridPaneJuego, stackPaneJuego);
+            }
+        
+          /*Añade un listener al stackPane para detectar cambios en el ancho posteriores a la primera carga del tablero. 
+            Da la RESPONSIVIDAD al tamaño de pantalla*/
+            stackPaneJuego.widthProperty().addListener((obs, oldVal, newVal) -> { //(valor observable, valor antiguo, valor nuevo).
+            if (newVal.doubleValue() > 0 && mapa != null) { //Cuando se produce un cambio y el nuevo valor es válido (>0 y != oldVal), se genera el Tablero. 
+                mapa.generarTablero(gridPaneJuego, stackPaneJuego);
+            }
+        });
+    });
+}
 }

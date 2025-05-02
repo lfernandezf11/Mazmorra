@@ -22,8 +22,8 @@ import javafx.scene.layout.StackPane;
   */
 
 public class Mapa {
-    private static String paredPath = "./../../../../resources/com/mazmorra/Images/pared.png"; //Guardamos las rutas en una variable, por legibilidad.
-    private static String sueloPath = "./../../../../resources/com/mazmorra/Images/suelo.png";
+    private static String paredPath = "mazmorra/src/main/resources/com/mazmorra/Images/pared.png"; //Guardamos las rutas en una variable, por legibilidad.
+    private static String sueloPath = "mazmorra/src/main/resources/com/mazmorra/Images/pared.png";
     private int[][] mapaMatriz; //Matriz de datos procedente de DataReader.java
 
     /*Constructor parametrizado */
@@ -65,8 +65,6 @@ public class Mapa {
                 }
                 gridPaneJuego.add(imageView, j, i); // GridPane: (NodeChild, int columna, int fila): j se tiene que especificar antes que i.
                 actualizarTamCelda(gridPaneJuego, mapaMatriz.length, anchoStack); //Establece el tamaño de las celdas en función del tamaño del mapa.
-            
-        
             }
         }
     }

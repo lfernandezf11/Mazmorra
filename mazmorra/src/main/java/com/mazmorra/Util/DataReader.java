@@ -34,9 +34,9 @@ public class DataReader {
 
             for (int j = 0; j < tam; j++) {
                 String c = "" + tupla.charAt(j);
-                if (c.toUpperCase().equals('S')) {
+                if (c.toUpperCase().equals("S")) {
                     matrizMapa[i][j] = 0;
-                } else if (c.toUpperCase().equals('P')) {
+                } else if (c.toUpperCase().equals("P")) {
                     matrizMapa[i][j] = 1;
                 } else {
                     throw new IllegalArgumentException("Carácter inválido en la coordenada " + matrizMapa[i][j]);
