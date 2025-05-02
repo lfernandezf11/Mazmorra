@@ -45,5 +45,10 @@ public class JuegoController implements Observer {
         ataqueJugador.setText(String.valueOf(personaje.getAtaque()));
         defensaJugador.setText(String.valueOf(personaje.getDefensa()));
         velocidadJugador.setText(String.valueOf(personaje.getVelocidad()));
+        if (personaje.getImagen() != null) {
+            imagenJugador.setImage(personaje.getImagen());
+            imagenJugador.setFitWidth(32);
+            imagenJugador.setFitHeight(32);
+        }
     }
 }

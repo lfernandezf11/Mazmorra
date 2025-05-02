@@ -2,12 +2,9 @@ package com.mazmorra.Model;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
 import com.mazmorra.TipoPersonaje;
 import com.mazmorra.Interfaces.Observer;
-
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class Personaje {
     private ArrayList<Observer> observers = new ArrayList<>();
@@ -21,7 +18,6 @@ public class Personaje {
     private static int puntosRestantes = 5;
 
     private Image imagen;
-    private ImageView imageView;
 
     public Personaje(String nombre, int ataque, int defensa, int vida, int velocidad, TipoPersonaje tipo, String rutaImagen) {
         this.nombre = nombre;
@@ -42,10 +38,7 @@ public class Personaje {
     }
 
     public void setImagen(String rutaImagen) {
-        this.imagen = new Image("file:" + rutaImagen); // o usa getClass().getResource() si es un recurso
-        this.imageView = new ImageView(this.imagen);
-        this.imageView.setFitWidth(32);
-        this.imageView.setFitHeight(32);
+        this.imagen = new Image(getClass().getResource(rutaImagen).toExternalForm());
     }
 
     public Image getImagen() {
@@ -59,10 +52,6 @@ public class Personaje {
     public void setPuntosRestantes(int puntosRestantes){
         Personaje.puntosRestantes = puntosRestantes;
         notifyObservers();
-    }
-
-    public ImageView getImageView() {
-        return this.imageView;
     }
 
     public void suscribe(Observer observer){

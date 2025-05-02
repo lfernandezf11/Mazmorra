@@ -16,7 +16,7 @@
          <children>
             <HBox fx:id="tituloEstadisticasPlayer" prefHeight="30.0">
                <children>
-                  <ImageView fx:id="imagenJugador" fitHeight="30.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imagenJugador" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="nombreJugador" prefHeight="30.0" prefWidth="75.0" text="Nombre" />
                   <Label fx:id="vidaJugador" prefHeight="30.0" prefWidth="75.0" text="Vida" />
                </children>

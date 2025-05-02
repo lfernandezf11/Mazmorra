@@ -92,7 +92,6 @@ public class PersonajeController implements Observer {
         Vida.setVisible(false);
         Velocidad.setVisible(false);
 
-
         introUno.setOnAction(e -> {
             if (!introNombre.getText().isEmpty()) {
                 // Mostrar las imágenes
@@ -103,9 +102,20 @@ public class PersonajeController implements Observer {
         });
 
         // Configurar los ImageView para que sean "clickables"
-        imagenMago.setOnMouseClicked(e -> mostrarStats());
-        imagenGuerrero.setOnMouseClicked(e -> mostrarStats());
-        imagenElfo.setOnMouseClicked(e -> mostrarStats());
+        imagenMago.setOnMouseClicked(e -> {
+            personajeUno.setImagen("/com/mazmorra/Images/maga/magaAbajo.png");
+            mostrarStats();
+        });
+        
+        imagenGuerrero.setOnMouseClicked(e -> {
+            personajeUno.setImagen("/com/mazmorra/Images/guerrero/guerreroAbajo.png");
+            mostrarStats();
+        });
+        
+        imagenElfo.setOnMouseClicked(e -> {
+            personajeUno.setImagen("/com/mazmorra/Images/arquero/arqueroAbajo.png");
+            mostrarStats();
+        });
 
         // Obtiene la instancia del Proveedor
         Proveedor proveedor = Proveedor.getInstance();
