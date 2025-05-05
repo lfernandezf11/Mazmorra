@@ -3,6 +3,11 @@ package com.mazmorra.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/*LUCÍA: AQUÍ, EN PROVEEDOR, REESCRIBIR LOS MÉTODOS PARA LLAMARLOS BIEN DESDE APP. 
+ * MIRAR QUE LOS SETTERS NO NECESITEN HACER UN NOTIFY OBSERVERS (O SÍ, A SABER)
+ * CREAR UN JSON CON RUTA VÁLIDA.
+ */
 public class Proveedor {
 
     private static Proveedor instance;
@@ -16,9 +21,9 @@ public class Proveedor {
         return instance;
     }
 
-    private Proveedor() {
-        this.jugador = new Jugador("", 0, 0, 0, 0, null, null, 0);
+    private Proveedor() { //Si se inicializa aquí new Jugador parametrizado
         this.enemigos = new ArrayList<>();
+        this.jugador = new Jugador();
     }
 
     public Jugador getJugador() {
@@ -29,8 +34,8 @@ public class Proveedor {
         this.jugador = jugador;
     }
 
-    public List<Personaje> getListaDePersonajes() {
-        return new ArrayList<>(enemigos);
+    public List<Enemigo> getListaEnemigos() {
+        return enemigos;
     }
 
     public List<Personaje> getListaDePersonajesIncluyendoJugador() {

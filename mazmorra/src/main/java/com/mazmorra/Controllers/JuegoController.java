@@ -52,7 +52,7 @@ public class JuegoController implements Observer {
     @FXML
     private GridPane gridPaneJuego;
 
-    private Jugador personaje;
+    private Jugador jugador;
     private Mapa mapa;
 
     @FXML
@@ -60,9 +60,9 @@ public class JuegoController implements Observer {
         // PONER LA RUTA BIEN!
         Proveedor.getInstance().cargarEnemigosDesdeJson("enemigos.json");
 
-        // Obtiene el personaje e inserta sus stats en la escena
-        personaje = Proveedor.getInstance().getJugador();
-        personaje.suscribe(this);
+        // Obtiene el jugador e inserta sus stats en la escena
+        jugador = Proveedor.getInstance().getJugador();
+        jugador.suscribe(this);
         actualizarStats();
 
         List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajes();

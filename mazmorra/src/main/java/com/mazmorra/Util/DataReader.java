@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mazmorra.Model.Enemigo;
-import com.mazmorra.Model.Mapa;
 
 public class DataReader {
 
