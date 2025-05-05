@@ -47,6 +47,11 @@ public class Jugador extends Personaje {
      *  La velocidad del jugador depende de su tipo, con lo que el método calcularVelocidad() sustituye al setter correspondiente.
     */
 
+    private static int calcularVelocidad() {
+        // IMPLEMENTAR LUCI.
+        throw new UnsupportedOperationException("Unimplemented method 'calcularVelocidad'");
+    }
+
     /** 
      * Obtiene el tipo de jugador asignado a la entidad.
      * 

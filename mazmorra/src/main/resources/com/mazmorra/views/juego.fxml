@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -11,26 +13,138 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mazmorra.Controllers.JuegoController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mazmorra.Controllers.JuegoController">
    <children>
-      <VBox layoutX="350.0" prefHeight="350.0" prefWidth="200.0">
+      <VBox layoutX="450.0" prefHeight="450.0" prefWidth="250.0">
          <children>
-            <HBox fx:id="tituloEstadisticasPlayer" prefHeight="30.0">
+            <HBox fx:id="tituloEstadisticasPlayer" alignment="CENTER" prefHeight="30.0">
                <children>
-                  <ImageView fx:id="imagenJugador" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imagenJugador" fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="nombreJugador" prefHeight="30.0" prefWidth="75.0" text="Nombre" />
-                  <Label fx:id="vidaJugador" prefHeight="30.0" prefWidth="75.0" text="Vida" />
+                  <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/heart.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="vidaJugador" prefHeight="30.0" prefWidth="40.0" text="Vida" />
                </children>
             </HBox>
-            <HBox fx:id="tituloEstadisticasPlayer1" prefHeight="30.0">
+            <HBox fx:id="tituloEstadisticasPlayer1" alignment="CENTER" prefHeight="30.0">
                <children>
-                  <Label fx:id="ataqueJugador" prefHeight="30.0" prefWidth="75.0" text="Ataque" />
-                  <Label fx:id="defensaJugador" prefHeight="30.0" prefWidth="75.0" text="Defensa" />
-                  <Label fx:id="velocidadJugador" prefHeight="30.0" prefWidth="75.0" text="Velocidad" />
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/sword.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="ataqueJugador" prefHeight="20.0" prefWidth="30.0" text="Ataque" />
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/security.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="defensaJugador" prefHeight="20.0" prefWidth="30.0" text="Defensa" />
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/lightning.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="velocidadJugador" prefHeight="20.0" prefWidth="30.0" text="Velocidad" />
                </children>
             </HBox>
+            <Separator prefHeight="0.0" prefWidth="250.0" />
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/cthulu/cthuluAbajo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/heart.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="vidaCthulu" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="2" />
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/sword.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="ataqueCthulu" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/lightning.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="velocidadCthulu" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/minotauro/minotauroAbajo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/heart.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="vidaMino" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="3" />
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/sword.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="ataqueMino" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="2" />
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/lightning.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="velocidadMino" alignment="CENTER" cache="true" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="30.0" text="2" />
+               </children>
+            </HBox>
+            <Separator prefHeight="0.0" prefWidth="250.0" />
+            <VBox alignment="CENTER" prefHeight="111.0" prefWidth="250.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="250.0" text="Turnos" />
+                  <HBox prefHeight="27.0" prefWidth="250.0">
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/lightning.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imagenMasVelocidad" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="19.0" prefWidth="250.0">
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/lightning.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imagenVelocidadMedia" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="27.0" prefWidth="250.0">
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/lightning.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imagenMasLento" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Separator prefHeight="0.0" prefWidth="250.0" />
          </children></VBox>
-      <AnchorPane id="anchorPaneJuego" fx:id="anchorPaneJuego" prefHeight="350.0" prefWidth="350.0">
+      <AnchorPane id="anchorPaneJuego" fx:id="anchorPaneJuego" prefHeight="450.0" prefWidth="450.0">
          <children>
             <StackPane fx:id="stackPaneJuego" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -56,7 +170,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
-                  <Pane fx:id="gameOverPane" prefHeight="350.0" prefWidth="350.0" />
+                  <Pane fx:id="gameOverPane" prefHeight="450.0" prefWidth="400.0" />
                </children>
             </StackPane>
          </children>
