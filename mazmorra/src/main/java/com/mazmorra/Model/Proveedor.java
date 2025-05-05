@@ -1,10 +1,13 @@
 package com.mazmorra.Model;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class Proveedor {
 
     private static Proveedor instance;
-    private Personaje personaje;
+    private Jugador jugador;
+    private List<Enemigo> enemigos;
 
     public static Proveedor getInstance() {
         if (instance == null) {
@@ -14,14 +17,15 @@ public class Proveedor {
     }
     
     private Proveedor(){
-        this.personaje = new Personaje("", 0, 0, 0, 0);
+        this.jugador = new Jugador("", 0, 0, 0, 0, null, null, 0);
+        this.enemigos = new ArrayList<Enemigo>();
     }
 
-    public Personaje getPersonaje(){
-        return this.personaje;
+    public Jugador getJugador(){
+        return this.jugador;
     }
 
-    public void setPersonaje(Personaje personaje){
-        this.personaje = personaje;
+    public void setJugador(Jugador jugador){
+        this.jugador = jugador;
     }
 }

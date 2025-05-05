@@ -1,27 +1,38 @@
 package com.mazmorra.Model;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import com.mazmorra.TipoPersonaje;
-import com.mazmorra.Interfaces.Observer;
 import javafx.scene.image.Image;
 
-public class Personaje {
-    private ArrayList<Observer> observers = new ArrayList<>();
-
-    protected TipoPersonaje tipo;
+/**
+ * Clase abstracta que representa un personaje genérico del juego.
+ * 
+ * Centraliza los atributos comunes de las clases Jugador y Enemigo, las cuales heredan de esta clase.
+ * 
+ * -La posición del personaje se establece y gestiona a través de ObjetoMapa.
+ * -Los observers son implementados en las clases instanciables hijas: Jugador y Enemigo.
+ * 
+ */
+public abstract class Personaje {
+    /*Atributos comunes a 'Jugador' y 'Enemigo' : estadísticas de combate, nombre e imagen gráfica asociada. */
     protected String nombre;
     protected int ataque; 
     protected int defensa;
     protected int vida;
     protected int velocidad;
-    private static int puntosRestantes = 5;
+    protected Image imagen;
 
-    private Image imagen;
-
-    public Personaje(String nombre, int ataque, int defensa, int vida, int velocidad, TipoPersonaje tipo, String rutaImagen) {
+    
+    /**
+     * Constructor parametrizado que genera un Personaje no tipado del juego.
+     *
+     * @param nombre     Nombre del personaje.
+     * @param ataque     Nivel de ataque.
+     * @param defensa    Nivel de defensa.
+     * @param vida       Puntos de vida.
+     * @param velocidad  Nivel de velocidad.
+     * @param rutaImagen Ruta del archivo de imagen asociado al personaje.
+     */
+    public Personaje(String nombre, int ataque, int defensa, int vida, int velocidad, String rutaImagen) {
         this.nombre = nombre;
-        this.tipo = tipo;
         this.ataque = ataque;
         this.defensa = defensa;
         this.vida = vida;
@@ -29,125 +40,128 @@ public class Personaje {
         setImagen(rutaImagen); // inicializa imagen e imageView
     }
 
-    public Personaje(String nombre, int ataque, int defensa, int vida, int velocidad) {
+  
+    /*GETTERS Y SETTERS */
+
+    /**
+     * Obtiene el nombre del personaje.
+     *
+     * @return el nombre del personaje.
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Establece el nombre del personaje.
+     *
+     * @param nombre el nuevo nombre del personaje.
+     */
+    public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    /**
+     * Obtiene el valor de ataque del personaje.
+     *
+     * @return el valor de ataque.
+     */
+    public int getAtaque() {
+        return ataque;
+    }
+
+    /**
+     * Establece el valor de ataque del personaje.
+     *
+     * @param ataque el nuevo valor de ataque.
+     */
+    public void setAtaque(int ataque) {
         this.ataque = ataque;
+    }
+
+    /**
+     * Obtiene el valor de defensa del personaje.
+     *
+     * @return el valor de defensa.
+     */
+    public int getDefensa() {
+        return defensa;
+    }
+
+    /**
+     * Establece el valor de defensa del personaje.
+     *
+     * @param defensa el nuevo valor de defensa.
+     */
+    public void setDefensa(int defensa) {
         this.defensa = defensa;
+    }
+
+    /**
+     * Obtiene los puntos de vida del personaje.
+     *
+     * @return la cantidad de vida.
+     */
+    public int getVida() {
+        return vida;
+    }
+
+    /**
+     * Establece los puntos de vida del personaje.
+     *
+     * @param vida la nueva cantidad de vida.
+     */
+    public void setVida(int vida) {
         this.vida = vida;
+    }
+
+    /**
+     * Obtiene la velocidad del personaje.
+     *
+     * @return el valor de velocidad.
+     */
+    public int getVelocidad() {
+        return velocidad;
+    }
+
+    /**
+     * Establece la velocidad del personaje.
+     *
+     * @param velocidad el nuevo valor de velocidad.
+     */
+    public void setVelocidad(int velocidad) {
         this.velocidad = velocidad;
     }
 
+    /**
+     * Establece la imagen gráfica del personaje a partir de una ruta.
+     *
+     * @param rutaImagen la ruta relativa a la imagen del personaje.
+     */
     public void setImagen(String rutaImagen) {
         this.imagen = new Image(getClass().getResource(rutaImagen).toExternalForm());
     }
 
+    /**
+     * Obtiene la imagen del personaje.
+     *
+     * @return el objeto Image del personaje.
+     */
     public Image getImagen() {
-        return this.imagen;
+        return imagen;
     }
 
-    public int getPuntosRestantes(){
-        return Personaje.puntosRestantes;
-    }
-
-    public void setPuntosRestantes(int puntosRestantes){
-        Personaje.puntosRestantes = puntosRestantes;
-        notifyObservers();
-    }
-
-    public void suscribe(Observer observer){
-        observers.add(observer);
-    }
-
-    public void unsuscribe(Observer observer){
-        observers.remove(observer);
-    }
-
-    public ArrayList<Observer> getObservers() {
-        return this.observers;
-    }
-
-    public void setObservers(ArrayList<Observer> observers) {
-        this.observers = observers;
-    }
-
-    public void notifyObservers(){
-        observers.forEach(x -> x.onChange());
-    }
-
-    public TipoPersonaje getTipo() {
-        return this.tipo;
-    }
-
-    public void setTipo(TipoPersonaje tipo) {
-        this.tipo = tipo;
-        notifyObservers();
-    }
-
-    public String getNombre(){
-        return this.nombre;
-    }
-
-    public void setNombre(String nombre){
-        this.nombre = nombre;
-        notifyObservers();
-    }
     
-    public int getAtaque() {
-        return this.ataque;
-    }
-
-    public void setAtaque(int ataque) {
-        this.ataque = ataque;
-        notifyObservers();
-    }
-
-    public int getDefensa() {
-        return this.defensa;
-    }
-
-    public void setDefensa(int defensa) {
-        this.defensa = defensa;
-        notifyObservers();
-    }
-
-    public int getVida() {
-        return this.vida;
-    }
-
-    public void setVida(int vida) {
-        this.vida = vida;
-        notifyObservers();
-    }
-
-    public int getVelocidad() {
-        return this.velocidad;
-    }
-
-    public void setVelocidad(int velocidad) {
-        this.velocidad = velocidad;
-        notifyObservers();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Personaje)) {
-            return false;
-        }
-        Personaje personaje = (Personaje) o;
-        return Objects.equals(tipo, personaje.tipo) && ataque == personaje.ataque && defensa == personaje.defensa && vida == personaje.vida && velocidad == personaje.velocidad;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(tipo, ataque, defensa, vida, velocidad);
-    }
-
-    @Override
+    /**
+     * Obtiene los valores de los atributos del personaje.
+     * 
+     * @return un String con las características del personaje.
+     * 
+     */
+     @Override
     public String toString() {
-        return "{" +
-            " tipo='" + getTipo() + "'" +
+        return "Personaje { " +
+            " nombre='" + getNombre() + "'" +
             ", ataque='" + getAtaque() + "'" +
             ", defensa='" + getDefensa() + "'" +
             ", vida='" + getVida() + "'" +
@@ -155,67 +169,4 @@ public class Personaje {
             "}";
     }
 
-    public void incrementarAtaque() {
-        if(puntosRestantes > 0) {
-            ataque++;
-            puntosRestantes--;
-            notifyObservers(); 
-        }
-    }
-    
-    public void decrementarAtaque() {
-        if(ataque > 0) {
-            ataque--;
-            puntosRestantes++;
-            notifyObservers();
-        }
-    }
-
-    public void incrementarDefensa() {
-        if(puntosRestantes > 0) {
-            defensa++;
-            puntosRestantes--;
-            notifyObservers(); 
-        }
-    }
-    
-    public void decrementarDefensa() {
-        if(defensa > 0) {
-            defensa--;
-            puntosRestantes++;
-            notifyObservers();
-        }
-    }
-
-    public void incrementarVida() {
-        if(puntosRestantes > 0) {
-            vida++;
-            puntosRestantes--;
-            notifyObservers(); 
-        }
-    }
-    
-    public void decrementarVida() {
-        if(vida > 0) {
-            vida--;
-            puntosRestantes++;
-            notifyObservers();
-        }
-    }
-
-    public void incrementarVelocidad() {
-        if(puntosRestantes > 0) {
-            velocidad++;
-            puntosRestantes--;
-            notifyObservers(); 
-        }
-    }
-    
-    public void decrementarVelocidad() {
-        if(velocidad > 0) {
-            velocidad--;
-            puntosRestantes++;
-            notifyObservers();
-        }
-    }
 }

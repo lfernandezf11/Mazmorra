@@ -3,7 +3,7 @@ package com.mazmorra.Controllers;
 import com.mazmorra.SceneID;
 import com.mazmorra.SceneManager;
 import com.mazmorra.Interfaces.Observer;
-import com.mazmorra.Model.Personaje;
+import com.mazmorra.Model.Jugador;
 import com.mazmorra.Model.Proveedor;
 
 import javafx.fxml.FXML;
@@ -12,7 +12,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
-public class PersonajeController implements Observer {
+/**
+ * Controlador para la escena de configuración del jugador.
+ * 
+ * Permite al usuario introducir su nombre, elegir el tipo de personaje (maga, guerrero, arquero), 
+ * y distribuir 5 puntos iniciales entre las estadísticas de vida, ataque, defensa y velocidad.
+ * 
+ * Implementa la interfaz Observer para plasmar en la escena los cambios en la entidad Jugador de forma dinámica.
+ */
+
+public class JugadorController implements Observer {
 
     @FXML
     private Label Vida;
@@ -64,8 +73,14 @@ public class PersonajeController implements Observer {
     @FXML
     private Button introUno;
 
-    private Personaje personajeUno;
+    private Jugador jugador;
 
+
+    /**
+    * Método de inicialización automática llamado por JavaFX.
+    * Configura el estado inicial de los componentes visuales,
+    * suscriptores del modelo, y los eventos de los botones.
+    */
     @FXML
     public void initialize() {
 
@@ -103,17 +118,17 @@ public class PersonajeController implements Observer {
 
         // Configurar los ImageView para que sean "clickables"
         imagenMago.setOnMouseClicked(e -> {
-            personajeUno.setImagen("/com/mazmorra/Images/maga/magaAbajo.png");
+            jugador.setImagen("/com/mazmorra/Images/maga/magaAbajo.png");
             mostrarStats();
         });
         
         imagenGuerrero.setOnMouseClicked(e -> {
-            personajeUno.setImagen("/com/mazmorra/Images/guerrero/guerreroAbajo.png");
+           jugador.setImagen("/com/mazmorra/Images/guerrero/guerreroAbajo.png");
             mostrarStats();
         });
         
         imagenElfo.setOnMouseClicked(e -> {
-            personajeUno.setImagen("/com/mazmorra/Images/arquero/arqueroAbajo.png");
+           jugador.setImagen("/com/mazmorra/Images/arquero/arqueroAbajo.png");
             mostrarStats();
         });
 
@@ -121,9 +136,9 @@ public class PersonajeController implements Observer {
         Proveedor proveedor = Proveedor.getInstance();
 
         // Inicialización con 5 puntos en vida
-        personajeUno = new Personaje("", 0, 0, 5, 0);
-        proveedor.setPersonaje(personajeUno); // Guarda en el Proveedor
-        personajeUno.suscribe(this);
+        jugador = new Jugador("", 0, 0, 5, 0, null, null, 0);
+        proveedor.setJugador(jugador); // Guarda en el Proveedor
+        jugador.suscribe(this);
 
         configurarBotones();
         actualizarPersonaje();
@@ -154,47 +169,47 @@ public class PersonajeController implements Observer {
     private void configurarBotones() {
         // Configuración usando métodos del modelo
         addVida.setOnAction(e -> {
-            personajeUno.incrementarVida();
-            Proveedor.getInstance().setPersonaje(personajeUno); // Actualiza el singleton
+           jugador.incrementarVida();
+            Proveedor.getInstance().setJugador(jugador); // Actualiza el singleton
         });
 
         restVida.setOnAction(e -> {
-            personajeUno.decrementarVida();
-            Proveedor.getInstance().setPersonaje(personajeUno);
+           jugador.decrementarVida();
+            Proveedor.getInstance().setJugador(jugador);
         });
 
         addAtaque.setOnAction(e -> {
-            personajeUno.incrementarAtaque();
-            Proveedor.getInstance().setPersonaje(personajeUno); // Actualiza el singleton
+           jugador.incrementarAtaque();
+            Proveedor.getInstance().setJugador(jugador); // Actualiza el singleton
         });
         restAtaque.setOnAction(e -> {
-            personajeUno.decrementarAtaque();
-            Proveedor.getInstance().setPersonaje(personajeUno);
+           jugador.decrementarAtaque();
+            Proveedor.getInstance().setJugador(jugador);
         });
 
         addDefensa.setOnAction(e -> {
-            personajeUno.incrementarDefensa();
-            Proveedor.getInstance().setPersonaje(personajeUno); // Actualiza el singleton
+           jugador.incrementarDefensa();
+            Proveedor.getInstance().setJugador(jugador); // Actualiza el singleton
         });
         restDefensa.setOnAction(e -> {
-            personajeUno.decrementarDefensa();
-            Proveedor.getInstance().setPersonaje(personajeUno);
+           jugador.decrementarDefensa();
+            Proveedor.getInstance().setJugador(jugador);
         });
 
         addVelocidad.setOnAction(e -> {
-            personajeUno.incrementarVelocidad();
-            Proveedor.getInstance().setPersonaje(personajeUno);
+           jugador.incrementarVelocidad();
+            Proveedor.getInstance().setJugador(jugador);
         });
 
         restVelocidad.setOnAction(e -> {
-            personajeUno.decrementarVelocidad();
-            Proveedor.getInstance().setPersonaje(personajeUno);
+           jugador.decrementarVelocidad();
+            Proveedor.getInstance().setJugador(jugador);
         });
 
         iniciarJuego.setOnAction(e -> {
             // Guarda cambios finales antes de cambiar
-            personajeUno.setNombre(introNombre.getText());
-            Proveedor.getInstance().setPersonaje(personajeUno);
+           jugador.setNombre(introNombre.getText());
+            Proveedor.getInstance().setJugador(jugador);
             SceneManager.getInstance().loadScene(SceneID.JUEGO);
         });
     }
@@ -206,20 +221,20 @@ public class PersonajeController implements Observer {
 
     private void actualizarPersonaje() {
         // Sincronización completa de valores
-        puntosVida.setText(String.valueOf(personajeUno.getVida()));
-        puntosAtaque.setText(String.valueOf(personajeUno.getAtaque()));
-        puntosDefensa.setText(String.valueOf(personajeUno.getDefensa()));
-        puntosVelocidad.setText(String.valueOf(personajeUno.getVelocidad()));
-        PuntosRestantes.setText(String.valueOf(personajeUno.getPuntosRestantes()));
+        puntosVida.setText(String.valueOf(jugador.getVida()));
+        puntosAtaque.setText(String.valueOf(jugador.getAtaque()));
+        puntosDefensa.setText(String.valueOf(jugador.getDefensa()));
+        puntosVelocidad.setText(String.valueOf(jugador.getVelocidad()));
+        PuntosRestantes.setText(String.valueOf(jugador.getPuntosRestantes()));
 
         // Gestión de estados de botones (-)
-        restVida.setDisable(personajeUno.getVida() <= 0);
-        restAtaque.setDisable(personajeUno.getAtaque() <= 0);
-        restDefensa.setDisable(personajeUno.getDefensa() <= 0);
-        restVelocidad.setDisable(personajeUno.getVelocidad() <= 0);
+        restVida.setDisable(jugador.getVida() <= 0);
+        restAtaque.setDisable(jugador.getAtaque() <= 0);
+        restDefensa.setDisable(jugador.getDefensa() <= 0);
+        restVelocidad.setDisable(jugador.getVelocidad() <= 0);
 
         // Gestión de estados de botones (+)
-        boolean sinPuntos = personajeUno.getPuntosRestantes() <= 0;
+        boolean sinPuntos =jugador.getPuntosRestantes() <= 0;
         addVida.setDisable(sinPuntos);
         addAtaque.setDisable(sinPuntos);
         addDefensa.setDisable(sinPuntos);
