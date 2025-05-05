@@ -37,6 +37,10 @@ public class Personaje {
         this.velocidad = velocidad;
     }
 
+    public Personaje(){
+
+    }
+
     public void setImagen(String rutaImagen) {
         this.imagen = new Image(getClass().getResource(rutaImagen).toExternalForm());
     }

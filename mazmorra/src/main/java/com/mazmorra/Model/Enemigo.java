@@ -2,11 +2,14 @@ package com.mazmorra.Model;
 
 public class Enemigo extends Personaje{
 
-    private int percepcion;
+    public int percepcion;
 
     public Enemigo(String nombre, int ataque, int vida, int defensa, int velocidad, int percepcion) {
         super(nombre, ataque, defensa, vida, velocidad);
         this.percepcion = percepcion;
+    }
+
+    public Enemigo(){
     }
 
     public String getNombre() {
