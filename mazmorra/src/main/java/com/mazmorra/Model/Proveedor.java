@@ -18,7 +18,7 @@ public class Proveedor {
     
     private Proveedor(){
         this.jugador = new Jugador("", 0, 0, 0, 0, null, null, 0);
-        this.enemigos = new ArrayList<Enemigo>();
+        this.enemigos = new ArrayList<>();
     }
 
     public Jugador getJugador(){

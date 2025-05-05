@@ -162,7 +162,7 @@ public class Jugador extends Personaje {
     // (equals, hashCode y toString no están incluidos en este fragmento, 
     // pero también podrían documentarse si los necesitas.)
 
-}
+
 
     @Override
     public boolean equals(Object o) {
@@ -254,3 +254,6 @@ public class Jugador extends Personaje {
             notifyObservers();
         }
     }
+
+
+}
