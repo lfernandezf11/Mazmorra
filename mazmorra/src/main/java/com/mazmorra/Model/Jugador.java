@@ -2,7 +2,7 @@ package com.mazmorra.Model;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import com.mazmorra.TipoPersonaje;
+import com.mazmorra.TipoJugador;
 import com.mazmorra.Interfaces.Observer;
 import javafx.scene.image.Image;
 
@@ -20,7 +20,7 @@ import javafx.scene.image.Image;
 public class Jugador extends Personaje {
     /** Lista de observadores suscritos a cambios en el jugador. */
     private ArrayList<Observer> observers = new ArrayList<>();
-    protected TipoPersonaje tipo;
+    protected TipoJugador tipo;
     private static int puntosRestantes = 5;
 
     /**
@@ -35,32 +35,42 @@ public class Jugador extends Personaje {
      * @param tipo            Tipo de personaje elegido (Arquero, guerrero o maga).
      * @param puntosRestantes Cantidad inicial de puntos por repartir, igual para toda instancia Jugador.
      */
-    public Jugador(String nombre, int ataque, int defensa, int vida, int velocidad, String rutaImagen, TipoPersonaje tipo, int puntosRestantes) {
-        super(nombre, ataque, defensa, vida, velocidad, rutaImagen);
+    public Jugador(String nombre, int ataque, int defensa, int vida, int velocidad, String rutaImagen, TipoJugador tipo, int puntosRestantes) {
+        super(nombre, ataque, defensa, vida, calcularVelocidad(), rutaImagen);
         this.tipo = tipo;
         Jugador.puntosRestantes = puntosRestantes;
     }
 
-    // ===== Getters y setters personalizados con notificación =====
+    /* GETTINGS PARA LOS ATRIBUTOS DE CLASE, SETTINGS PARA TODOS LOS ATRIBUTOS.*/ 
+    
+    /** Los setters super() están sobreescritos para implementar la notificación a los observadores suscritos a la clase.
+     *  La velocidad del jugador depende de su tipo, con lo que el método calcularVelocidad() sustituye al setter correspondiente.
+    */
 
     /** 
+     * Obtiene el tipo de jugador asignado a la entidad.
      * 
-     * @return el tipo de personaje. */
-    public TipoPersonaje getTipo() {
+     * @return el tipo de jugador.
+     */
+    public TipoJugador getTipo() {
         return this.tipo;
     }
 
     /** 
-     * Establece el tipo de personaje y notifica a los observadores.
+     * Establece el tipo de jugador y notifica a los observadores.
      *
-     * @param tipo el tipo seleccionado.
+     * @param tipo el tipo seleccionado por el usuario.
      */
-    public void setTipo(TipoPersonaje tipo) {
+    public void setTipo(TipoJugador tipo) {
         this.tipo = tipo;
         notifyObservers();
     }
 
-    /** @return la cantidad de puntos no distribuidos. */
+    /** 
+     * Obtiene la cantidad de puntos a distribuir.
+     * 
+     * @return la cantidad de puntos no distribuidos. 
+     */
     public int getPuntosRestantes() {
         return Jugador.puntosRestantes;
     }
@@ -75,11 +85,7 @@ public class Jugador extends Personaje {
         notifyObservers();
     }
 
-    /** @return el nombre del jugador. */
-    public String getNombre() {
-        return this.nombre;
-    }
-
+    /*SETTERS SOBREESCRITOS */
     /**
      * Establece el nombre del jugador y notifica a los observadores.
      *
@@ -124,18 +130,9 @@ public class Jugador extends Personaje {
         notifyObservers();
     }
 
-    /**
-     * Establece la velocidad y notifica a los observadores.
-     *
-     * @param velocidad nuevo valor de velocidad.
-     */
-    @Override
-    public void setVelocidad(int velocidad) {
-        this.velocidad = velocidad;
-        notifyObservers();
-    }
+   
 
-    // ===== Gestión del patrón Observer =====
+    /* GESTIÓN Y MANIPULACIÓN DE OBSERVERS*/
 
     /**
      * Suscribe un observador a los cambios del jugador.
@@ -165,7 +162,7 @@ public class Jugador extends Personaje {
     // (equals, hashCode y toString no están incluidos en este fragmento, 
     // pero también podrían documentarse si los necesitas.)
 
-}
+
 
     @Override
     public boolean equals(Object o) {
@@ -257,3 +254,6 @@ public class Jugador extends Personaje {
             notifyObservers();
         }
     }
+
+
+}

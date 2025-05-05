@@ -1,5 +1,5 @@
 package com.mazmorra;
 
-public enum TipoPersonaje {
+public enum TipoJugador {
     ARQUERO, GUERRERO, MAGO
 }

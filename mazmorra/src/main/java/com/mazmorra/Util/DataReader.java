@@ -73,7 +73,7 @@ public class DataReader {
             if (!obj.endsWith("}"))
                 obj = obj + "}";
 
-            Enemigo enemigo = new Enemigo();
+            Enemigo enemigo = new Enemigo(obj, i, i, i, i, i);
 
             // Extraer los campos manualmente
             enemigo.setNombre(extraerString(obj, "nombre"));
