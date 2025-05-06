@@ -62,7 +62,7 @@ public class JuegoController implements Observer {
 
         // Obtiene el jugador e inserta sus stats en la escena
         jugador = Proveedor.getInstance().getJugador();
-        jugador.suscribe(this);
+        jugador.subscribe(this);
         actualizarStats();
 
         List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
