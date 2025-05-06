@@ -114,13 +114,18 @@ public abstract class Personaje {
      * @param rutaImagen la ruta relativa a la imagen del personaje.
      */
     public void setImagen(String rutaImagen) {
+        if (rutaImagen == null || rutaImagen.isEmpty()) {
+            System.err.println("Ruta de imagen no especificada para el personaje: " + nombre);
+            // Puedes asignar una imagen por defecto aquí si lo deseas
+            // this.imagen = new Image(getClass().getResource("/com/mazmorra/Images/por_defecto.png").toExternalForm());
+            return;
+        }
         var url = getClass().getResource(rutaImagen);
         if (url != null) {
             this.imagen = new Image(url.toExternalForm());
         } else {
             System.err.println("Imagen no encontrada: " + rutaImagen);
-            // Puedes asignar una imagen por defecto si lo deseas
-            // this.imagen = new Image("ruta/a/imagen/por_defecto.png");
+            // this.imagen = new Image(getClass().getResource("/com/mazmorra/Images/por_defecto.png").toExternalForm());
         }
     }
 

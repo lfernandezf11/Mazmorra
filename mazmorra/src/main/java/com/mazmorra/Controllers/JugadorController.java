@@ -122,16 +122,19 @@ public class JugadorController implements Observer {
         // Configurar los ImageView para que sean "clickables"
         imagenMago.setOnMouseClicked(e -> {
             jugador.setImagen("/com/mazmorra/Images/maga/magaAbajo.png");
+            jugador.setTipo(TipoJugador.MAGO);
             mostrarStats();
         });
 
         imagenGuerrero.setOnMouseClicked(e -> {
             jugador.setImagen("/com/mazmorra/Images/guerrero/guerreroAbajo.png");
+            jugador.setTipo(TipoJugador.GUERRERO);
             mostrarStats();
         });
 
         imagenElfo.setOnMouseClicked(e -> {
             jugador.setImagen("/com/mazmorra/Images/arquero/arqueroAbajo.png");
+            jugador.setTipo(TipoJugador.ARQUERO);
             mostrarStats();
         });
 
@@ -139,7 +142,7 @@ public class JugadorController implements Observer {
         Proveedor proveedor = Proveedor.getInstance();
 
         // Inicialización con 5 puntos en vida
-        jugador = new Jugador("", 0, 0, 5, null, TipoJugador.MAGO, 0);
+        jugador = new Jugador("", 0, 0, 5, null, TipoJugador.MAGO, 5);
         proveedor.setJugador(jugador); // Guarda en el Proveedor
         jugador.subscribe(this);
 
