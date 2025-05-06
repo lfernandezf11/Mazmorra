@@ -24,7 +24,6 @@ public class Proveedor {
     //obtener el tipo para calcular la velocidad antes de haber sido asignado.
     private Proveedor() { 
         this.enemigos = new ArrayList<>();
-        this.jugador = new Jugador();
     }
 
     public Jugador getJugador() {
@@ -109,7 +108,7 @@ public class Proveedor {
                             break;
                     }
                 }
-                this.enemigos.add(new Enemigo(nombre, ataque, vida, defensa, velocidad, percepcion));
+                this.enemigos.add(new Enemigo(nombre, ataque, vida, defensa, null, nombre, percepcion) );
             }
         } catch (Exception e) {
             e.printStackTrace();

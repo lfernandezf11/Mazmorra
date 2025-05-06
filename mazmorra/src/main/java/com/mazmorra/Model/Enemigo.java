@@ -1,13 +1,17 @@
 package com.mazmorra.Model;
 
+import com.mazmorra.TipoJugador;
+
 public class Enemigo extends Personaje{
 
     private int percepcion;
 
-    public Enemigo(String nombre, int ataque, int vida, int defensa, int velocidad, String rutaImagen, int percepcion) {
-        super(nombre, ataque, defensa, vida, velocidad, rutaImagen);
+    public Enemigo(String nombre, int ataque, int vida, int defensa, TipoJugador tipo, String rutaImagen, int percepcion) {
+        super(nombre, ataque, defensa, vida, tipo, rutaImagen);
+        Personaje.calcularVelocidad(tipo);
         this.percepcion = percepcion;
     }
+
 
     public String getNombre() {
         return this.nombre;
