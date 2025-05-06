@@ -58,15 +58,15 @@ public class JuegoController implements Observer {
     @FXML
     public void initialize() {
         // PONER LA RUTA BIEN!
-        Proveedor.getInstance().cargarEnemigosDesdeJson("enemigos.json");
+        Proveedor.getInstance().cargarEnemigosDesdeJson("mazmorra/src/main/resources/com/mazmorra/Enemigos/enemigo1.json");
 
         // Obtiene el jugador e inserta sus stats en la escena
         jugador = Proveedor.getInstance().getJugador();
         jugador.suscribe(this);
         actualizarStats();
 
-        List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajes();
-        mostrarPersonajesPorVelocidad(personajes);
+        List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
+        mostrarpersonajesPorVelocidad(personajes);
 
         cargarMapa();
         cargarTablero();
@@ -78,20 +78,20 @@ public class JuegoController implements Observer {
     }
 
     private void actualizarStats() {
-        nombreJugador.setText(personaje.getNombre());
-        vidaJugador.setText(String.valueOf(personaje.getVida()));
-        ataqueJugador.setText(String.valueOf(personaje.getAtaque()));
-        defensaJugador.setText(String.valueOf(personaje.getDefensa()));
-        velocidadJugador.setText(String.valueOf(personaje.getVelocidad()));
-        if (personaje.getImagen() != null) {
-            imagenJugador.setImage(personaje.getImagen());
+        nombreJugador.setText(jugador.getNombre());
+        vidaJugador.setText(String.valueOf(jugador.getVida()));
+        ataqueJugador.setText(String.valueOf(jugador.getAtaque()));
+        defensaJugador.setText(String.valueOf(jugador.getDefensa()));
+        velocidadJugador.setText(String.valueOf(jugador.getVelocidad()));
+        if (jugador.getImagen() != null) {
+            imagenJugador.setImage(jugador.getImagen());
             imagenJugador.setFitWidth(32);
             imagenJugador.setFitHeight(32);
         }
 
     }
 
-    private void mostrarPersonajesPorVelocidad(List<Personaje> personajes) {
+    private void mostrarpersonajesPorVelocidad(List<Personaje> personajes) {
         personajes.sort(Comparator.comparingInt(Personaje::getVelocidad).reversed());
         if (personajes.size() >= 3) {
             imagenMasVelocidad.setImage(personajes.get(0).getImagen());

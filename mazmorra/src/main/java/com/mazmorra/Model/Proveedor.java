@@ -5,7 +5,6 @@ import java.util.List;
 
 
 /*LUCÍA: AQUÍ, EN PROVEEDOR, REESCRIBIR LOS MÉTODOS PARA LLAMARLOS BIEN DESDE APP. 
- * MIRAR QUE LOS SETTERS NO NECESITEN HACER UN NOTIFY OBSERVERS (O SÍ, A SABER)
  * CREAR UN JSON CON RUTA VÁLIDA.
  */
 public class Proveedor {
@@ -21,7 +20,9 @@ public class Proveedor {
         return instance;
     }
 
-    private Proveedor() { //Si se inicializa aquí new Jugador parametrizado
+    //Aquí no se puede inicializar un Jugador parametrizado, puesto que el constructor intentaría 
+    //obtener el tipo para calcular la velocidad antes de haber sido asignado.
+    private Proveedor() { 
         this.enemigos = new ArrayList<>();
         this.jugador = new Jugador();
     }
@@ -40,8 +41,13 @@ public class Proveedor {
 
     public List<Personaje> getListaDePersonajesIncluyendoJugador() {
         List<Personaje> lista = new ArrayList<>();
-        lista.add(jugador);
-        lista.addAll(enemigos);
+        if (jugador != null) {
+            lista.add(jugador);
+        }
+    
+        if (enemigos != null && !enemigos.isEmpty()) {
+            lista.addAll(enemigos);
+        }
         return lista;
     }
 

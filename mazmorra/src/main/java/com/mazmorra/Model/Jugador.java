@@ -57,9 +57,6 @@ public class Jugador extends Personaje {
      *  La velocidad del jugador depende de su tipo, con lo que el método calcularVelocidad() sustituye al setter correspondiente.
     */
 
-  
-
-
     /** 
      * Obtiene el tipo de jugador asignado a la entidad.
      * 
@@ -145,7 +142,6 @@ public class Jugador extends Personaje {
 
 
     /* GESTIÓN Y MANIPULACIÓN DE OBSERVERS*/
-
     /**
      * Suscribe un observador a los cambios del jugador.
      *
@@ -190,37 +186,38 @@ public class Jugador extends Personaje {
                 return 5;
         }
     }
-    // (equals, hashCode y toString no están incluidos en este fragmento, 
-    // pero también podrían documentarse si los necesitas.)
+   
 
 
 
+   
+//COMENTAR
     @Override
     public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Jugador)) {
-            return false;
-        }
-        Jugador Jugador = (Jugador) o;
-        return Objects.equals(tipo, Jugador.tipo) && ataque == Jugador.ataque && defensa == Jugador.defensa && vida == Jugador.vida && velocidad == Jugador.velocidad;
+        if (this == o) return true;
+        if (!(o instanceof Jugador)) return false;
+        Jugador jugador = (Jugador) o;
+        return ataque == jugador.ataque &&
+               defensa == jugador.defensa &&
+               vida == jugador.vida &&
+               velocidad == jugador.velocidad &&
+               Objects.equals(nombre, jugador.nombre) &&
+               tipo == jugador.tipo;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tipo, ataque, defensa, vida, velocidad);
+        return Objects.hash(nombre, tipo, ataque, defensa, vida, velocidad);
     }
 
     @Override
     public String toString() {
-        return "{" +
-            " tipo='" + getTipo() + "'" +
-            ", ataque='" + getAtaque() + "'" +
-            ", defensa='" + getDefensa() + "'" +
-            ", vida='" + getVida() + "'" +
-            ", velocidad='" + getVelocidad() + "'" +
-            "}";
+        return super.toString().replace("}", "") +
+                ", tipo=" + tipo +
+                ", puntosRestantes=" + puntosRestantes +
+                '}';
     }
+
 
     public void incrementarAtaque() {
         if(puntosRestantes > 0) {
