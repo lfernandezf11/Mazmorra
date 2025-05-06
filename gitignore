@@ -1,0 +1,20 @@
+# Compilación
+/bin/
+/build/
+/target/
+
+# IDEs
+*.iml
+.idea/
+*.class
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Configuración de entorno
+*.log
+
+# Maven / Gradle
+.mvn/
+.gradle/
