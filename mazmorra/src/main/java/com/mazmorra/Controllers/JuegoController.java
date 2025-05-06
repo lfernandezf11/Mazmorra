@@ -57,7 +57,7 @@ public class JuegoController implements Observer {
 
     @FXML
     public void initialize() {
-        // PONER LA RUTA BIEN!
+        // PONER LA RUTA BIEN, IMPLEMENTAR EN LA RUTA BASE
         Proveedor.getInstance().cargarEnemigosDesdeJson("mazmorra/src/main/resources/com/mazmorra/Enemigos/enemigo1.json");
 
         // Obtiene el jugador e inserta sus stats en la escena
