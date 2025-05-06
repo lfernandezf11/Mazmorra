@@ -63,6 +63,9 @@ public class SceneManager {
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
 
+            // Aplica la hoja de estilos CSS global
+            scene.getStylesheets().add(App.class.getResource("/com/mazmorra/styles/styles.css").toExternalForm());
+
             // Guardar el FXMLLoader en la escena para recuperar el controlador después
             scene.setUserData(fxmlLoader);
             scenes.put(sceneID, scene);

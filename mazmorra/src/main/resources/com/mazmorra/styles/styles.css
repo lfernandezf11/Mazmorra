@@ -1,0 +1,24 @@
+#cambiarAPersonaje {
+    -fx-background-color: linear-gradient(to bottom, #222 40%, #a34ef8 100%);
+    -fx-background-radius: 24;
+    -fx-border-color: #f118a9;
+    -fx-border-width: 3;
+    -fx-border-radius: 24;
+    -fx-text-fill: #ffffff; /* Dorado, destaca sobre fondo negro */
+    -fx-font-size: 20px;
+    -fx-font-family: "Arial Black";
+    -fx-font-weight: bold;
+    -fx-padding: 10 36 10 36;
+    -fx-effect: dropshadow(gaussian, #ffffff, 16, 0.7, 0, 2);
+    -fx-cursor: hand;
+    -fx-opacity: 0.95;
+    -fx-transition: all 0.2s;
+}
+
+#cambiarAPersonaje:hover {
+    -fx-background-color: linear-gradient(to bottom, #a34ef8, #222);
+    -fx-text-fill: #fff;
+    -fx-effect: dropshadow(gaussian, #fff, 24, 0.8, 0, 4);
+    -fx-scale-x: 1.07;
+    -fx-scale-y: 1.07;
+}
