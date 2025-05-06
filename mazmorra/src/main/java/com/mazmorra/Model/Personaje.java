@@ -138,7 +138,7 @@ public abstract class Personaje {
      *
      * @param rutaImagen la ruta relativa a la imagen del personaje.
      */
-    public void setImagen(String rutaImagen) {
+    public static void setImagen(String rutaImagen) {
         this.imagen = new Image(getClass().getResource(rutaImagen).toExternalForm());
     }
 

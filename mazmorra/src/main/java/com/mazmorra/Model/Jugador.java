@@ -45,8 +45,8 @@ public class Jugador extends Personaje {
      * @param tipo            Tipo de jugador elegido (Arquero, guerrero o maga).
      * @param puntosRestantes Cantidad inicial de puntos por repartir, igual para toda instancia Jugador.
      */
-    public Jugador(String nombre, int ataque, int defensa, int vida, int velocidad, String rutaImagen, TipoJugador tipo, int puntosRestantes) {
-        super(nombre, ataque, defensa, vida, calcularVelocidad(tipo), rutaImagen);
+    public Jugador(String nombre, int ataque, int defensa, int vida, String rutaImagen, TipoJugador tipo, int puntosRestantes) {
+        super(nombre, ataque, defensa, vida, calcularVelocidad(tipo),);
         this.tipo = tipo;
         Jugador.puntosRestantes = puntosRestantes;
     }
