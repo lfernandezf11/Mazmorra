@@ -27,7 +27,7 @@ public class Jugador extends Personaje {
      */
     public Jugador() {
         super("", 0, 0, 0, 0,"");
-        this.tipo = null;
+        this.tipo = TipoJugador.MAGO;
         Jugador.puntosRestantes = 5; //Llamada estática a puntosRestantes.
     }
     
@@ -40,12 +40,11 @@ public class Jugador extends Personaje {
      * @param ataque          Nivel de ataque.
      * @param defensa         Nivel de defensa.
      * @param vida            Puntos de vida.
-     * @param velocidad       Nivel de velocidad, dependiente de TipoJugador tipo.
      * @param rutaImagen      Ruta del archivo de imagen asociado al personaje.
      * @param tipo            Tipo de jugador elegido (Arquero, guerrero o maga).
      * @param puntosRestantes Cantidad inicial de puntos por repartir, igual para toda instancia Jugador.
      */
-    public Jugador(String nombre, int ataque, int defensa, int vida, int velocidad, String rutaImagen, TipoJugador tipo, int puntosRestantes) {
+    public Jugador(String nombre, int ataque, int defensa, int vida, String rutaImagen, TipoJugador tipo, int puntosRestantes) {
         super(nombre, ataque, defensa, vida, calcularVelocidad(tipo), rutaImagen);
         this.tipo = tipo;
         Jugador.puntosRestantes = puntosRestantes;
@@ -175,6 +174,9 @@ public class Jugador extends Personaje {
      * @return el valor de la velocidad correspondiente a este tipo de jugador.
      */
     public static int calcularVelocidad(TipoJugador tipo) {
+        if (tipo == null) {
+            return 5; // Valor por defecto si el tipo no está definido
+        }
         switch (tipo) {
             case ARQUERO:
                 return 7;
@@ -186,6 +188,7 @@ public class Jugador extends Personaje {
                 return 5;
         }
     }
+    
    
 
 

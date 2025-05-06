@@ -2,6 +2,7 @@ package com.mazmorra.Controllers;
 
 import com.mazmorra.SceneID;
 import com.mazmorra.SceneManager;
+import com.mazmorra.TipoJugador;
 import com.mazmorra.Interfaces.Observer;
 import com.mazmorra.Model.Jugador;
 import com.mazmorra.Model.Proveedor;
@@ -15,10 +16,13 @@ import javafx.scene.image.ImageView;
 /**
  * Controlador para la escena de configuración del jugador.
  * 
- * Permite al usuario introducir su nombre, elegir el tipo de personaje (maga, guerrero, arquero), 
- * y distribuir 5 puntos iniciales entre las estadísticas de vida, ataque, defensa y velocidad.
+ * Permite al usuario introducir su nombre, elegir el tipo de personaje (maga,
+ * guerrero, arquero),
+ * y distribuir 5 puntos iniciales entre las estadísticas de vida, ataque,
+ * defensa y velocidad.
  * 
- * Implementa la interfaz Observer para plasmar en la escena los cambios en la entidad Jugador de forma dinámica.
+ * Implementa la interfaz Observer para plasmar en la escena los cambios en la
+ * entidad Jugador de forma dinámica.
  */
 
 public class JugadorController implements Observer {
@@ -75,12 +79,11 @@ public class JugadorController implements Observer {
 
     private Jugador jugador;
 
-
     /**
-    * Método de inicialización automática llamado por JavaFX.
-    * Configura el estado inicial de los componentes visuales,
-    * suscriptores del modelo, y los eventos de los botones.
-    */
+     * Método de inicialización automática llamado por JavaFX.
+     * Configura el estado inicial de los componentes visuales,
+     * suscriptores del modelo, y los eventos de los botones.
+     */
     @FXML
     public void initialize() {
 
@@ -121,14 +124,14 @@ public class JugadorController implements Observer {
             jugador.setImagen("/com/mazmorra/Images/maga/magaAbajo.png");
             mostrarStats();
         });
-        
+
         imagenGuerrero.setOnMouseClicked(e -> {
-           jugador.setImagen("/com/mazmorra/Images/guerrero/guerreroAbajo.png");
+            jugador.setImagen("/com/mazmorra/Images/guerrero/guerreroAbajo.png");
             mostrarStats();
         });
-        
+
         imagenElfo.setOnMouseClicked(e -> {
-           jugador.setImagen("/com/mazmorra/Images/arquero/arqueroAbajo.png");
+            jugador.setImagen("/com/mazmorra/Images/arquero/arqueroAbajo.png");
             mostrarStats();
         });
 
@@ -136,7 +139,7 @@ public class JugadorController implements Observer {
         Proveedor proveedor = Proveedor.getInstance();
 
         // Inicialización con 5 puntos en vida
-        jugador = new Jugador("", 0, 0, 5, 0, null, null, 0);
+        jugador = new Jugador("", 0, 0, 5, null, TipoJugador.MAGO, 0);
         proveedor.setJugador(jugador); // Guarda en el Proveedor
         jugador.suscribe(this);
 
@@ -169,46 +172,46 @@ public class JugadorController implements Observer {
     private void configurarBotones() {
         // Configuración usando métodos del modelo
         addVida.setOnAction(e -> {
-           jugador.incrementarVida();
+            jugador.incrementarVida();
             Proveedor.getInstance().setJugador(jugador); // Actualiza el singleton
         });
 
         restVida.setOnAction(e -> {
-           jugador.decrementarVida();
+            jugador.decrementarVida();
             Proveedor.getInstance().setJugador(jugador);
         });
 
         addAtaque.setOnAction(e -> {
-           jugador.incrementarAtaque();
+            jugador.incrementarAtaque();
             Proveedor.getInstance().setJugador(jugador); // Actualiza el singleton
         });
         restAtaque.setOnAction(e -> {
-           jugador.decrementarAtaque();
+            jugador.decrementarAtaque();
             Proveedor.getInstance().setJugador(jugador);
         });
 
         addDefensa.setOnAction(e -> {
-           jugador.incrementarDefensa();
+            jugador.incrementarDefensa();
             Proveedor.getInstance().setJugador(jugador); // Actualiza el singleton
         });
         restDefensa.setOnAction(e -> {
-           jugador.decrementarDefensa();
+            jugador.decrementarDefensa();
             Proveedor.getInstance().setJugador(jugador);
         });
 
         addVelocidad.setOnAction(e -> {
-           jugador.incrementarVelocidad();
+            jugador.incrementarVelocidad();
             Proveedor.getInstance().setJugador(jugador);
         });
 
         restVelocidad.setOnAction(e -> {
-           jugador.decrementarVelocidad();
+            jugador.decrementarVelocidad();
             Proveedor.getInstance().setJugador(jugador);
         });
 
         iniciarJuego.setOnAction(e -> {
             // Guarda cambios finales antes de cambiar
-           jugador.setNombre(introNombre.getText());
+            jugador.setNombre(introNombre.getText());
             Proveedor.getInstance().setJugador(jugador);
             SceneManager.getInstance().loadScene(SceneID.JUEGO);
         });
@@ -234,7 +237,7 @@ public class JugadorController implements Observer {
         restVelocidad.setDisable(jugador.getVelocidad() <= 0);
 
         // Gestión de estados de botones (+)
-        boolean sinPuntos =jugador.getPuntosRestantes() <= 0;
+        boolean sinPuntos = jugador.getPuntosRestantes() <= 0;
         addVida.setDisable(sinPuntos);
         addAtaque.setDisable(sinPuntos);
         addDefensa.setDisable(sinPuntos);
