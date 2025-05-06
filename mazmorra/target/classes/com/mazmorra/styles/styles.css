@@ -1,3 +1,4 @@
+/* Estilos de la vista inicio*/
 #cambiarAPersonaje {
     -fx-background-color: linear-gradient(to bottom, #222 40%, #a34ef8 100%);
     -fx-background-radius: 24;
@@ -21,4 +22,74 @@
     -fx-effect: dropshadow(gaussian, #fff, 24, 0.8, 0, 4);
     -fx-scale-x: 1.07;
     -fx-scale-y: 1.07;
+}
+
+/* Estilos de la vista personaje */
+/* Fondo general oscuro */
+.pane {
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #1a1625 60%, #3a245d 100%);
+}
+
+/* Título principal */
+.label {
+    -fx-font-family: "Trajan Pro", "Arial Black", serif;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f2e379;
+    -fx-effect: dropshadow(gaussian, #000000, 8, 0.8, 0, 2);
+}
+
+/* Botón de inicio y botones de puntos */
+.button {
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #2d193c 60%, #a34ef8 100%);
+    -fx-background-radius: 18;
+    -fx-border-color: #f118a9;
+    -fx-border-width: 2;
+    -fx-border-radius: 18;
+    -fx-font-size: 16px;
+    -fx-font-family: "Arial Black";
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+    -fx-effect: dropshadow(gaussian, #f118a9, 8, 0.6, 0, 2);
+    -fx-cursor: hand;
+    -fx-padding: 8 20 8 20;
+    -fx-opacity: 0.95;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #a34ef8, #2d193c);
+    -fx-effect: dropshadow(gaussian, #fff, 16, 0.8, 0, 4);
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+}
+
+/* Botones de sumar/restar puntos */
+#restVida, #restAtaque, #restDefensa, #restVelocidad {
+    -fx-background-color: #2d193c;
+    -fx-text-fill: #ff2d2d;
+    -fx-border-color: #ff2d2d;
+}
+
+#addVida, #addAtaque, #addDefensa, #addVelocidad {
+    -fx-background-color: #2d193c;
+    -fx-text-fill: #00ff2f;
+    -fx-border-color: #00ff2f;
+}
+
+/* Imagenes de personajes */
+.image-view {
+    -fx-effect: dropshadow(gaussian, #a34ef8, 18, 0.7, 0, 2);
+    -fx-border-color: #f2e379;
+    -fx-border-width: 3;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 3;
+}
+
+/* Etiquetas de puntos restantes */
+#PuntosRestantes {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f2f600;
+    -fx-effect: dropshadow(gaussian, #000, 8, 0.7, 0, 2);
 }
