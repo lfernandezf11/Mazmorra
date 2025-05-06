@@ -28,15 +28,14 @@ public abstract class Personaje {
      * @param ataque     Nivel de ataque.
      * @param defensa    Nivel de defensa.
      * @param vida       Puntos de vida.
-     * @param velocidad  Nivel de velocidad.
      * @param rutaImagen Ruta del archivo de imagen asociado al personaje.
      */
-    public Personaje(String nombre, int ataque, int defensa, int vida, int velocidad, String rutaImagen) {
+    public Personaje(String nombre, int ataque, int defensa, int vida, String rutaImagen) {
         this.nombre = nombre;
         this.ataque = ataque;
         this.defensa = defensa;
         this.vida = vida;
-        this.velocidad = velocidad;
+        setVelocidad(velocidad);
         setImagen(rutaImagen); // inicializa imagen e imageView
     }
 
@@ -129,7 +128,7 @@ public abstract class Personaje {
      *
      * @param velocidad el nuevo valor de velocidad.
      */
-    public void setVelocidad(int velocidad) {
+    public void setVelocidad(int tipo) {
         this.velocidad = velocidad;
     }
 
@@ -138,7 +137,7 @@ public abstract class Personaje {
      *
      * @param rutaImagen la ruta relativa a la imagen del personaje.
      */
-    public static void setImagen(String rutaImagen) {
+    public void setImagen(String rutaImagen) {
         this.imagen = new Image(getClass().getResource(rutaImagen).toExternalForm());
     }
 

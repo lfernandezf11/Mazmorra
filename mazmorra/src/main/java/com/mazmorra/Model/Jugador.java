@@ -26,7 +26,7 @@ public class Jugador extends Personaje {
      * Constructor por defecto que genera un objeto Jugador genérico, inicializando sus atributos.
      */
     public Jugador() {
-        super("", 0, 0, 0, 0,"");
+        super("", 0, 0, 0, "");
         this.tipo = TipoJugador.MAGO;
         Jugador.puntosRestantes = 5; //Llamada estática a puntosRestantes.
     }

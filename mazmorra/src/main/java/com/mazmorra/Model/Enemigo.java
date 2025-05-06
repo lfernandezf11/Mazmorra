@@ -4,8 +4,8 @@ public class Enemigo extends Personaje{
 
     private int percepcion;
 
-    public Enemigo(String nombre, int ataque, int vida, int defensa, int velocidad, int percepcion) {
-        super(nombre, ataque, defensa, vida, velocidad, nombre);
+    public Enemigo(String nombre, int ataque, int vida, int defensa, int velocidad, String rutaImagen, int percepcion) {
+        super(nombre, ataque, defensa, vida, velocidad, rutaImagen);
         this.percepcion = percepcion;
     }
 

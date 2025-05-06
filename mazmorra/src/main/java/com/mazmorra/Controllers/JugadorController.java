@@ -121,18 +121,16 @@ public class JugadorController implements Observer {
 
         // Configurar los ImageView para que sean "clickables"
         imagenMago.setOnMouseClicked(e -> {
-            Jugador.setImagen("/com/mazmorra/Images/maga/magaAbajo.png");
+            jugador.setImagen("/com/mazmorra/Images/maga/magaAbajo.png");
             mostrarStats();
         });
 
         imagenGuerrero.setOnMouseClicked(e -> {
-           Jugador.setImagen("/com/mazmorra/Images/guerrero/guerreroAbajo.png");
             jugador.setImagen("/com/mazmorra/Images/guerrero/guerreroAbajo.png");
             mostrarStats();
         });
 
         imagenElfo.setOnMouseClicked(e -> {
-           Jugador.setImagen("/com/mazmorra/Images/arquero/arqueroAbajo.png");
             jugador.setImagen("/com/mazmorra/Images/arquero/arqueroAbajo.png");
             mostrarStats();
         });
