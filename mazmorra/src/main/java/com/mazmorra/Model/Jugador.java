@@ -19,17 +19,15 @@ import com.mazmorra.Interfaces.Observer;
 public class Jugador extends Personaje {
     /** Lista de observadores suscritos a cambios en el jugador. */
     private ArrayList<Observer> observers = new ArrayList<>();
-    private TipoJugador tipo;
     private static int puntosRestantes = 5;
 
     /**
      * Constructor por defecto que genera un objeto Jugador genérico, inicializando sus atributos.
      */
-    public Jugador() {
-        super("", 0, 0, 0, 0,"");
-        this.tipo = TipoJugador.MAGO;
-        Jugador.puntosRestantes = 5; //Llamada estática a puntosRestantes.
-    }
+    // public Jugador() {
+    //     super("", 0,0 , 0, TipoJugador.MAGO, rutaImagen);
+    //     Jugador.puntosRestantes = 5; //Llamada estática a puntosRestantes.
+    // }
     
     /**
      * Constructor parametrizado que genera el Personaje de tipo Jugador y asigna a sus atributos los valores iniciales para la partida.
@@ -45,8 +43,8 @@ public class Jugador extends Personaje {
      * @param puntosRestantes Cantidad inicial de puntos por repartir, igual para toda instancia Jugador.
      */
     public Jugador(String nombre, int ataque, int defensa, int vida, String rutaImagen, TipoJugador tipo, int puntosRestantes) {
-        super(nombre, ataque, defensa, vida, calcularVelocidad(tipo), rutaImagen);
-        this.tipo = tipo;
+        super(nombre, ataque, defensa, vida, tipo, rutaImagen);
+        Personaje.calcularVelocidad(tipo);
         Jugador.puntosRestantes = puntosRestantes;
     }
 
@@ -166,28 +164,8 @@ public class Jugador extends Personaje {
         observers.forEach(Observer::onChange);
     }
 
-    /* MÉTODO DE ASIGNACIÓN DE VELOCIDAD */
-    /**
-     * Asigna al Jugador un valor de velocidad de tipo estático, dependiente del tipo de jugador seleccionado (arquero, guerrero o mago).
-     * 
-     * @param tipo tipo de Jugador seleccionado, definido por el enum {@code TipoJugador}.
-     * @return el valor de la velocidad correspondiente a este tipo de jugador.
-     */
-    public static int calcularVelocidad(TipoJugador tipo) {
-        if (tipo == null) {
-            return 5; // Valor por defecto si el tipo no está definido
-        }
-        switch (tipo) {
-            case ARQUERO:
-                return 7;
-            case MAGO:
-                return 5;
-            case GUERRERO:
-                return 4;
-            default:
-                return 5;
-        }
-    }
+    
+    
     
    
 

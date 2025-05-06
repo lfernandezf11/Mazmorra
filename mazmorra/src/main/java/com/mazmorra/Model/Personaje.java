@@ -1,5 +1,7 @@
 package com.mazmorra.Model;
 
+import com.mazmorra.TipoJugador;
+
 import javafx.scene.image.Image;
 
 /**
@@ -18,6 +20,7 @@ public abstract class Personaje {
     protected int defensa;
     protected int vida;
     protected int velocidad;
+    protected TipoJugador tipo;
     protected Image imagen;
 
     
@@ -28,15 +31,15 @@ public abstract class Personaje {
      * @param ataque     Nivel de ataque.
      * @param defensa    Nivel de defensa.
      * @param vida       Puntos de vida.
-     * @param velocidad  Nivel de velocidad.
      * @param rutaImagen Ruta del archivo de imagen asociado al personaje.
      */
-    public Personaje(String nombre, int ataque, int defensa, int vida, int velocidad, String rutaImagen) {
+    public Personaje(String nombre, int ataque, int defensa, int vida, TipoJugador tipo, String rutaImagen) {
         this.nombre = nombre;
         this.ataque = ataque;
         this.defensa = defensa;
         this.vida = vida;
-        this.velocidad = velocidad;
+        this.tipo = tipo;
+        calcularVelocidad(tipo);
         setImagen(rutaImagen); // inicializa imagen e imageView
     }
 
@@ -124,13 +127,34 @@ public abstract class Personaje {
         return velocidad;
     }
 
+   /* MÉTODO DE ASIGNACIÓN DE VELOCIDAD */
     /**
-     * Establece la velocidad del personaje.
-     *
-     * @param velocidad el nuevo valor de velocidad.
+     * Asigna al Jugador un valor de velocidad de tipo estático, dependiente del tipo de jugador seleccionado (arquero, guerrero o mago).
+     * 
+     * @param tipo tipo de Jugador seleccionado, definido por el enum {@code TipoJugador}.
+     * @return el valor de la velocidad correspondiente a este tipo de jugador.
      */
-    public void setVelocidad(int velocidad) {
-        this.velocidad = velocidad;
+    public static int calcularVelocidad(TipoJugador tipo) {
+        if (tipo == null) {
+            return 5; // Valor por defecto si el tipo no está definido
+        }
+        switch (tipo) {
+            case ARQUERO:
+                return 7;
+            case MAGO:
+                return 5;
+            case GUERRERO:
+                return 4;
+            case CICLOPE:
+                return 6;
+            case CTHULU:
+                return 4;
+            case MINOTAURO:
+                return 5;
+
+            default:
+                return 5;
+        }
     }
 
     /**
