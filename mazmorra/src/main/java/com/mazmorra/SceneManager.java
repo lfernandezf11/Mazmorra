@@ -56,7 +56,6 @@ public class SceneManager {
      * @param sceneID el identificador único de la escena.
      * @param fxml    el nombre del archivo FXML que define la vista de la escena.
      */
-
     public void setScene(SceneID sceneID, String fxml) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/" + fxml + ".fxml"));

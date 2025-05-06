@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import com.mazmorra.TipoJugador;
 import com.mazmorra.Interfaces.Observer;
-import javafx.scene.image.Image;
 
 /**
  * Representa al objeto de tipo Personaje que actúa como Jugador.
@@ -20,23 +19,34 @@ import javafx.scene.image.Image;
 public class Jugador extends Personaje {
     /** Lista de observadores suscritos a cambios en el jugador. */
     private ArrayList<Observer> observers = new ArrayList<>();
-    protected TipoJugador tipo;
+    private TipoJugador tipo;
     private static int puntosRestantes = 5;
 
     /**
-     * Constructor parametrizado que genera el Personaje de tipo Jugador, otorgando a sus atributos los valores iniciales.
+     * Constructor por defecto que genera un objeto Jugador genérico, inicializando sus atributos.
+     */
+    public Jugador() {
+        super("", 0, 0, 0, 0,"");
+        this.tipo = null;
+        Jugador.puntosRestantes = 5; //Llamada estática a puntosRestantes.
+    }
+    
+    /**
+     * Constructor parametrizado que genera el Personaje de tipo Jugador y asigna a sus atributos los valores iniciales para la partida.
+     * 
+     * El atributo velocidad es asignado en función del tipo de jugador.
      *
      * @param nombre          Nombre del personaje.
      * @param ataque          Nivel de ataque.
      * @param defensa         Nivel de defensa.
      * @param vida            Puntos de vida.
-     * @param velocidad       Nivel de velocidad.
+     * @param velocidad       Nivel de velocidad, dependiente de TipoJugador tipo.
      * @param rutaImagen      Ruta del archivo de imagen asociado al personaje.
-     * @param tipo            Tipo de personaje elegido (Arquero, guerrero o maga).
+     * @param tipo            Tipo de jugador elegido (Arquero, guerrero o maga).
      * @param puntosRestantes Cantidad inicial de puntos por repartir, igual para toda instancia Jugador.
      */
     public Jugador(String nombre, int ataque, int defensa, int vida, int velocidad, String rutaImagen, TipoJugador tipo, int puntosRestantes) {
-        super(nombre, ataque, defensa, vida, calcularVelocidad(), rutaImagen);
+        super(nombre, ataque, defensa, vida, calcularVelocidad(tipo), rutaImagen);
         this.tipo = tipo;
         Jugador.puntosRestantes = puntosRestantes;
     }
@@ -47,10 +57,8 @@ public class Jugador extends Personaje {
      *  La velocidad del jugador depende de su tipo, con lo que el método calcularVelocidad() sustituye al setter correspondiente.
     */
 
-    private static int calcularVelocidad() {
-        // IMPLEMENTAR LUCI.
-        throw new UnsupportedOperationException("Unimplemented method 'calcularVelocidad'");
-    }
+  
+
 
     /** 
      * Obtiene el tipo de jugador asignado a la entidad.
@@ -135,7 +143,6 @@ public class Jugador extends Personaje {
         notifyObservers();
     }
 
-   
 
     /* GESTIÓN Y MANIPULACIÓN DE OBSERVERS*/
 
@@ -164,6 +171,25 @@ public class Jugador extends Personaje {
         observers.forEach(Observer::onChange);
     }
 
+    /* MÉTODO DE ASIGNACIÓN DE VELOCIDAD */
+    /**
+     * Asigna al Jugador un valor de velocidad de tipo estático, dependiente del tipo de jugador seleccionado (arquero, guerrero o mago).
+     * 
+     * @param tipo tipo de Jugador seleccionado, definido por el enum {@code TipoJugador}.
+     * @return el valor de la velocidad correspondiente a este tipo de jugador.
+     */
+    public static int calcularVelocidad(TipoJugador tipo) {
+        switch (tipo) {
+            case ARQUERO:
+                return 7;
+            case MAGO:
+                return 5;
+            case GUERRERO:
+                return 4;
+            default:
+                return 5;
+        }
+    }
     // (equals, hashCode y toString no están incluidos en este fragmento, 
     // pero también podrían documentarse si los necesitas.)
 
