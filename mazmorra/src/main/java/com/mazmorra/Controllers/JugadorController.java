@@ -132,19 +132,6 @@ public class JugadorController implements Observer {
             crearJugador(TipoJugador.ARQUERO, "/com/mazmorra/Images/arqueroAbajo.png");       
         });
             
-    
-
-    
-
-        // // Inicialización con 5 puntos en vida
-        // jugador = new Jugador("", 0, 0, 5, null, TipoJugador.MAGO, 5);
-        //  // Obtiene la instancia del Proveedor
-        //  Proveedor proveedor = Proveedor.getInstance();
-        // proveedor.setJugador(jugador); // Guarda en el Proveedor
-        // jugador.subscribe(this);
-
-        // configurarBotones();
-        // actualizarPersonaje();
     }
 
     /**
