@@ -121,35 +121,55 @@ public class JugadorController implements Observer {
 
         // Configurar los ImageView para que sean "clickables"
         imagenMago.setOnMouseClicked(e -> {
-            jugador.setImagen("/com/mazmorra/Images/maga/magaAbajo.png");
-            jugador.setTipo(TipoJugador.MAGO);
-            mostrarStats();
+            crearJugador(TipoJugador.MAGO, "/com/mazmorra/Images/magaAbajo.png");
         });
-
+           
         imagenGuerrero.setOnMouseClicked(e -> {
-            jugador.setImagen("/com/mazmorra/Images/guerrero/guerreroAbajo.png");
-            jugador.setTipo(TipoJugador.GUERRERO);
-            mostrarStats();
+            crearJugador(TipoJugador.GUERRERO, "/com/mazmorra/Images/guerreroAbajo.png");
         });
-
+           
         imagenElfo.setOnMouseClicked(e -> {
-            jugador.setImagen("/com/mazmorra/Images/arquero/arqueroAbajo.png");
-            jugador.setTipo(TipoJugador.ARQUERO);
-            mostrarStats();
+            crearJugador(TipoJugador.ARQUERO, "/com/mazmorra/Images/arqueroAbajo.png");       
         });
+            
+    
 
-        // Obtiene la instancia del Proveedor
-        Proveedor proveedor = Proveedor.getInstance();
+    
 
-        // Inicialización con 5 puntos en vida
-        jugador = new Jugador("", 0, 0, 5, null, TipoJugador.MAGO, 10);
-        proveedor.setJugador(jugador); // Guarda en el Proveedor
-        jugador.subscribe(this);
+        // // Inicialización con 5 puntos en vida
+        // jugador = new Jugador("", 0, 0, 5, null, TipoJugador.MAGO, 5);
+        //  // Obtiene la instancia del Proveedor
+        //  Proveedor proveedor = Proveedor.getInstance();
+        // proveedor.setJugador(jugador); // Guarda en el Proveedor
+        // jugador.subscribe(this);
 
-        configurarBotones();
-        actualizarPersonaje();
+        // configurarBotones();
+        // actualizarPersonaje();
     }
 
+    /**
+     * Genera el Jugador una vez seleccionado el tipo de Personaje (mago, arquero, guerrero).
+     * @param tipo
+     * @param rutaImagen
+     */
+    private void crearJugador(TipoJugador tipo, String rutaImagen) {
+        jugador = new Jugador(
+            introNombre.getText(),
+            0, // ataque inicial
+            0, // defensa inicial
+            5, // vida inicial
+            rutaImagen,
+            tipo,
+            5 // puntos restantes
+            );
+        
+            jugador.subscribe(this);
+            Proveedor.getInstance().setJugador(jugador);
+            mostrarStats();
+            configurarBotones();
+            actualizarPersonaje();
+        }
+          
     private void mostrarStats() {
         puntosVida.setVisible(true);
         puntosAtaque.setVisible(true);

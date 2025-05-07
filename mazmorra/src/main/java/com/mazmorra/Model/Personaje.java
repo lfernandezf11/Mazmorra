@@ -21,6 +21,9 @@ public abstract class Personaje {
     protected int velocidad;
     protected TipoJugador tipo;
     protected Image imagen;
+    
+
+    private static int vidaInicial = 5;
 
     /**
      * Constructor parametrizado que genera un Personaje no tipado del juego.
@@ -36,7 +39,7 @@ public abstract class Personaje {
         this.nombre = nombre;
         this.ataque = ataque;
         this.defensa = defensa;
-        this.vida = vida;
+        this.vida = vidaInicial;
         this.tipo = tipo;
         this.velocidad = calcularVelocidad(tipo); // Asignación correcta de velocidad
         setImagen(rutaImagen); // inicializa imagen

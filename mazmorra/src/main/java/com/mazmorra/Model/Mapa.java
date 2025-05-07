@@ -59,10 +59,10 @@ public class Mapa {
                 ImageView imageView = new ImageView(); //Crea una vista gráfica por cada celda.
     
                 if (celda == 0) {
-                    imageView.setImage(new Image(getClass().getResource(paredPath).toExternalForm()));
+                    imageView.setImage(new Image(getClass().getResource(sueloPath).toExternalForm()));
                     //Obtiene el recurso dentro de la ruta de clase, y convierte la referencia a una URL completa que JavaFX pueda interpretar. 
                 } else {
-                    imageView.setImage(new Image(getClass().getResource(sueloPath).toExternalForm()));
+                    imageView.setImage(new Image(getClass().getResource(paredPath).toExternalForm()));
                 }
                 gridPaneJuego.add(imageView, j, i); // GridPane: (NodeChild, int columna, int fila): j se tiene que especificar antes que i.
                 actualizarTamCelda(gridPaneJuego, mapaMatriz.length, anchoStack); 
