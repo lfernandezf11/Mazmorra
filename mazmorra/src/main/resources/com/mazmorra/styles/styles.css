@@ -1,6 +1,6 @@
 /* Estilos de la vista inicio*/
 #cambiarAPersonaje {
-    -fx-background-color: linear-gradient(to bottom, #222 40%, #a34ef8 100%);
+    /* -fx-background-color: linear-gradient(to bottom, #222 40%, #a34ef8 100%); */
     -fx-background-radius: 24;
     -fx-border-color: #f118a9;
     -fx-border-width: 3;
@@ -17,7 +17,7 @@
 }
 
 #cambiarAPersonaje:hover {
-    -fx-background-color: linear-gradient(to bottom, #a34ef8, #222);
+    /* -fx-background-color: linear-gradient(to bottom, #a34ef8, #222); */
     -fx-text-fill: #fff;
     -fx-effect: dropshadow(gaussian, #fff, 24, 0.8, 0, 4);
     -fx-scale-x: 1.07;
@@ -41,7 +41,7 @@
 
 /* Botón de inicio y botones de puntos */
 .button {
-    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #2d193c 60%, #a34ef8 100%);
+    /* -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #2d193c 60%, #a34ef8 100%); */
     -fx-background-radius: 18;
     -fx-border-color: #f118a9;
     -fx-border-width: 2;
@@ -57,7 +57,7 @@
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #a34ef8, #2d193c);
+    /* -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #a34ef8, #2d193c); */
     -fx-effect: dropshadow(gaussian, #fff, 16, 0.8, 0, 4);
     -fx-scale-x: 1.08;
     -fx-scale-y: 1.08;
@@ -78,7 +78,7 @@
 
 /* Imagenes de personajes */
 .image-view {
-    -fx-effect: dropshadow(gaussian, #a34ef8, 18, 0.7, 0, 2);
+    /* -fx-effect: dropshadow(gaussian, #a34ef8, 18, 0.7, 0, 2); */
     -fx-border-color: #f2e379;
     -fx-border-width: 3;
     -fx-border-radius: 12;
