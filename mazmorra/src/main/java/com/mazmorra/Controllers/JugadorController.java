@@ -147,7 +147,7 @@ public class JugadorController implements Observer {
             5, // vida inicial
             rutaImagen,
             tipo,
-            5 // puntos restantes
+            10 // puntos restantes
             );
         
             jugador.subscribe(this);

@@ -12,6 +12,6 @@
             <Image url="@../Images/Intro.gif" />
          </image>
       </ImageView>
-      <Button fx:id="cambiarAPersonaje" text="Entrar en el juego" translateY="100.0" />
+      <Button fx:id="cambiarAPersonaje" styleClass="boton-inicio" text="Entrar en el juego" translateY="100.0" />
    </children>
 </StackPane>
