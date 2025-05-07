@@ -56,7 +56,7 @@
                <children>
                   <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/cthulu/cthuluAbajo.png" />
+                        <Image url="@../Images/cthuluAbajo.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
@@ -83,7 +83,7 @@
                <children>
                   <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/minotauro/minotauroAbajo.png" />
+                        <Image url="@../Images/minotauroAbajo.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
