@@ -70,17 +70,17 @@
          <children>
             <ImageView fx:id="imagenMago" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/maga/magaAbajo.png" />
+                  <Image url="@../Images/magaAbajo.png" />
                </image>
             </ImageView>
             <ImageView fx:id="imagenGuerrero" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/guerrero/guerreroAbajo.png" />
+                  <Image url="@../Images/guerreroAbajo.png" />
                </image>
             </ImageView>
             <ImageView fx:id="imagenElfo" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/arquero/arqueroAbajo.png" />
+                  <Image url="@../Images/arqueroAbajo.png" />
                </image>
             </ImageView>
          </children>
