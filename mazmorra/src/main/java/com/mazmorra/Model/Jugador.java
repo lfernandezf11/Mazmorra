@@ -11,7 +11,7 @@ import com.mazmorra.Interfaces.Observer;
 public class Jugador extends Personaje {
     /** Lista de observadores suscritos a cambios en el jugador. */
     private ArrayList<Observer> observers = new ArrayList<>();
-    private int puntosRestantes = 5; // Ahora es de instancia, no estático
+    private int puntosRestantes = 10; // Ahora es de instancia, no estático
 
     /**
      * Constructor parametrizado que genera el Personaje de tipo Jugador.

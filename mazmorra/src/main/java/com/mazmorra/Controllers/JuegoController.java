@@ -3,6 +3,7 @@ package com.mazmorra.Controllers;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import com.mazmorra.Interfaces.Observer;
 import com.mazmorra.Model.Jugador;
@@ -46,6 +47,18 @@ public class JuegoController implements Observer {
     private ImageView imagenVelocidadMedia;
     @FXML
     private ImageView imagenMasLento;
+    @FXML
+    private Label vidaCthulu;
+    @FXML
+    private Label ataqueCthulu;
+    @FXML
+    private Label velocidadCthulu;
+    @FXML
+    private Label vidaMino;
+    @FXML
+    private Label ataqueMino;
+    @FXML
+    private Label velocidadMino;
 
     @FXML
     private StackPane stackPaneJuego;
@@ -58,7 +71,8 @@ public class JuegoController implements Observer {
     @FXML
     public void initialize() {
         // PONER LA RUTA BIEN, IMPLEMENTAR EN LA RUTA BASE
-        Proveedor.getInstance().cargarEnemigosDesdeJson("mazmorra/src/main/resources/com/mazmorra/Enemigos/enemigo1.json");
+        Proveedor.getInstance()
+                .cargarEnemigosDesdeJson("mazmorra/src/main/resources/com/mazmorra/Enemigos/enemigo1.json");
 
         // Obtiene el jugador e inserta sus stats en la escena
         jugador = Proveedor.getInstance().getJugador();
@@ -71,6 +85,32 @@ public class JuegoController implements Observer {
 
         List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
         mostrarpersonajesPorVelocidad(personajes);
+
+        try {
+            List<Map<String, Object>> enemigos = DataReader
+                    .leerJson("mazmorra/src/main/resources/com/mazmorra/Enemigos/enemigo1.json");
+            for (Map<String, Object> enemigo : enemigos) {
+                String nombre = ((String) enemigo.get("nombre")).toUpperCase();
+                int vida = (int) enemigo.get("vida");
+                int ataque = (int) enemigo.get("ataque");
+                int velocidad = (int) enemigo.get("velocidad");
+
+                switch (nombre) {
+                    case "CTHULU":
+                        vidaCthulu.setText(String.valueOf(vida));
+                        ataqueCthulu.setText(String.valueOf(ataque));
+                        velocidadCthulu.setText(String.valueOf(velocidad));
+                        break;
+                    case "MINOTAURO":
+                        vidaMino.setText(String.valueOf(vida));
+                        ataqueMino.setText(String.valueOf(ataque));
+                        velocidadMino.setText(String.valueOf(velocidad));
+                        break;
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error leyendo enemigos: " + e.getMessage());
+        }
 
         cargarMapa();
         cargarTablero();

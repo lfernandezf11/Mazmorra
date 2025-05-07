@@ -1,25 +1,25 @@
 [
     {
-      "nombre": "Goblin",
+      "nombre": "CTHULU",
       "ataque": 1,
       "vida": 3,
       "defensa": 1,
-      "velocidad": 2,
-      "percepcion": 2
+      "velocidad": 4,
+      "percepcion": 1
     },
     {
-      "nombre": "Orco",
+      "nombre": "MINOTAURO",
       "ataque": 2,
       "vida": 5,
       "defensa": 2,
-      "velocidad": 3,
+      "velocidad": 6,
       "percepcion": 2
     },
     {
-      "nombre": "Dragón",
+      "nombre": "CICLOPE",
       "ataque": 3,
-      "vida": 10,
-      "defensa": 3,
+      "vida": 7,
+      "defensa": 2,
       "velocidad": 5,
       "percepcion": 3
     }

@@ -28,9 +28,6 @@ public class App extends Application {
         sm.loadScene(SceneID.INICIO);
     }
 
-    
-    
-
     public static void main(String[] args) {
         launch();
     }
