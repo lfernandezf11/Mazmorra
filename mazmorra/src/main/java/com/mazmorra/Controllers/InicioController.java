@@ -14,8 +14,9 @@ public class InicioController {
     @FXML
     public void initialize() {
         cambiarAPersonaje.setOnAction(event -> {
-
-        SceneManager.getInstance().loadScene(SceneID.PERSONAJE);
+            // Carga la escena del personaje (puede estar precargada si quieres)
+            SceneManager.getInstance().setScene(SceneID.PERSONAJE, "personaje");
+            SceneManager.getInstance().loadScene(SceneID.PERSONAJE);
         });
     }
 }

@@ -142,20 +142,14 @@ public class JugadorController implements Observer {
     private void crearJugador(TipoJugador tipo, String rutaImagen) {
         jugador = new Jugador(
             introNombre.getText(),
-            0, // ataque inicial
-            0, // defensa inicial
-            5, // vida inicial
-            rutaImagen,
-            tipo,
-            10 // puntos restantes
-            );
-        
-            jugador.subscribe(this);
-            Proveedor.getInstance().setJugador(jugador);
-            mostrarStats();
-            configurarBotones();
-            actualizarPersonaje();
-        }
+            0, 0, 5, rutaImagen, tipo, 10
+        );
+        jugador.subscribe(this);
+        Proveedor.getInstance().setJugador(jugador); // SOLO AQUÍ
+        mostrarStats();
+        configurarBotones();
+        actualizarPersonaje();
+    }
           
     private void mostrarStats() {
         puntosVida.setVisible(true);
@@ -183,46 +177,39 @@ public class JugadorController implements Observer {
         // Configuración usando métodos del modelo
         addVida.setOnAction(e -> {
             jugador.incrementarVida();
-            Proveedor.getInstance().setJugador(jugador); // Actualiza el singleton
         });
 
         restVida.setOnAction(e -> {
             jugador.decrementarVida();
-            Proveedor.getInstance().setJugador(jugador);
         });
 
         addAtaque.setOnAction(e -> {
             jugador.incrementarAtaque();
-            Proveedor.getInstance().setJugador(jugador); // Actualiza el singleton
         });
         restAtaque.setOnAction(e -> {
             jugador.decrementarAtaque();
-            Proveedor.getInstance().setJugador(jugador);
         });
 
         addDefensa.setOnAction(e -> {
             jugador.incrementarDefensa();
-            Proveedor.getInstance().setJugador(jugador); // Actualiza el singleton
         });
         restDefensa.setOnAction(e -> {
             jugador.decrementarDefensa();
-            Proveedor.getInstance().setJugador(jugador);
         });
 
         addVelocidad.setOnAction(e -> {
             jugador.incrementarVelocidad();
-            Proveedor.getInstance().setJugador(jugador);
         });
 
         restVelocidad.setOnAction(e -> {
             jugador.decrementarVelocidad();
-            Proveedor.getInstance().setJugador(jugador);
         });
 
         iniciarJuego.setOnAction(e -> {
-            // Guarda cambios finales antes de cambiar
             jugador.setNombre(introNombre.getText());
             Proveedor.getInstance().setJugador(jugador);
+            // Carga y muestra la escena de juego en este momento
+            SceneManager.getInstance().setScene(SceneID.JUEGO, "juego");
             SceneManager.getInstance().loadScene(SceneID.JUEGO);
         });
     }

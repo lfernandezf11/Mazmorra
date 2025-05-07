@@ -15,15 +15,13 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         // Obtiene la instancia del SceneManager
         SceneManager sm = SceneManager.getInstance();
-        
+
         // Inicializa el SceneManager con el stage y una ruta de estilos
         sm.init(stage);
-        
-        // Configura las escenas con identificadores y tamaños
-        sm.setScene(SceneID.INICIO, "inicio");
-        sm.setScene(SceneID.PERSONAJE, "personaje");
-        sm.setScene(SceneID.JUEGO, "juego");
-        
+
+        // Carga la escena INICIO en el mapa del SceneManager
+        sm.setScene(SceneID.INICIO, "inicio"); // <-- ¡ESTO ES IMPRESCINDIBLE!
+
         // Carga la escena principal
         sm.loadScene(SceneID.INICIO);
     }
@@ -31,5 +29,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }

@@ -70,18 +70,21 @@ public class JuegoController implements Observer {
 
     @FXML
     public void initialize() {
-        // PONER LA RUTA BIEN, IMPLEMENTAR EN LA RUTA BASE
-        Proveedor.getInstance()
-                .cargarEnemigosDesdeJson("mazmorra/src/main/resources/com/mazmorra/Enemigos/enemigo1.json");
 
         // Obtiene el jugador e inserta sus stats en la escena
+        System.out.println("INICIALIZANDO JUEGO CONTROLLER");
         jugador = Proveedor.getInstance().getJugador();
+        System.out.println("Jugador en JuegoController: " + jugador);
         if (jugador != null) {
             jugador.subscribe(this);
             actualizarStats();
+        } else {
+            System.out.println("Jugador es null en JuegoController");
         }
-        
-       
+
+        // PONER LA RUTA BIEN, IMPLEMENTAR EN LA RUTA BASE
+        Proveedor.getInstance()
+                .cargarEnemigosDesdeJson("mazmorra/src/main/resources/com/mazmorra/Enemigos/enemigo1.json");
 
         List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
         mostrarpersonajesPorVelocidad(personajes);
@@ -118,21 +121,29 @@ public class JuegoController implements Observer {
 
     @Override
     public void onChange() {
-        actualizarStats();
+        actualizarStats(); // Actualiza la UI cuando hay un cambio en el jugador
     }
 
     private void actualizarStats() {
-        nombreJugador.setText(jugador.getNombre());
-        vidaJugador.setText(String.valueOf(jugador.getVida()));
-        ataqueJugador.setText(String.valueOf(jugador.getAtaque()));
-        defensaJugador.setText(String.valueOf(jugador.getDefensa()));
-        velocidadJugador.setText(String.valueOf(jugador.getVelocidad()));
-        if (jugador.getImagen() != null) {
-            imagenJugador.setImage(jugador.getImagen());
-            imagenJugador.setFitWidth(32);
-            imagenJugador.setFitHeight(32);
+        System.out.println("Actualizando stats en JuegoController");
+        if (jugador != null) {
+            System.out.println("Vida del jugador en JuegoController: " + jugador.getVida());
+            vidaJugador.setText(String.valueOf(jugador.getVida()));
+        } else {
+            System.out.println("Jugador es null en actualizarStats()");
         }
-
+        if (jugador != null) {
+            nombreJugador.setText(jugador.getNombre());
+            vidaJugador.setText(String.valueOf(jugador.getVida()));
+            ataqueJugador.setText(String.valueOf(jugador.getAtaque()));
+            defensaJugador.setText(String.valueOf(jugador.getDefensa()));
+            velocidadJugador.setText(String.valueOf(jugador.getVelocidad()));
+            if (jugador.getImagen() != null) {
+                imagenJugador.setImage(jugador.getImagen());
+                imagenJugador.setFitWidth(32);
+                imagenJugador.setFitHeight(32);
+            }
+        }
     }
 
     private void mostrarpersonajesPorVelocidad(List<Personaje> personajes) {
