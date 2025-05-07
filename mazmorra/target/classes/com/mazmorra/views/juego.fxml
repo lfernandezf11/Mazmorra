@@ -118,6 +118,7 @@
                            </image>
                         </ImageView>
                         <ImageView fx:id="imagenMasVelocidad" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="masVelocidad" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
                      </children>
                   </HBox>
                   <HBox prefHeight="19.0" prefWidth="250.0">
@@ -128,6 +129,7 @@
                            </image>
                         </ImageView>
                         <ImageView fx:id="imagenVelocidadMedia" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="velocidadMedia" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
                      </children>
                   </HBox>
                   <HBox prefHeight="27.0" prefWidth="250.0">
@@ -138,6 +140,7 @@
                            </image>
                         </ImageView>
                         <ImageView fx:id="imagenMasLento" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="masLento" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
                      </children>
                   </HBox>
                </children>
