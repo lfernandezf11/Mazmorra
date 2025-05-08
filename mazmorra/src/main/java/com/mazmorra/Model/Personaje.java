@@ -162,8 +162,6 @@ public abstract class Personaje {
         this.rutaImagen = rutaImagen;
     }
     
-    
-
     /* RESTO DE MÉTODOS */
     /**
      * Asigna al Jugador un valor de velocidad de tipo estático, dependiente del tipo de jugador seleccionado (arquero, guerrero o mago).

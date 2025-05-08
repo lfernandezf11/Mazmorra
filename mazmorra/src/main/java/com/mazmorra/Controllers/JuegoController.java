@@ -49,6 +49,14 @@ public class JuegoController implements Observer {
     @FXML
     private ImageView imagenMasLento;
     @FXML
+    private ImageView imagenMasMasLento;
+    @FXML
+    private ImageView imagenEnemigo1;
+    @FXML
+    private ImageView imagenEnemigo2;
+    @FXML
+    private ImageView imagenEnemigo3;
+    @FXML
     private Label vidaEnemigo1;
     @FXML
     private Label ataqueEnemigo1;
@@ -60,6 +68,20 @@ public class JuegoController implements Observer {
     private Label ataqueEnemigo2;
     @FXML
     private Label velocidadEnemigo2;
+    @FXML
+    private Label vidaEnemigo3;
+    @FXML
+    private Label ataqueEnemigo3;
+    @FXML
+    private Label velocidadEnemigo3;
+    @FXML
+    private Label masVelocidad;
+    @FXML
+    private Label velocidadMedia;
+    @FXML
+    private Label masLento;
+    @FXML
+    private Label masMasLento;
 
     @FXML
     private StackPane stackPaneJuego;
@@ -82,12 +104,11 @@ public class JuegoController implements Observer {
             System.err.println("❌ Ruta de imagen null para: " + jugador.getNombre());
         }
         // if (jugador != null) {
-        //     imagenJugador.setImage(cargarImagenJugador(jugador.getRutaImagen()));
-            jugador.subscribe(this);
-            actualizarStats();
+        // imagenJugador.setImage(cargarImagenJugador(jugador.getRutaImagen()));
+        jugador.subscribe(this);
+        actualizarStats();
         // } else {
-        //     System.out.println("Jugador es null en initialize()");
-        
+        // System.out.println("Jugador es null en initialize()");
 
         Proveedor.getInstance()
                 .cargarEnemigosDesdeJson(rutaBase + "/Enemigos/enemigo1.json");
@@ -100,20 +121,29 @@ public class JuegoController implements Observer {
                     .leerJson(rutaBase + "/Enemigos/enemigo1.json");
             for (Map<String, Object> enemigo : enemigos) {
                 String nombre = ((String) enemigo.get("nombre")).toUpperCase();
+                String rutaImagen = (String) enemigo.get("rutaImagen");
                 int vida = (int) enemigo.get("vida");
                 int ataque = (int) enemigo.get("ataque");
                 int velocidad = (int) enemigo.get("velocidad");
 
                 switch (nombre) {
                     case "CTHULU":
+                        imagenEnemigo1.setImage(cargarImagen(rutaImagen));
                         vidaEnemigo1.setText(String.valueOf(vida));
                         ataqueEnemigo1.setText(String.valueOf(ataque));
                         velocidadEnemigo1.setText(String.valueOf(velocidad));
                         break;
                     case "MINOTAURO":
+                        imagenEnemigo2.setImage(cargarImagen(rutaImagen));
                         vidaEnemigo2.setText(String.valueOf(vida));
                         ataqueEnemigo2.setText(String.valueOf(ataque));
                         velocidadEnemigo2.setText(String.valueOf(velocidad));
+                        break;
+                    case "CICLOPE":
+                        imagenEnemigo3.setImage(cargarImagen(rutaImagen));
+                        vidaEnemigo3.setText(String.valueOf(vida));
+                        ataqueEnemigo3.setText(String.valueOf(ataque));
+                        velocidadEnemigo3.setText(String.valueOf(velocidad));
                         break;
                 }
             }
@@ -124,17 +154,15 @@ public class JuegoController implements Observer {
         cargarMapa();
         cargarTablero();
     }
-    
 
     @Override
     public void onChange() {
         actualizarStats(); // Actualiza la UI cuando hay un cambio en el jugador
     }
 
-    
     private Image cargarImagenJugador(String rutaImagen) {
         return new Image(getClass().getResource(rutaImagen).toExternalForm());
-        
+
     }
 
     private void actualizarStats() {
@@ -159,21 +187,35 @@ public class JuegoController implements Observer {
         }
     }
 
+    private Image cargarImagen(String ruta) {
+        return new Image(getClass().getResource(ruta).toExternalForm());
+    }
 
     private void mostrarpersonajesPorVelocidad(List<Personaje> personajes) {
         personajes.sort(Comparator.comparingInt(Personaje::getVelocidad).reversed());
-    
-        if (personajes.size() > 0 && personajes.get(0).getRutaImagen() != null)
+
+        if (personajes.size() > 0 && personajes.get(0).getRutaImagen() != null) {
             imagenMasVelocidad.setImage(cargarImagenJugador(personajes.get(0).getRutaImagen()));
-        if (personajes.size() > 1 && personajes.get(1).getRutaImagen() != null)
+            masVelocidad.setText(String.valueOf(personajes.get(0).getVelocidad()));
+        }
+        if (personajes.size() > 1 && personajes.get(1).getRutaImagen() != null) {
             imagenVelocidadMedia.setImage(cargarImagenJugador(personajes.get(1).getRutaImagen()));
-        if (personajes.size() > 2 && personajes.get(2).getRutaImagen() != null)
+            velocidadMedia.setText(String.valueOf(personajes.get(1).getVelocidad()));
+        }
+        if (personajes.size() > 2 && personajes.get(2).getRutaImagen() != null) {
             imagenMasLento.setImage(cargarImagenJugador(personajes.get(2).getRutaImagen()));
+            masLento.setText(String.valueOf(personajes.get(2).getVelocidad()));
+        }
+        if (personajes.size() > 3 && personajes.get(3).getRutaImagen() != null) {
+            imagenMasMasLento.setImage(cargarImagenJugador(personajes.get(3).getRutaImagen()));
+            masMasLento.setText(String.valueOf(personajes.get(3).getVelocidad()));
+        }
     }
-    
- 
-    /* De momento vamos a trabajar con personaje y dos enemigos, es posible que haya que modificar este trozo */
-    
+
+    /*
+     * De momento vamos a trabajar con personaje y dos enemigos, es posible que haya
+     * que modificar este trozo
+     */
 
     /**
      * Genera una instancia Mapa en la que establece la correspondencia gráfica
@@ -187,8 +229,9 @@ public class JuegoController implements Observer {
         String rutaArchivo = "mapa_15x15_prueba.txt";
         String carpeta = "/Tablero/";
         try {
-            int[][] mapaMatriz = DataReader.leerMapa(rutaBase + carpeta + rutaArchivo); // Ruta común declarada como variable
-                                                                              // estática de la clase.
+            int[][] mapaMatriz = DataReader.leerMapa(rutaBase + carpeta + rutaArchivo); // Ruta común declarada como
+                                                                                        // variable
+            // estática de la clase.
             mapa = new Mapa(mapaMatriz);
         } catch (IOException e) { // Como el método trabaja con archivos, hay que capturar errores de
                                   // entrada/salida (IO)
