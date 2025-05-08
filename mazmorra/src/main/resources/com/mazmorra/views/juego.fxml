@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mazmorra.Controllers.JuegoController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mazmorra.Controllers.JuegoController">
    <children>
-      <VBox layoutX="450.0" prefHeight="450.0" prefWidth="250.0">
+      <VBox layoutX="517.0" prefHeight="450.0" prefWidth="183.0">
          <children>
             <HBox fx:id="tituloEstadisticasPlayer" alignment="CENTER" prefHeight="71.0" prefWidth="250.0">
                <children>
