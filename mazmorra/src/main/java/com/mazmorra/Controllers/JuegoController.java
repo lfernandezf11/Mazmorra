@@ -87,6 +87,8 @@ public class JuegoController implements Observer {
     private StackPane stackPaneJuego;
     @FXML
     private GridPane gridPaneJuego;
+    @FXML
+    private GridPane gridPanePersonajes;
 
     private Jugador jugador;
     private Mapa mapa;
@@ -128,19 +130,19 @@ public class JuegoController implements Observer {
 
                 switch (nombre) {
                     case "CTHULU":
-                        imagenEnemigo1.setImage(cargarImagen(rutaImagen));
+                        imagenEnemigo1.setImage(cargarImagenJugador(rutaImagen));
                         vidaEnemigo1.setText(String.valueOf(vida));
                         ataqueEnemigo1.setText(String.valueOf(ataque));
                         velocidadEnemigo1.setText(String.valueOf(velocidad));
                         break;
                     case "MINOTAURO":
-                        imagenEnemigo2.setImage(cargarImagen(rutaImagen));
+                        imagenEnemigo2.setImage(cargarImagenJugador(rutaImagen));
                         vidaEnemigo2.setText(String.valueOf(vida));
                         ataqueEnemigo2.setText(String.valueOf(ataque));
                         velocidadEnemigo2.setText(String.valueOf(velocidad));
                         break;
                     case "CICLOPE":
-                        imagenEnemigo3.setImage(cargarImagen(rutaImagen));
+                        imagenEnemigo3.setImage(cargarImagenJugador(rutaImagen));
                         vidaEnemigo3.setText(String.valueOf(vida));
                         ataqueEnemigo3.setText(String.valueOf(ataque));
                         velocidadEnemigo3.setText(String.valueOf(velocidad));
@@ -187,9 +189,6 @@ public class JuegoController implements Observer {
         }
     }
 
-    private Image cargarImagen(String ruta) {
-        return new Image(getClass().getResource(ruta).toExternalForm());
-    }
 
     private void mostrarpersonajesPorVelocidad(List<Personaje> personajes) {
         personajes.sort(Comparator.comparingInt(Personaje::getVelocidad).reversed());
@@ -259,6 +258,7 @@ public class JuegoController implements Observer {
         Platform.runLater(() -> {
             if (stackPaneJuego.getWidth() > 0 && mapa != null) {
                 mapa.generarTablero(gridPaneJuego, stackPaneJuego);
+                mapa.generarPersonajes(gridPanePersonajes, stackPaneJuego);
             }
 
             /*

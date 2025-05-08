@@ -82,8 +82,12 @@ public class Mapa {
         ImageView entidadJugador = new ImageView(); 
         String url = Proveedor.getInstance().getJugador().getRutaImagen();//Crea una vista gráfica por cada c
         entidadJugador.setImage(new Image(getClass().getResource(url).toExternalForm()));
+        System.out.println("Ruta obtenida: " + url);
+System.out.println("URL resuelta:");
         gridPanePersonajes.add(entidadJugador, 0, 0);
-        actualizarTamCelda(gridPanePersonajes, mapaMatriz.length, anchoStack); 
+        entidadJugador.setFitWidth(32);
+        entidadJugador.setFitHeight(32);
+        //actualizarTamCelda(gridPanePersonajes, mapaMatriz.length, anchoStack); 
         }
         
     
