@@ -49,17 +49,17 @@ public class JuegoController implements Observer {
     @FXML
     private ImageView imagenMasLento;
     @FXML
-    private Label vidaCthulu;
+    private Label vidaEnemigo1;
     @FXML
-    private Label ataqueCthulu;
+    private Label ataqueEnemigo1;
     @FXML
-    private Label velocidadCthulu;
+    private Label velocidadEnemigo1;
     @FXML
-    private Label vidaMino;
+    private Label vidaEnemigo2;
     @FXML
-    private Label ataqueMino;
+    private Label ataqueEnemigo2;
     @FXML
-    private Label velocidadMino;
+    private Label velocidadEnemigo2;
 
     @FXML
     private StackPane stackPaneJuego;
@@ -106,14 +106,14 @@ public class JuegoController implements Observer {
 
                 switch (nombre) {
                     case "CTHULU":
-                        vidaCthulu.setText(String.valueOf(vida));
-                        ataqueCthulu.setText(String.valueOf(ataque));
-                        velocidadCthulu.setText(String.valueOf(velocidad));
+                        vidaEnemigo1.setText(String.valueOf(vida));
+                        ataqueEnemigo1.setText(String.valueOf(ataque));
+                        velocidadEnemigo1.setText(String.valueOf(velocidad));
                         break;
                     case "MINOTAURO":
-                        vidaMino.setText(String.valueOf(vida));
-                        ataqueMino.setText(String.valueOf(ataque));
-                        velocidadMino.setText(String.valueOf(velocidad));
+                        vidaEnemigo2.setText(String.valueOf(vida));
+                        ataqueEnemigo2.setText(String.valueOf(ataque));
+                        velocidadEnemigo2.setText(String.valueOf(velocidad));
                         break;
                 }
             }

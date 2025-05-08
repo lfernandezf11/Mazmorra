@@ -60,19 +60,19 @@
                         <Image url="@../Images/heart.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="vidaCthulu" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="2" />
+                  <Label fx:id="vidaEnemigo1" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="2" />
                   <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/sword.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="ataqueCthulu" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
+                  <Label fx:id="ataqueEnemigo1" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
                   <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/lightning.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="velocidadCthulu" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
+                  <Label fx:id="velocidadEnemigo1" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0">
@@ -83,19 +83,19 @@
                         <Image url="@../Images/heart.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="vidaMino" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="3" />
+                  <Label fx:id="vidaEnemigo2" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="3" />
                   <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/sword.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="ataqueMino" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="2" />
+                  <Label fx:id="ataqueEnemigo2" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="2" />
                   <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/lightning.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="velocidadMino" alignment="CENTER" cache="true" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="30.0" text="2" />
+                  <Label fx:id="velocidadEnemigo2" alignment="CENTER" cache="true" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="30.0" text="2" />
                </children>
             </HBox>
             <Separator prefHeight="0.0" prefWidth="250.0" />
