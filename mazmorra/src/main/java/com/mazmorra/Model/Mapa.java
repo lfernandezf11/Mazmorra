@@ -1,5 +1,7 @@
 package com.mazmorra.Model;
 
+import com.mazmorra.Controllers.JuegoController;
+
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -70,6 +72,23 @@ public class Mapa {
         }
     }
 
+
+    public void generarPersonajes(GridPane gridPanePersonajes, StackPane stackPaneJuego){
+        //Limpia el contenido anterior del gridPane (si lo hubiese).
+        resetearGridPane(gridPanePersonajes);
+        addConstraints(gridPanePersonajes);
+        
+        double anchoStack = stackPaneJuego.getWidth();
+        ImageView entidadJugador = new ImageView(); 
+        String url = Proveedor.getInstance().getJugador().getRutaImagen();//Crea una vista gráfica por cada c
+        entidadJugador.setImage(new Image(getClass().getResource(url).toExternalForm()));
+        gridPanePersonajes.add(entidadJugador, 0, 0);
+        actualizarTamCelda(gridPanePersonajes, mapaMatriz.length, anchoStack); 
+        }
+        
+    
+
+
     /**
      * Limpia el contenido y las restricciones del GridPane.
      * 
@@ -77,12 +96,12 @@ public class Mapa {
      * @return el GridPane sin contenido.
      * 
      */
-    private GridPane resetearGridPane(GridPane gridPaneJuego){
-        gridPaneJuego.getChildren().clear();
-        gridPaneJuego.getColumnConstraints().clear();
-        gridPaneJuego.getRowConstraints().clear();
+    private GridPane resetearGridPane(GridPane gridPane){
+        gridPane.getChildren().clear();
+        gridPane.getColumnConstraints().clear();
+        gridPane.getRowConstraints().clear();
 
-        return gridPaneJuego;
+        return gridPane;
     }
     
     /**
@@ -91,7 +110,7 @@ public class Mapa {
      * @param gridPaneJuego el GridPane del tablero de juego.
      * 
      */
-    private void addConstraints(GridPane gridPaneJuego){
+    private void addConstraints(GridPane gridPane){
         for (int i = 0; i < mapaMatriz.length; i++) { //Asume que el tablero es cuadrado.
             ColumnConstraints cc = new ColumnConstraints(); 
             RowConstraints rc = new RowConstraints();
@@ -99,8 +118,8 @@ public class Mapa {
             cc.setPercentWidth(100.0 / mapaMatriz.length);//Establece que el grid tiene que ocupar todo el espacio disponible.
             rc.setPercentHeight(100.0 / mapaMatriz.length);
             
-            gridPaneJuego.getColumnConstraints().add(cc);//Añade las restricciones al grid.
-            gridPaneJuego.getRowConstraints().add(rc);
+            gridPane.getColumnConstraints().add(cc);//Añade las restricciones al grid.
+            gridPane.getRowConstraints().add(rc);
         }
     }
     
@@ -112,11 +131,11 @@ public class Mapa {
      * @param anchoStack ancho disponible en la estructura AnchorPane para distribuir las celdas.
      * 
      */
-    private void actualizarTamCelda(GridPane gridPaneJuego, int size, double anchoStack){
+    private void actualizarTamCelda(GridPane gridPane, int size, double anchoStack){
          
             double tamCelda = anchoStack / size; // size = mapaMatriz.length = columnas
         
-            for (Node node : gridPaneJuego.getChildren()) {
+            for (Node node : gridPane.getChildren()) {
                 if (node instanceof ImageView) {
                     ((ImageView) node).setFitWidth(tamCelda);
                     ((ImageView) node).setFitHeight(tamCelda);
