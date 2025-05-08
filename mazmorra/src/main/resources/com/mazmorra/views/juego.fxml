@@ -54,11 +54,7 @@
             <Separator prefHeight="0.0" prefWidth="250.0" />
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0">
                <children>
-                  <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/cthuluAbajo.png" />
-                     </image>
-                  </ImageView>
+                  <ImageView fx:id="imagenEnemigo1" fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/heart.png" />
@@ -81,11 +77,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0">
                <children>
-                  <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/minotauroAbajo.png" />
-                     </image>
-                  </ImageView>
+                  <ImageView fx:id="imagenEnemigo2" fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/heart.png" />

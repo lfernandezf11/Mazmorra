@@ -145,7 +145,7 @@ public class JugadorController implements Observer {
             0, 0, 5, rutaImagen, tipo, 10
         );
         jugador.subscribe(this);
-        Proveedor.getInstance().setJugador(jugador); // SOLO AQUÍ
+        Proveedor.getInstance().setJugador(jugador); 
         mostrarStats();
         configurarBotones();
         actualizarPersonaje();
@@ -207,6 +207,7 @@ public class JugadorController implements Observer {
 
         iniciarJuego.setOnAction(e -> {
             jugador.setNombre(introNombre.getText());
+            
             Proveedor.getInstance().setJugador(jugador);
             // Carga y muestra la escena de juego en este momento
             SceneManager.getInstance().setScene(SceneID.JUEGO, "juego");

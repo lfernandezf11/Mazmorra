@@ -15,6 +15,7 @@ import com.mazmorra.Util.DataReader;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -27,7 +28,7 @@ public class JuegoController implements Observer {
      * getResources extrae de aquí las imágenes, por eso
      * se puede prescindir de src/main/resources en su ruta relativa.
      */
-    private static final String rutaBase = "mazmorra/src/main/resources/com/mazmorra/Tablero/";
+    private static final String rutaBase = "mazmorra/src/main/resources/com/mazmorra/";
 
     @FXML
     private Label vidaJugador;
@@ -75,23 +76,28 @@ public class JuegoController implements Observer {
         System.out.println("INICIALIZANDO JUEGO CONTROLLER");
         jugador = Proveedor.getInstance().getJugador();
         System.out.println("Jugador en JuegoController: " + jugador);
-        if (jugador != null) {
+        if (jugador.getRutaImagen() != null) {
+            imagenJugador.setImage(cargarImagenJugador(jugador.getRutaImagen()));
+        } else {
+            System.err.println("❌ Ruta de imagen null para: " + jugador.getNombre());
+        }
+        // if (jugador != null) {
+        //     imagenJugador.setImage(cargarImagenJugador(jugador.getRutaImagen()));
             jugador.subscribe(this);
             actualizarStats();
-        } else {
-            System.out.println("Jugador es null en JuegoController");
-        }
+        // } else {
+        //     System.out.println("Jugador es null en initialize()");
+        
 
-        // PONER LA RUTA BIEN, IMPLEMENTAR EN LA RUTA BASE
         Proveedor.getInstance()
-                .cargarEnemigosDesdeJson("mazmorra/src/main/resources/com/mazmorra/Enemigos/enemigo1.json");
+                .cargarEnemigosDesdeJson(rutaBase + "/Enemigos/enemigo1.json");
 
         List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
         mostrarpersonajesPorVelocidad(personajes);
 
         try {
             List<Map<String, Object>> enemigos = DataReader
-                    .leerJson("mazmorra/src/main/resources/com/mazmorra/Enemigos/enemigo1.json");
+                    .leerJson(rutaBase + "/Enemigos/enemigo1.json");
             for (Map<String, Object> enemigo : enemigos) {
                 String nombre = ((String) enemigo.get("nombre")).toUpperCase();
                 int vida = (int) enemigo.get("vida");
@@ -118,10 +124,17 @@ public class JuegoController implements Observer {
         cargarMapa();
         cargarTablero();
     }
+    
 
     @Override
     public void onChange() {
         actualizarStats(); // Actualiza la UI cuando hay un cambio en el jugador
+    }
+
+    
+    private Image cargarImagenJugador(String rutaImagen) {
+        return new Image(getClass().getResource(rutaImagen).toExternalForm());
+        
     }
 
     private void actualizarStats() {
@@ -138,29 +151,29 @@ public class JuegoController implements Observer {
             ataqueJugador.setText(String.valueOf(jugador.getAtaque()));
             defensaJugador.setText(String.valueOf(jugador.getDefensa()));
             velocidadJugador.setText(String.valueOf(jugador.getVelocidad()));
-            if (jugador.getImagen() != null) {
-                imagenJugador.setImage(jugador.getImagen());
+            if (jugador.getRutaImagen() != null) {
+                imagenJugador.setImage(cargarImagenJugador(jugador.getRutaImagen()));
                 imagenJugador.setFitWidth(32);
                 imagenJugador.setFitHeight(32);
             }
         }
     }
 
+
     private void mostrarpersonajesPorVelocidad(List<Personaje> personajes) {
         personajes.sort(Comparator.comparingInt(Personaje::getVelocidad).reversed());
-        if (personajes.size() >= 3) {
-            imagenMasVelocidad.setImage(personajes.get(0).getImagen());
-            imagenVelocidadMedia.setImage(personajes.get(1).getImagen());
-            imagenMasLento.setImage(personajes.get(2).getImagen());
-        } else {
-            if (personajes.size() > 0)
-                imagenMasVelocidad.setImage(personajes.get(0).getImagen());
-            if (personajes.size() > 1)
-                imagenVelocidadMedia.setImage(personajes.get(1).getImagen());
-            if (personajes.size() > 2)
-                imagenMasLento.setImage(personajes.get(2).getImagen());
-        }
+    
+        if (personajes.size() > 0 && personajes.get(0).getRutaImagen() != null)
+            imagenMasVelocidad.setImage(cargarImagenJugador(personajes.get(0).getRutaImagen()));
+        if (personajes.size() > 1 && personajes.get(1).getRutaImagen() != null)
+            imagenVelocidadMedia.setImage(cargarImagenJugador(personajes.get(1).getRutaImagen()));
+        if (personajes.size() > 2 && personajes.get(2).getRutaImagen() != null)
+            imagenMasLento.setImage(cargarImagenJugador(personajes.get(2).getRutaImagen()));
     }
+    
+ 
+    /* De momento vamos a trabajar con personaje y dos enemigos, es posible que haya que modificar este trozo */
+    
 
     /**
      * Genera una instancia Mapa en la que establece la correspondencia gráfica
@@ -172,8 +185,9 @@ public class JuegoController implements Observer {
      */
     private void cargarMapa() {
         String rutaArchivo = "mapa_15x15_prueba.txt";
+        String carpeta = "/Tablero/";
         try {
-            int[][] mapaMatriz = DataReader.leerMapa(rutaBase + rutaArchivo); // Ruta común declarada como variable
+            int[][] mapaMatriz = DataReader.leerMapa(rutaBase + carpeta + rutaArchivo); // Ruta común declarada como variable
                                                                               // estática de la clase.
             mapa = new Mapa(mapaMatriz);
         } catch (IOException e) { // Como el método trabaja con archivos, hay que capturar errores de

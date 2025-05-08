@@ -3,6 +3,8 @@ package com.mazmorra.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mazmorra.TipoJugador;
+
 
 /*LUCÍA: AQUÍ, EN PROVEEDOR, REESCRIBIR LOS MÉTODOS PARA LLAMARLOS BIEN DESDE APP. 
  * CREAR UN JSON CON RUTA VÁLIDA.
@@ -77,7 +79,10 @@ public class Proveedor {
                 String[] campos = enemigoStr.split(",");
 
                 String nombre = "";
-                int ataque = 0, vida = 0, defensa = 0, velocidad = 0, percepcion = 0;
+                int ataque = 0, vida = 0, defensa = 0, velocidad = 0; 
+                String rutaImagen = "/com/mazmorra/Images/arqueroAbajo.png";
+                TipoJugador tipo = TipoJugador.CICLOPE;
+                int percepcion = 0;
 
                 for (String campo : campos) {
                     String[] keyValue = campo.split(":");
@@ -89,7 +94,8 @@ public class Proveedor {
 
                     switch (key) {
                         case "nombre":
-                            nombre = value;
+                            nombre = value.toUpperCase();
+                            tipo = TipoJugador.valueOf(nombre);
                             break;
                         case "ataque":
                             ataque = Integer.parseInt(value);
@@ -103,12 +109,15 @@ public class Proveedor {
                         case "velocidad":
                             velocidad = Integer.parseInt(value);
                             break;
+                        case "rutaImagen":
+                            rutaImagen = value;
+                            break;
                         case "percepcion":
                             percepcion = Integer.parseInt(value);
                             break;
                     }
                 }
-                this.enemigos.add(new Enemigo(nombre, ataque, vida, defensa, null, nombre, percepcion) );
+                this.enemigos.add(new Enemigo(nombre, ataque, defensa, vida, tipo, rutaImagen, percepcion));
             }
         } catch (Exception e) {
             e.printStackTrace();
