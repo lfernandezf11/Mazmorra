@@ -155,6 +155,32 @@ public class JuegoController implements Observer {
 
         cargarMapa();
         cargarTablero();
+
+        stackPaneJuego.setFocusTraversable(true);
+
+        stackPaneJuego.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case UP:
+                    mapa.moverJugador(0, -1, gridPanePersonajes, stackPaneJuego);
+                    stackPaneJuego.requestFocus();
+                    break;
+                case DOWN:
+                    mapa.moverJugador(0, 1, gridPanePersonajes, stackPaneJuego);
+                    stackPaneJuego.requestFocus();
+                    break;
+                case LEFT:
+                    mapa.moverJugador(-1, 0, gridPanePersonajes, stackPaneJuego);
+                    stackPaneJuego.requestFocus();
+                    break;
+                case RIGHT:
+                    mapa.moverJugador(1, 0, gridPanePersonajes, stackPaneJuego);
+                    stackPaneJuego.requestFocus();
+                    break;
+                default:
+                    break;
+            }
+        });
+        stackPaneJuego.requestFocus(); // Para que el stackPane reciba el foco y capture las teclas
     }
 
     @Override
@@ -188,7 +214,6 @@ public class JuegoController implements Observer {
             }
         }
     }
-
 
     private void mostrarpersonajesPorVelocidad(List<Personaje> personajes) {
         personajes.sort(Comparator.comparingInt(Personaje::getVelocidad).reversed());
@@ -275,6 +300,5 @@ public class JuegoController implements Observer {
             });
         });
     }
-
 
 }
