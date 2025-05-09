@@ -11,6 +11,9 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
+import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Gestiona la construcción gráfica del tablero de juego a partir de una matriz
@@ -85,34 +88,43 @@ public class Mapa {
     }
 
     public void generarPersonajes(GridPane gridPanePersonajes, StackPane stackPaneJuego) {
-        // Limpia el contenido anterior del gridPane (si lo hubiese).
         resetearGridPane(gridPanePersonajes);
         addConstraints(gridPanePersonajes);
 
-        double anchoStack = stackPaneJuego.getWidth();
+        Random random = new Random();
+        Set<String> posicionesOcupadas = new HashSet<>();
+
+        // --- JUGADOR ---
+        int jugadorX, jugadorY;
+        do { // AL JUGADOR LO LIMITO A ESTAR EN EL 7x7 
+            jugadorX = random.nextInt(7);
+            jugadorY = random.nextInt(7);
+        } while (mapaMatriz[jugadorY][jugadorX] != 0 || posicionesOcupadas.contains(jugadorX + "," + jugadorY));
+        posicionesOcupadas.add(jugadorX + "," + jugadorY);
+
         ImageView entidadJugador = new ImageView();
-        String url = Proveedor.getInstance().getJugador().getRutaImagen();// Crea una vista gráfica por cada c
+        String url = Proveedor.getInstance().getJugador().getRutaImagen();
         entidadJugador.setImage(new Image(getClass().getResource(url).toExternalForm()));
-        System.out.println("Ruta obtenida: " + url);
-        System.out.println("URL resuelta:");
-        gridPanePersonajes.add(entidadJugador, 0, 0);
         entidadJugador.setFitWidth(32);
         entidadJugador.setFitHeight(32);
-        // actualizarTamCelda(gridPanePersonajes, mapaMatriz.length, anchoStack);
+        gridPanePersonajes.add(entidadJugador, jugadorX, jugadorY);
 
-        // Posiciones fijas para enemigos
-        int[][] posiciones = {{ 7, 7 }, { 7, 0 }, { 0, 7 } };
-
+        // --- ENEMIGOS ---
         List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
+        for (Enemigo enemigo : enemigos) {
+            int enemigoX, enemigoY;
+            do {
+                enemigoX = random.nextInt(mapaMatriz[0].length);
+                enemigoY = random.nextInt(mapaMatriz.length);
+            } while (mapaMatriz[enemigoY][enemigoX] != 0 || posicionesOcupadas.contains(enemigoX + "," + enemigoY));
+            posicionesOcupadas.add(enemigoX + "," + enemigoY);
 
-        for (int i = 0; i < enemigos.size() && i < posiciones.length; i++) {
-            Enemigo enemigo = enemigos.get(i);
             ImageView enemigoView = new ImageView();
             String urlEnemigo = enemigo.getRutaImagen();
             enemigoView.setImage(new Image(getClass().getResource(urlEnemigo).toExternalForm()));
             enemigoView.setFitWidth(32);
             enemigoView.setFitHeight(32);
-            gridPanePersonajes.add(enemigoView, posiciones[i][0], posiciones[i][1]);
+            gridPanePersonajes.add(enemigoView, enemigoX, enemigoY);
         }
     }
 
