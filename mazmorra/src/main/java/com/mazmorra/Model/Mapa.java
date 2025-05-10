@@ -92,7 +92,7 @@ public class Mapa {
         }
     }
 
-    public void generarPersonajes(GridPane gridPanePersonajes, StackPane stackPaneJuego) {
+    public void generarPersonajes(GridPane gridPanePersonajes) {
         resetearGridPane(gridPanePersonajes);
         addConstraints(gridPanePersonajes);
 
@@ -166,7 +166,7 @@ public class Mapa {
             moverEnemigos();
 
             // Redibuja los personajes en la nueva posición (sin regenerar aleatorio)
-            generarPersonajes(gridPanePersonajes, stackPaneJuego);
+            generarPersonajes(gridPanePersonajes);
             return true;
         }
         return false;

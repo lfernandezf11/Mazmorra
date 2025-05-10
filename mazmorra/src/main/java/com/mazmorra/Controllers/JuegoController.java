@@ -283,7 +283,7 @@ public class JuegoController implements Observer {
         Platform.runLater(() -> {
             if (stackPaneJuego.getWidth() > 0 && mapa != null) {
                 mapa.generarTablero(gridPaneJuego, stackPaneJuego);
-                mapa.generarPersonajes(gridPanePersonajes, stackPaneJuego);
+                mapa.generarPersonajes(gridPanePersonajes);
             }
 
             /*

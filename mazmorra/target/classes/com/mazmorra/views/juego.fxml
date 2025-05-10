@@ -173,11 +173,11 @@
                </children>
             </VBox>
          </children></VBox>
-      <AnchorPane id="anchorPaneJuego" fx:id="anchorPaneJuego" prefHeight="450.0" prefWidth="450.0">
+      <AnchorPane id="anchorPaneJuego" fx:id="anchorPaneJuego" maxHeight="500.0" maxWidth="500.0" minHeight="500.0" minWidth="500.0" prefHeight="500.0" prefWidth="500.0">
          <children>
-            <StackPane fx:id="stackPaneJuego" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <StackPane fx:id="stackPaneJuego" prefHeight="450.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <GridPane fx:id="gridPaneJuego" prefHeight="350.0" prefWidth="350.0">
+                  <GridPane fx:id="gridPaneJuego" maxHeight="500.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -188,7 +188,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                   </GridPane>
-                  <GridPane fx:id="gridPanePersonajes" prefHeight="350.0" prefWidth="350.0">
+                  <GridPane fx:id="gridPanePersonajes" maxHeight="500.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -199,7 +199,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
-                  <Pane fx:id="gameOverPane" prefHeight="450.0" prefWidth="400.0" />
+                  <Pane fx:id="gameOverPane" prefHeight="450.0" prefWidth="450.0" />
                </children>
             </StackPane>
          </children>
