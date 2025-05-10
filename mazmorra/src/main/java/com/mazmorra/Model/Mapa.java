@@ -162,12 +162,59 @@ public class Mapa {
 
             jugadorX = nuevoX;
             jugadorY = nuevoY;
+            // Mueve los enemigos tras mover el jugador
+            moverEnemigos();
 
             // Redibuja los personajes en la nueva posición (sin regenerar aleatorio)
             generarPersonajes(gridPanePersonajes, stackPaneJuego);
             return true;
         }
         return false;
+    }
+
+    public void moverEnemigos() {
+        List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
+        Set<String> posicionesOcupadas = new HashSet<>();
+
+        // Añade la posición del jugador para que los enemigos no puedan ir ahí
+        posicionesOcupadas.add(jugadorX + "," + jugadorY);
+
+        // Añade posiciones actuales de enemigos para evitar que se pisen
+        for (Enemigo enemigo : enemigos) {
+            posicionesOcupadas.add(enemigo.getPosicionX() + "," + enemigo.getPosicionY());
+        }
+
+        Random random = new Random();
+
+        for (Enemigo enemigo : enemigos) {
+            int x = enemigo.getPosicionX();
+            int y = enemigo.getPosicionY();
+
+            // Direcciones posibles: arriba, abajo, izquierda, derecha
+            int[][] direcciones = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
+            List<int[]> posiblesMovimientos = new java.util.ArrayList<>();
+
+            for (int[] dir : direcciones) {
+                int nx = x + dir[0];
+                int ny = y + dir[1];
+                String posStr = nx + "," + ny;
+                if (nx >= 0 && nx < mapaMatriz[0].length &&
+                        ny >= 0 && ny < mapaMatriz.length &&
+                        mapaMatriz[ny][nx] == 0 && // Solo suelo
+                        !posicionesOcupadas.contains(posStr) // No pisar jugador ni otros enemigos
+                ) {
+                    posiblesMovimientos.add(new int[] { nx, ny });
+                }
+            }
+
+            if (!posiblesMovimientos.isEmpty()) {
+                int[] movimiento = posiblesMovimientos.get(random.nextInt(posiblesMovimientos.size()));
+                posicionesOcupadas.remove(x + "," + y); // Libera la casilla anterior
+                enemigo.setPosicion(movimiento[0], movimiento[1]);
+                posicionesOcupadas.add(movimiento[0] + "," + movimiento[1]); // Ocupa la nueva
+            }
+            // Si no hay movimientos posibles, el enemigo se queda quieto
+        }
     }
 
     /**
