@@ -17,12 +17,12 @@
       <Image url="@../Images/peakpx.jpg" />
    </image>
 </ImageView>
-        <Button fx:id="iniciarJuego" layoutX="253.0" layoutY="287.0" prefHeight="25.0" prefWidth="74.0" text="START" />
-        <Label layoutX="232.0" layoutY="14.0" text="Elección de Personaje" textFill="WHITE">
+        <Button fx:id="iniciarJuego" layoutX="252.0" layoutY="274.0" prefHeight="25.0" prefWidth="175.0" text="START" />
+        <Label fx:id="labelPrincipal" layoutX="208.0" layoutY="6.0" text="Elección de Personaje" textFill="WHITE">
          <font>
             <Font name="Arial Bold Italic" size="12.0" />
          </font></Label>
-      <Label fx:id="pDisponible" layoutX="15.0" layoutY="166.0" text="Puntos disponibles:" textFill="WHITE">
+      <Label fx:id="pDisponible" layoutX="13.0" layoutY="156.0" text="Puntos disponibles:" textFill="WHITE">
          <font>
             <Font name="Arial Bold Italic" size="12.0" />
          </font></Label>
@@ -30,7 +30,7 @@
          <children>
             <HBox prefHeight="30.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="Vida" prefHeight="30.0" prefWidth="60.0" text="Vida" textFill="WHITE" />
+                  <Label fx:id="Vida" prefHeight="30.0" prefWidth="80.0" text="Vida" textFill="WHITE" />
                   <Label fx:id="puntosVida" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="50.0" text="5" textAlignment="CENTER" textFill="WHITE" />
                   <Button fx:id="restVida" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" textFill="RED" />
                   <Button fx:id="addVida" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" textFill="#00ff2f" />
@@ -38,7 +38,7 @@
             </HBox>
             <HBox prefHeight="30.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="Ataque" prefHeight="30.0" prefWidth="60.0" text="Ataque" textFill="WHITE" />
+                  <Label fx:id="Ataque" prefHeight="30.0" prefWidth="80.0" text="Ataque" textFill="WHITE" />
                   <Label fx:id="puntosAtaque" alignment="CENTER" prefHeight="33.0" prefWidth="50.0" text="0" textFill="#fffdfd" />
                   <Button fx:id="restAtaque" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" textFill="RED" />
                   <Button fx:id="addAtaque" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" textFill="#00ff2f" />
@@ -46,7 +46,7 @@
             </HBox>
             <HBox prefHeight="30.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="Defensa" prefHeight="30.0" prefWidth="60.0" text="Defensa" textFill="WHITE" />
+                  <Label fx:id="Defensa" prefHeight="30.0" prefWidth="80.0" text="Defensa" textFill="WHITE" />
                   <Label fx:id="puntosDefensa" alignment="CENTER" prefHeight="38.0" prefWidth="50.0" text="0" textFill="WHITE" />
                   <Button fx:id="restDefensa" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" textFill="RED" />
                   <Button fx:id="addDefensa" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" textFill="#00ff2f" />
@@ -54,7 +54,7 @@
             </HBox>
             <HBox prefHeight="30.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="Velocidad" prefHeight="30.0" prefWidth="60.0" text="Velocidad" textFill="WHITE" />
+                  <Label fx:id="Velocidad" prefHeight="30.0" prefWidth="80.0" text="Velocidad" textFill="WHITE" />
                   <Label fx:id="puntosVelocidad" alignment="CENTER" prefHeight="37.0" prefWidth="50.0" text="0" textFill="WHITE" />
                   <Button fx:id="restVelocidad" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="-" textFill="RED" />
                   <Button fx:id="addVelocidad" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" text="+" textFill="#00ff2f" />
@@ -62,7 +62,7 @@
             </HBox>
          </children>
       </VBox>
-      <Label fx:id="PuntosRestantes" alignment="CENTER" contentDisplay="CENTER" layoutX="134.0" layoutY="160.0" prefHeight="27.0" prefWidth="50.0" text="5" textAlignment="CENTER" textFill="#f2f600">
+      <Label fx:id="PuntosRestantes" alignment="CENTER" contentDisplay="CENTER" layoutX="158.0" layoutY="153.0" prefHeight="27.0" prefWidth="50.0" text="5" textAlignment="CENTER" textFill="#f2f600">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
@@ -85,12 +85,12 @@
             </ImageView>
          </children>
       </HBox>
-      <Label layoutX="12.0" layoutY="47.0" text="Introduce tu nombre:" textFill="WHITE">
+      <Label fx:id="labelPrincipal" layoutX="12.0" layoutY="47.0" text="Introduce tu nombre:" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="introNombre" layoutX="157.0" layoutY="43.0" promptText="Nombre" />
-      <Button fx:id="introUno" layoutX="322.0" layoutY="43.0" prefHeight="25.0" prefWidth="74.0" text="Intro" />
+      <TextField fx:id="introNombre" layoutX="144.0" layoutY="43.0" promptText="Nombre" />
+      <Button fx:id="introUno" layoutX="339.0" layoutY="43.0" prefHeight="25.0" prefWidth="115.0" text="Intro" />
    </children>
 </Pane>
