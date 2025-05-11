@@ -122,7 +122,7 @@ for (Enemigo enemigo : enemigos) {
            
 
         cargarMapa();
-        cargarTablero();
+        dibujarTablero();
 
         stackPaneJuego.setFocusTraversable(true);
 
@@ -238,11 +238,15 @@ for (Enemigo enemigo : enemigos) {
      * de extraerlas y operar sobre ellos.
      * 
      */
-    private void cargarTablero() {
+    private void dibujarTablero() {
+        //Ejecuta el primer ciclo de la función para pasar al true el booleano personajesGenerados.
+          mapa.dibujarPersonajes(gridPanePersonajes); 
+        
         /*
          * Clase JavaFX que permite al programa comunicarse y modificar la interfaz
          * gráfica desde otro hilo.
          */
+       
         /*
          * Carga por primera vez el tablero DESPUÉS de que JavaFx haya terminado de
          * cargar, asegurando que se obtienen valores válidos.
@@ -251,7 +255,6 @@ for (Enemigo enemigo : enemigos) {
         Platform.runLater(() -> {
             if (stackPaneJuego.getWidth() > 0 && mapa != null) {
                 mapa.generarTablero(gridPaneJuego, stackPaneJuego);
-                mapa.generarPersonajes(gridPanePersonajes);
             }
 
             /*

@@ -40,6 +40,7 @@ public class Mapa {
     private int[][] mapaMatriz; // Matriz de datos procedente de DataReader.java
     private List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
     private Jugador jugador = Proveedor.getInstance().getJugador();
+    private List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
     
     private Set<String> posicionesOcupadas = new HashSet<>();
     // POSICION DEL JUGADOR
@@ -97,7 +98,7 @@ public class Mapa {
         }
     }
 
-    public void generarPersonajes(GridPane gridPanePersonajes) {
+    public void dibujarPersonajes(GridPane gridPanePersonajes) {
         resetearGridPane(gridPanePersonajes);
         addConstraints(gridPanePersonajes);
 
@@ -118,10 +119,18 @@ public class Mapa {
             }
 
             personajesGenerados = true;
-        }
+            
+            // Vacía el set de posiciones ocupadas solo si no es la carga inicial, y lo reemplaza con las posiciones actuales.
+            } else {
+                posicionesOcupadas.clear();
+                posicionesOcupadas.add(jugador.getColumna() + "," + jugador.getFila());
+                for (Enemigo enemigo : enemigos) {
+                    posicionesOcupadas.add(enemigo.getPosicionX() + "," + enemigo.getPosicionY());
+                }
+            }
 
         // Dibuja el jugador en la posición actual
-        
+    
         ImageView entidadJugador = new ImageView();
         String url = Proveedor.getInstance().getJugador().getRutaImagen();
         entidadJugador.setImage(new Image(getClass().getResource(url).toExternalForm()));
@@ -164,7 +173,7 @@ for (String pos : posicionesOcupadas) {
             moverEnemigos();
 
             // Redibuja los personajes en la nueva posición (sin regenerar aleatorio)
-            generarPersonajes(gridPanePersonajes);
+            dibujarPersonajes(gridPanePersonajes);
             return true;
         }
         return false;
