@@ -39,6 +39,7 @@ public class Mapa {
     private static String sueloPath = "/com/mazmorra/Images/suelo.png";
     private int[][] mapaMatriz; // Matriz de datos procedente de DataReader.java
     private List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
+    private Jugador jugador = Proveedor.getInstance().getJugador();
     
     private Set<String> posicionesOcupadas = new HashSet<>();
     // POSICION DEL JUGADOR
@@ -120,12 +121,13 @@ public class Mapa {
         }
 
         // Dibuja el jugador en la posición actual
+        
         ImageView entidadJugador = new ImageView();
         String url = Proveedor.getInstance().getJugador().getRutaImagen();
         entidadJugador.setImage(new Image(getClass().getResource(url).toExternalForm()));
         entidadJugador.setFitWidth(32);
         entidadJugador.setFitHeight(32);
-        gridPanePersonajes.add(entidadJugador, this.posicionX, this.posicionY);
+        gridPanePersonajes.add(entidadJugador, jugador.getColumna(), jugador.getFila());
 
         System.out.println("🎯 Posiciones ocupadas:");
 for (String pos : posicionesOcupadas) {
@@ -169,8 +171,6 @@ for (String pos : posicionesOcupadas) {
 
     public void moverEnemigos() {
         List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
-        Set<String> posicionesOcupadas = new HashSet<>();
-
         // Añade la posición del jugador para que los enemigos no puedan ir ahí
         posicionesOcupadas.add(posicionX + "," + posicionY);
 
@@ -178,8 +178,6 @@ for (String pos : posicionesOcupadas) {
         for (Enemigo enemigo : enemigos) {
             posicionesOcupadas.add(enemigo.getPosicionX() + "," + enemigo.getPosicionY());
         }
-
-        Random random = new Random();
 
         for (Enemigo enemigo : enemigos) {
             int x = enemigo.getPosicionX();
