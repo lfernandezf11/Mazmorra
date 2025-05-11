@@ -92,7 +92,7 @@ public class JuegoController implements Observer {
 
     private Jugador jugador = Proveedor.getInstance().getJugador();
     private List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
-    private List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
+    private List<Personaje> personajes;
     private Mapa mapa;
 
     @FXML
@@ -107,8 +107,9 @@ public class JuegoController implements Observer {
         // Obtiene los enemigos, los inserta en el proveedor y los muestra en la escena por velocidad. 
         enemigos = DataReader.leerJsonEnemigos(rutaBase + "/Enemigos/enemigo1.json");
         Proveedor.getInstance().setEnemigos(enemigos);
+
+        personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
         cargarStatsEnemigos(enemigos);
-        
         mostrarpersonajesPorVelocidad(personajes);
 
         cargarMapa();
