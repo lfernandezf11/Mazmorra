@@ -11,6 +11,8 @@ import com.mazmorra.Model.Mapa;
 import com.mazmorra.Model.Personaje;
 import com.mazmorra.Model.Proveedor;
 import com.mazmorra.Util.DataReader;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -82,6 +84,8 @@ public class JuegoController implements Observer {
     private Label masLento;
     @FXML
     private Label masMasLento;
+    @FXML
+    private Label teTocaTurno;
 
     @FXML
     private StackPane stackPaneJuego;
@@ -94,6 +98,8 @@ public class JuegoController implements Observer {
     private List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
     private List<Personaje> personajes;
     private Mapa mapa;
+    private int indiceTurnoActual = 0;
+    private List<Personaje> personajesPorTurno;
 
     @FXML
     public void initialize() {
@@ -104,7 +110,8 @@ public class JuegoController implements Observer {
             jugador.subscribe(this);
             actualizarStats();
         }
-        // Obtiene los enemigos, los inserta en el proveedor y los muestra en la escena por velocidad. 
+        // Obtiene los enemigos, los inserta en el proveedor y los muestra en la escena
+        // por velocidad.
         enemigos = DataReader.leerJsonEnemigos(rutaBase + "/Enemigos/enemigo1.json");
         Proveedor.getInstance().setEnemigos(enemigos);
 
@@ -120,33 +127,74 @@ public class JuegoController implements Observer {
         stackPaneJuego.setFocusTraversable(true);
 
         stackPaneJuego.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case UP:
-                    mapa.moverJugador(0, -1, gridPanePersonajes, stackPaneJuego);
-                    stackPaneJuego.requestFocus();
-                    break;
-                case DOWN:
-                    mapa.moverJugador(0, 1, gridPanePersonajes, stackPaneJuego);
-                    stackPaneJuego.requestFocus();
-                    break;
-                case LEFT:
-                    mapa.moverJugador(-1, 0, gridPanePersonajes, stackPaneJuego);
-                    stackPaneJuego.requestFocus();
-                    break;
-                case RIGHT:
-                    mapa.moverJugador(1, 0, gridPanePersonajes, stackPaneJuego);
-                    stackPaneJuego.requestFocus();
-                    break;
-                default:
-                    break;
+            // Solo permite mover si es el turno del jugador
+            Personaje actual = personajesPorTurno.get(indiceTurnoActual);
+            if (actual instanceof Jugador) {
+                boolean seMovio = false;
+                switch (event.getCode()) {
+                    case UP:
+                        seMovio = mapa.moverJugador(0, -1, gridPanePersonajes, stackPaneJuego);
+                        break;
+                    case DOWN:
+                        seMovio = mapa.moverJugador(0, 1, gridPanePersonajes, stackPaneJuego);
+                        break;
+                    case LEFT:
+                        seMovio = mapa.moverJugador(-1, 0, gridPanePersonajes, stackPaneJuego);
+                        break;
+                    case RIGHT:
+                        seMovio = mapa.moverJugador(1, 0, gridPanePersonajes, stackPaneJuego);
+                        break;
+                    default:
+                        break;
+                }
+                if (seMovio) {
+                    siguienteTurno();
+                }
             }
+            stackPaneJuego.requestFocus();
         });
         stackPaneJuego.requestFocus(); // Para que el stackPane reciba el foco y capture las teclas
+        personajesPorTurno = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
+        personajesPorTurno.sort(Comparator.comparingInt(Personaje::getVelocidad).reversed());
+        indiceTurnoActual = -1;
+        siguienteTurno();
+        actualizarLabelTurno();
     }
 
     @Override
     public void onChange() {
         actualizarStats(); // Actualiza la UI cuando hay un cambio en el jugador
+    }
+
+    private void siguienteTurno() {
+        indiceTurnoActual = (indiceTurnoActual + 1) % personajesPorTurno.size();
+        Personaje actual = personajesPorTurno.get(indiceTurnoActual);
+
+        actualizarLabelTurno();
+
+        if (actual instanceof Jugador) {
+            stackPaneJuego.requestFocus();
+            // Espera a que el jugador pulse tecla
+        } else {
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            pause.setOnFinished(event -> {
+                mapa.moverEnemigo((Enemigo) actual, gridPanePersonajes, stackPaneJuego);
+                // SIEMPRE avanza el turno, mueva o no el enemigo
+                siguienteTurno();
+            });
+            pause.play();
+        }
+    }
+
+    private void actualizarLabelTurno() {
+        Personaje actual = personajesPorTurno.get(indiceTurnoActual);
+        if (actual instanceof Jugador) {
+            teTocaTurno.setVisible(true);
+            teTocaTurno.setText("¡Tu turno!");
+        } else {
+            teTocaTurno.setVisible(false);
+            teTocaTurno.setText("");
+        }
     }
 
     private Image cargarImagenJugador(String rutaImagen) {
@@ -169,17 +217,21 @@ public class JuegoController implements Observer {
         }
     }
 
-    /* Lo ideal es establecer un grid en la escena y asignar los valores a las celdas, pero esto es un arreglo para
+    /*
+     * Lo ideal es establecer un grid en la escena y asignar los valores a las
+     * celdas, pero esto es un arreglo para
      * no determinar una a una cada View y cada Label.
      */
     private void cargarStatsEnemigos(List<Enemigo> enemigos) {
-        //Agrupa en listas las ImageViews y las labels que corresponden al mismo atributo en la escena.
+        // Agrupa en listas las ImageViews y las labels que corresponden al mismo
+        // atributo en la escena.
         List<ImageView> imagenes = List.of(imagenEnemigo1, imagenEnemigo2, imagenEnemigo3);
         List<Label> vidas = List.of(vidaEnemigo1, vidaEnemigo2, vidaEnemigo3);
         List<Label> ataques = List.of(ataqueEnemigo1, ataqueEnemigo2, ataqueEnemigo3);
         List<Label> velocidad = List.of(velocidadEnemigo1, velocidadEnemigo2, velocidadEnemigo3);
 
-        //Recorre la lista de enemigos asignando a cada atributo de la escena el valor del enemigo actual.
+        // Recorre la lista de enemigos asignando a cada atributo de la escena el valor
+        // del enemigo actual.
         for (int i = 0; i < enemigos.size(); i++) {
             Enemigo enemigo = enemigos.get(i);
             imagenes.get(i).setImage(cargarImagenJugador(enemigo.getRutaImagen()));
@@ -188,7 +240,6 @@ public class JuegoController implements Observer {
             velocidad.get(i).setText(String.valueOf(enemigo.getVelocidad()));
         }
     }
-
 
     private void mostrarpersonajesPorVelocidad(List<Personaje> personajes) {
         personajes.sort(Comparator.comparingInt(Personaje::getVelocidad).reversed());
@@ -229,7 +280,8 @@ public class JuegoController implements Observer {
         String carpeta = "/Tablero/";
         try {
             int[][] mapaMatriz = DataReader.leerMapa(rutaBase + carpeta + rutaArchivo); // Ruta común declarada como
-                                                                                        // variable estática de la clase.
+                                                                                        // variable estática de la
+                                                                                        // clase.
             mapa = new Mapa(mapaMatriz);
         } catch (IOException e) { // Como el método trabaja con archivos, hay que capturar errores de
                                   // entrada/salida (IO)
@@ -249,7 +301,7 @@ public class JuegoController implements Observer {
          * Clase JavaFX que permite al programa comunicarse y modificar la interfaz
          * gráfica desde otro hilo.
          */
-       
+
         /*
          * Carga por primera vez el tablero DESPUÉS de que JavaFx haya terminado de
          * cargar, asegurando que se obtienen valores válidos.
