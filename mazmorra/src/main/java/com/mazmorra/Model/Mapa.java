@@ -2,8 +2,6 @@ package com.mazmorra.Model;
 
 import java.util.List;
 
-import com.mazmorra.Controllers.JuegoController;
-
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -98,36 +96,36 @@ public class Mapa {
         }
     }
 
+    public void generarPosicionesIniciales() {
+    if (personajesGenerados) return;
+
+    int posicionX, posicionY;
+    for (Personaje personaje : personajes) {
+        do {
+            posicionX = random.nextInt(mapaMatriz[0].length);
+            posicionY = random.nextInt(mapaMatriz.length);
+        } while (mapaMatriz[posicionY][posicionX] != 0 || posicionesOcupadas.contains(posicionX + "," + posicionY));
+        
+        posicionesOcupadas.add(posicionX + "," + posicionY);
+        this.posicionX = posicionX;
+        this.posicionY = posicionY;
+        personaje.setPosicion(posicionX, posicionY);
+    }
+
+    personajesGenerados = true;
+}
+
+
     public void dibujarPersonajes(GridPane gridPanePersonajes) {
         resetearGridPane(gridPanePersonajes);
         addConstraints(gridPanePersonajes);
 
-        // Solo genera posiciones aleatorias la primera vez
-        if (!personajesGenerados) {
-            int posicionX, posicionY;
-            for (Personaje personaje : personajes) {
-                do {
-                    posicionX = random.nextInt(mapaMatriz[0].length);
-                    posicionY = random.nextInt(mapaMatriz.length);
-                } while (mapaMatriz[posicionY][posicionX] != 0 || posicionesOcupadas.contains(posicionX + "," + posicionY));
-                
-                posicionesOcupadas.add(posicionX + "," + posicionY);
-                this.posicionX = posicionX; //Almacena la posición en la instancia de Mapa
-                this.posicionY = posicionY;
-                personaje.setPosicion(posicionX, posicionY); //Actualiza la posición en el personaje.
-
-            }
-
-            personajesGenerados = true;
             
-            // Vacía el set de posiciones ocupadas solo si no es la carga inicial, y lo reemplaza con las posiciones actuales.
-            } else {
-                posicionesOcupadas.clear();
-                posicionesOcupadas.add(jugador.getColumna() + "," + jugador.getFila());
-                for (Enemigo enemigo : enemigos) {
-                    posicionesOcupadas.add(enemigo.getPosicionX() + "," + enemigo.getPosicionY());
-                }
-            }
+        posicionesOcupadas.clear();
+        posicionesOcupadas.add(jugador.getColumna() + "," + jugador.getFila());
+        for (Enemigo enemigo : enemigos) {
+            posicionesOcupadas.add(enemigo.getPosicionX() + "," + enemigo.getPosicionY());
+        }
 
         // Dibuja el jugador en la posición actual
     
@@ -159,8 +157,8 @@ for (String pos : posicionesOcupadas) {
 
     // METODO MOVER JUGADOR
     public boolean moverJugador(int dx, int dy, GridPane gridPanePersonajes, StackPane stackPaneJuego) {
-        int nuevoX = posicionX + dx;
-        int nuevoY = posicionY + dy;
+        int nuevoX = jugador.getColumna() + dx;
+        int nuevoY = jugador.getFila() + dy;
 
         if (nuevoX >= 0 && nuevoX < mapaMatriz[0].length &&
                 nuevoY >= 0 && nuevoY < mapaMatriz.length &&

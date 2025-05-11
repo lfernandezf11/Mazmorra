@@ -3,7 +3,6 @@ package com.mazmorra.Controllers;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import com.mazmorra.Interfaces.Observer;
 import com.mazmorra.Model.Enemigo;
@@ -91,38 +90,31 @@ public class JuegoController implements Observer {
     @FXML
     private GridPane gridPanePersonajes;
 
-    private Jugador jugador;
-    private List<Enemigo> enemigos;
+    private Jugador jugador = Proveedor.getInstance().getJugador();
+    private List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
+    private List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
     private Mapa mapa;
 
     @FXML
     public void initialize() {
 
         // Obtiene el jugador e inserta sus stats en la escena
-        System.out.println("INICIALIZANDO JUEGO CONTROLLER");
-        jugador = Proveedor.getInstance().getJugador();
-        System.out.println("Jugador en JuegoController: " + jugador);
         if (jugador.getRutaImagen() != null) {
             imagenJugador.setImage(cargarImagenJugador(jugador.getRutaImagen()));
             jugador.subscribe(this);
             actualizarStats();
         }
-       
+        // Obtiene los enemigos, los inserta en el proveedor y los muestra en la escena por velocidad. 
         enemigos = DataReader.leerJsonEnemigos(rutaBase + "/Enemigos/enemigo1.json");
         Proveedor.getInstance().setEnemigos(enemigos);
-        System.out.println("📦 Enemigos cargados: " + enemigos.size());
-for (Enemigo enemigo : enemigos) {
-    System.out.println("🧟 " + enemigo.getNombre() + " - " + enemigo.getRutaImagen());
-}
-
-        List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
+        cargarStatsEnemigos(enemigos);
+        
         mostrarpersonajesPorVelocidad(personajes);
 
-
-           
-
         cargarMapa();
+        mapa.generarPosicionesIniciales();
         dibujarTablero();
+        mapa.dibujarPersonajes(gridPanePersonajes);
 
         stackPaneJuego.setFocusTraversable(true);
 
@@ -162,13 +154,6 @@ for (Enemigo enemigo : enemigos) {
     }
 
     private void actualizarStats() {
-        System.out.println("Actualizando stats en JuegoController");
-        if (jugador != null) {
-            System.out.println("Vida del jugador en JuegoController: " + jugador.getVida());
-            vidaJugador.setText(String.valueOf(jugador.getVida()));
-        } else {
-            System.out.println("Jugador es null en actualizarStats()");
-        }
         if (jugador != null) {
             nombreJugador.setText(jugador.getNombre());
             vidaJugador.setText(String.valueOf(jugador.getVida()));
@@ -182,6 +167,27 @@ for (Enemigo enemigo : enemigos) {
             }
         }
     }
+
+    /* Lo ideal es establecer un grid en la escena y asignar los valores a las celdas, pero esto es un arreglo para
+     * no determinar una a una cada View y cada Label.
+     */
+    private void cargarStatsEnemigos(List<Enemigo> enemigos) {
+        //Agrupa en listas las ImageViews y las labels que corresponden al mismo atributo en la escena.
+        List<ImageView> imagenes = List.of(imagenEnemigo1, imagenEnemigo2, imagenEnemigo3);
+        List<Label> vidas = List.of(vidaEnemigo1, vidaEnemigo2, vidaEnemigo3);
+        List<Label> ataques = List.of(ataqueEnemigo1, ataqueEnemigo2, ataqueEnemigo3);
+        List<Label> velocidad = List.of(velocidadEnemigo1, velocidadEnemigo2, velocidadEnemigo3);
+
+        //Recorre la lista de enemigos asignando a cada atributo de la escena el valor del enemigo actual.
+        for (int i = 0; i < enemigos.size(); i++) {
+            Enemigo enemigo = enemigos.get(i);
+            imagenes.get(i).setImage(cargarImagenJugador(enemigo.getRutaImagen()));
+            vidas.get(i).setText(String.valueOf(enemigo.getVida()));
+            ataques.get(i).setText(String.valueOf(enemigo.getAtaque()));
+            velocidad.get(i).setText(String.valueOf(enemigo.getVelocidad()));
+        }
+    }
+
 
     private void mostrarpersonajesPorVelocidad(List<Personaje> personajes) {
         personajes.sort(Comparator.comparingInt(Personaje::getVelocidad).reversed());
@@ -222,8 +228,7 @@ for (Enemigo enemigo : enemigos) {
         String carpeta = "/Tablero/";
         try {
             int[][] mapaMatriz = DataReader.leerMapa(rutaBase + carpeta + rutaArchivo); // Ruta común declarada como
-                                                                                        // variable
-            // estática de la clase.
+                                                                                        // variable estática de la clase.
             mapa = new Mapa(mapaMatriz);
         } catch (IOException e) { // Como el método trabaja con archivos, hay que capturar errores de
                                   // entrada/salida (IO)
@@ -239,9 +244,6 @@ for (Enemigo enemigo : enemigos) {
      * 
      */
     private void dibujarTablero() {
-        //Ejecuta el primer ciclo de la función para pasar al true el booleano personajesGenerados.
-          mapa.dibujarPersonajes(gridPanePersonajes); 
-        
         /*
          * Clase JavaFX que permite al programa comunicarse y modificar la interfaz
          * gráfica desde otro hilo.
