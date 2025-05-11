@@ -111,7 +111,6 @@ public class Mapa {
         this.posicionY = posicionY;
         personaje.setPosicion(posicionX, posicionY);
     }
-
     personajesGenerados = true;
 }
 
@@ -128,7 +127,6 @@ public class Mapa {
         }
 
         // Dibuja el jugador en la posición actual
-    
         ImageView entidadJugador = new ImageView();
         String url = Proveedor.getInstance().getJugador().getRutaImagen();
         entidadJugador.setImage(new Image(getClass().getResource(url).toExternalForm()));
@@ -136,15 +134,8 @@ public class Mapa {
         entidadJugador.setFitHeight(32);
         gridPanePersonajes.add(entidadJugador, jugador.getColumna(), jugador.getFila());
 
-        System.out.println("🎯 Posiciones ocupadas:");
-for (String pos : posicionesOcupadas) {
-    System.out.println(" - " + pos);
-}
-        // Dibuja los enemigos en sus posiciones guardadas (aquí solo si tienes
-        // posiciones guardadas)
-        List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
         for (Enemigo enemigo : enemigos) {
-            int enemigoX = enemigo.getPosicionX(); // Debes tener estos métodos si quieres mover enemigos
+            int enemigoX = enemigo.getPosicionX();
             int enemigoY = enemigo.getPosicionY();
             ImageView enemigoView = new ImageView();
             String urlEnemigo = enemigo.getRutaImagen();
@@ -160,13 +151,20 @@ for (String pos : posicionesOcupadas) {
         int nuevoX = jugador.getColumna() + dx;
         int nuevoY = jugador.getFila() + dy;
 
+        //Verifica que la nueva posición esté dentro del mapa y que la celda sea de tipo suelo.
         if (nuevoX >= 0 && nuevoX < mapaMatriz[0].length &&
-                nuevoY >= 0 && nuevoY < mapaMatriz.length &&
-                mapaMatriz[nuevoY][nuevoX] == 0) {
-
-            posicionX = nuevoX;
-            posicionY = nuevoY;
-            jugador.setPosicion(nuevoX, nuevoY);
+            nuevoY >= 0 && nuevoY < mapaMatriz.length &&
+            mapaMatriz[nuevoY][nuevoX] == 0) {
+                
+                //Verifica si en la nueva posición hay un enemigo.
+                for (Enemigo enemigo : enemigos) {
+                    if (enemigo.getColumna() == nuevoX && enemigo.getFila() == nuevoY) {
+                        iniciarCombate(jugador, enemigo);
+                        return; //Si hay enemigo, no realiza el movimiento.
+                    } else {
+                        posicionX = nuevoX;
+                        posicionY = nuevoY;
+                        jugador.setPosicion(nuevoX, nuevoY);
             // Mueve los enemigos tras mover el jugador
             moverEnemigos();
 
