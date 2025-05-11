@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mazmorra.Interfaces.Observer;
+import com.mazmorra.Model.Enemigo;
 import com.mazmorra.Model.Jugador;
 import com.mazmorra.Model.Mapa;
 import com.mazmorra.Model.Personaje;
@@ -91,6 +92,7 @@ public class JuegoController implements Observer {
     private GridPane gridPanePersonajes;
 
     private Jugador jugador;
+    private List<Enemigo> enemigos;
     private Mapa mapa;
 
     @FXML
@@ -102,56 +104,22 @@ public class JuegoController implements Observer {
         System.out.println("Jugador en JuegoController: " + jugador);
         if (jugador.getRutaImagen() != null) {
             imagenJugador.setImage(cargarImagenJugador(jugador.getRutaImagen()));
-        } else {
-            System.err.println("❌ Ruta de imagen null para: " + jugador.getNombre());
+            jugador.subscribe(this);
+            actualizarStats();
         }
-        // if (jugador != null) {
-        // imagenJugador.setImage(cargarImagenJugador(jugador.getRutaImagen()));
-        jugador.subscribe(this);
-        actualizarStats();
-        // } else {
-        // System.out.println("Jugador es null en initialize()");
-
-        Proveedor.getInstance()
-                .cargarEnemigosDesdeJson(rutaBase + "/Enemigos/enemigo1.json");
+       
+        enemigos = DataReader.leerJsonEnemigos(rutaBase + "/Enemigos/enemigo1.json");
+        Proveedor.getInstance().setEnemigos(enemigos);
+        System.out.println("📦 Enemigos cargados: " + enemigos.size());
+for (Enemigo enemigo : enemigos) {
+    System.out.println("🧟 " + enemigo.getNombre() + " - " + enemigo.getRutaImagen());
+}
 
         List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
         mostrarpersonajesPorVelocidad(personajes);
 
-        try {
-            List<Map<String, Object>> enemigos = DataReader
-                    .leerJson(rutaBase + "/Enemigos/enemigo1.json");
-            for (Map<String, Object> enemigo : enemigos) {
-                String nombre = ((String) enemigo.get("nombre")).toUpperCase();
-                String rutaImagen = (String) enemigo.get("rutaImagen");
-                int vida = (int) enemigo.get("vida");
-                int ataque = (int) enemigo.get("ataque");
-                int velocidad = (int) enemigo.get("velocidad");
 
-                switch (nombre) {
-                    case "CTHULU":
-                        imagenEnemigo1.setImage(cargarImagenJugador(rutaImagen));
-                        vidaEnemigo1.setText(String.valueOf(vida));
-                        ataqueEnemigo1.setText(String.valueOf(ataque));
-                        velocidadEnemigo1.setText(String.valueOf(velocidad));
-                        break;
-                    case "MINOTAURO":
-                        imagenEnemigo2.setImage(cargarImagenJugador(rutaImagen));
-                        vidaEnemigo2.setText(String.valueOf(vida));
-                        ataqueEnemigo2.setText(String.valueOf(ataque));
-                        velocidadEnemigo2.setText(String.valueOf(velocidad));
-                        break;
-                    case "CICLOPE":
-                        imagenEnemigo3.setImage(cargarImagenJugador(rutaImagen));
-                        vidaEnemigo3.setText(String.valueOf(vida));
-                        ataqueEnemigo3.setText(String.valueOf(ataque));
-                        velocidadEnemigo3.setText(String.valueOf(velocidad));
-                        break;
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error leyendo enemigos: " + e.getMessage());
-        }
+           
 
         cargarMapa();
         cargarTablero();

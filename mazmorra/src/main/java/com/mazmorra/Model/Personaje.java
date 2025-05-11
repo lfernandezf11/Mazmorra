@@ -25,8 +25,8 @@ public abstract class Personaje {
     protected int velocidad;
     protected TipoJugador tipo;
     protected String rutaImagen;
-    // protected int columna;
-    // protected int fila;
+    protected int columna;
+    protected int fila;
 
     /*
      * En lugar de almacenar una Image asociada al Personaje, almacenamos la ruta
@@ -188,23 +188,58 @@ public abstract class Personaje {
         this.rutaImagen = rutaImagen;
     }
 
-    // public int getColumna() {
-    //     return columna;
-    // }
+    /**
+     * Obtiene la posición del personaje en el eje horizonal.
+     * 
+     * @return la posición de columna.
+     */
+    public int getColumna() {
+        return columna;
+    }
 
-    // public int getFila() {
-    //     return fila;
-    // }
+    /**
+     * Establece la posición del personaje en el eje horizonal.
+     * 
+     * @param columna la nueva posición de columna.
+     */
+    public void setColumna(int columna) {
+       this.columna = columna;
+    }
 
-    // public void setColumna(int columna) {
-    //     this.columna = columna;
-    // }
+    
+    /**
+     * Obtiene la posición del personaje en el eje vertical.
+     * 
+     * @return la posición de fila.
+     */
+    public int getFila() {
+        return fila;
+    }
 
-    // public void setFila(int fila) {
-    //     this.fila = fila;
-    // }
+    /**
+     * Establece la posición del personaje en el eje vertical.
+     * 
+     * @param y la nueva posición de fila.
+     */
+    public void setFila(int fila) {
+       this.fila = fila;
+    }
+
+    
 
     /* RESTO DE MÉTODOS */
+    /**
+     * Establece la posición del personaje en el mapa.
+     * 
+     * @param columna la nueva posición en el eje horizontal.
+     * @param fila la nueva posición en el eje vertical.
+     */
+    public void setPosicion(int columna, int fila) {
+        setColumna(columna);
+        setFila(fila);
+    }
+    
+    
     /**
      * Asigna al Jugador un valor de velocidad de tipo estático, dependiente del
      * tipo de jugador seleccionado (arquero, guerrero o mago).

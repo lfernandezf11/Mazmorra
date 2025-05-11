@@ -3,10 +3,10 @@ package com.mazmorra.Model;
 import com.mazmorra.TipoJugador;
 
 public class Enemigo extends Personaje {
-
-    private int percepcion;
     private int posicionX;
     private int posicionY;
+    private int percepcion;
+    
 
     public Enemigo(String nombre, int ataque, int defensa, int vida, TipoJugador tipo, String rutaImagen,
             int percepcion) {

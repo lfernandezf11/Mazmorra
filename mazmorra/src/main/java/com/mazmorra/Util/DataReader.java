@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mazmorra.TipoJugador;
+import com.mazmorra.Model.Enemigo;
+
 public class DataReader {
 
     public static int[][] leerMapa(String path) throws IOException {
@@ -47,47 +50,64 @@ public class DataReader {
         return matrizMapa;
     }
 
-     public static List<Map<String, Object>> leerJson(String rutaArchivo) throws IOException {
-        // Leer todo el archivo en un String
-        BufferedReader br = new BufferedReader(new FileReader(rutaArchivo));
-        StringBuilder sb = new StringBuilder();
-        String linea;
-        while ((linea = br.readLine()) != null) {
-            sb.append(linea.trim());
-        }
-        br.close();
 
-        // Limpiar y preparar el texto
-        String texto = sb.toString().trim();
-        texto = texto.substring(1, texto.length() - 1); // Quitar corchetes [ ]
-        String[] elementos = texto.split("\\},\\s*\\{");
-
-        List<Map<String, Object>> lista = new ArrayList<>();
-
-        for (String elem : elementos) {
-            elem = elem.trim();
-            if (!elem.startsWith("{")) elem = "{" + elem;
-            if (!elem.endsWith("}")) elem = elem + "}";
-            elem = elem.substring(1, elem.length() - 1); // Quitar llaves { }
-
-            String[] campos = elem.split(",");
-            Map<String, Object> dic = new HashMap<>();
-
-            for (String campo : campos) {
-                String[] claveValor = campo.split(":");
-                String clave = claveValor[0].trim().replace("\"", "");
-                String valor = claveValor[1].trim();
-
-                // Detectar si es string o número
-                if (valor.startsWith("\"")) {
-                    valor = valor.replace("\"", "");
-                    dic.put(clave, valor);
-                } else {
-                    dic.put(clave, Integer.parseInt(valor));
-                }
+    public static List<Enemigo> leerJsonEnemigos(String rutaJson) {
+        List<Enemigo> enemigos = new ArrayList<>(); 
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(rutaJson))) {
+            //Lee el archivo Json como un String.
+            StringBuilder jsonBuilder = new StringBuilder();
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                jsonBuilder.append(linea.trim());
             }
-            lista.add(dic);
-        }
-        return lista;
-    }
+            String textoJson = jsonBuilder.toString();
+
+          
+            // Elimina los corchetes iniciales y finales (aunque asumimos su existencia, se comprueba).
+            if (textoJson.startsWith("["))
+                textoJson = textoJson.substring(1);
+            if (textoJson.endsWith("]"))
+                textoJson = textoJson.substring(0, textoJson.length() - 1);
+
+            // Divide los objetos por "},{", asumiendo que no hay llaves en los valores, y después las elimina.
+            String[] enemigosArray = textoJson.split("\\},\\{");
+            for (String enemigo : enemigosArray) {
+                enemigo = enemigo.replace("{", "").replace("}", "");
+
+                // Divide el array de enemigos por campos clave:valor e inicializa su HashMap. 
+                String[] campos = enemigo.split(",");
+                Map<String, Object> mapEnemigo = new HashMap<>(); //Object porque almacena valores int y String.
+
+                // Divide cada campo en clave y valor, almacenando sólo los valores no nulos.
+                for (String campo : campos) {
+                    String[] claveValor = campo.split(":", 2); //Divide para generar un máximo de dos campos
+                    if (claveValor.length < 2)
+                        continue;
+                    String clave = claveValor[0].trim().replaceAll("^\"|\"$", "").toUpperCase(); //Elimina comillas iniciales y finales.
+                    String valor = claveValor[1].trim().replaceAll("^\"|\"$", "");
+
+                    // Comprueba si el valor es un dígito y lo parsea. Convierte el tipo en enum.
+                    if (valor.matches("\\d+")) {
+                        mapEnemigo.put(clave, Integer.parseInt(valor));
+                    } else {
+                        mapEnemigo.put(clave, valor.toUpperCase());
+                    }         
+                }
+            // Asigna a cada atributo de Enemigo el valor correspondiente a su clave en el map.
+            String nombre = mapEnemigo.get("NOMBRE").toString();
+            int ataque = (int) mapEnemigo.get("ATAQUE");
+            int defensa = (int) mapEnemigo.get("DEFENSA");
+            int vida = (int) mapEnemigo.get("VIDA");
+            int velocidad = (int) mapEnemigo.get("VELOCIDAD");
+            String rutaImagen = mapEnemigo.get("RUTAIMAGEN").toString();
+            TipoJugador tipo = TipoJugador.valueOf(mapEnemigo.get("NOMBRE").toString());
+            int percepcion = (int) mapEnemigo.get("PERCEPCION");
+                
+            enemigos.add(new Enemigo(nombre, ataque, defensa, vida, tipo, rutaImagen, percepcion));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }  return enemigos;
+    } 
 }

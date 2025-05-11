@@ -32,14 +32,18 @@ import java.util.Set;
  */
 
 public class Mapa {
+    Random random = new Random();
     private static String paredPath = "/com/mazmorra/Images/pared.png"; // La ruta relativa de img prescinde de
                                                                         // src/main/resources, porque se recupera desde
                                                                         // el classpath (desde target/classes)
     private static String sueloPath = "/com/mazmorra/Images/suelo.png";
     private int[][] mapaMatriz; // Matriz de datos procedente de DataReader.java
+    private List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
+    
+    private Set<String> posicionesOcupadas = new HashSet<>();
     // POSICION DEL JUGADOR
-    private int jugadorX;
-    private int jugadorY;
+    private int posicionX;
+    private int posicionY;
 
     private boolean personajesGenerados = false;
 
@@ -98,31 +102,18 @@ public class Mapa {
 
         // Solo genera posiciones aleatorias la primera vez
         if (!personajesGenerados) {
-            Random random = new Random();
-            Set<String> posicionesOcupadas = new HashSet<>();
-
-            // --- JUGADOR ---
-            int jugadorX, jugadorY;
-            do {
-                jugadorX = random.nextInt(7);
-                jugadorY = random.nextInt(7);
-            } while (mapaMatriz[jugadorY][jugadorX] != 0 || posicionesOcupadas.contains(jugadorX + "," + jugadorY));
-            posicionesOcupadas.add(jugadorX + "," + jugadorY);
-            this.jugadorX = jugadorX;
-            this.jugadorY = jugadorY;
-
-            // --- ENEMIGOS ---
-            List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
-            for (Enemigo enemigo : enemigos) {
-                int enemigoX, enemigoY;
+            int posicionX, posicionY;
+            for (Personaje personaje : personajes) {
                 do {
-                    enemigoX = new Random().nextInt(mapaMatriz[0].length);
-                    enemigoY = new Random().nextInt(mapaMatriz.length);
-                } while (mapaMatriz[enemigoY][enemigoX] != 0 || posicionesOcupadas.contains(enemigoX + "," + enemigoY));
-                posicionesOcupadas.add(enemigoX + "," + enemigoY);
-                // Si quieres que los enemigos se muevan, aquí deberías guardar sus posiciones
-                // en una lista
-                enemigo.setPosicion(enemigoX, enemigoY); // Si tienes este método, si no, ignora esta línea
+                    posicionX = random.nextInt(mapaMatriz[0].length);
+                    posicionY = random.nextInt(mapaMatriz.length);
+                } while (mapaMatriz[posicionY][posicionX] != 0 || posicionesOcupadas.contains(posicionX + "," + posicionY));
+                
+                posicionesOcupadas.add(posicionX + "," + posicionY);
+                this.posicionX = posicionX; //Almacena la posición en la instancia de Mapa
+                this.posicionY = posicionY;
+                personaje.setPosicion(posicionX, posicionY); //Actualiza la posición en el personaje.
+
             }
 
             personajesGenerados = true;
@@ -134,8 +125,12 @@ public class Mapa {
         entidadJugador.setImage(new Image(getClass().getResource(url).toExternalForm()));
         entidadJugador.setFitWidth(32);
         entidadJugador.setFitHeight(32);
-        gridPanePersonajes.add(entidadJugador, this.jugadorX, this.jugadorY);
+        gridPanePersonajes.add(entidadJugador, this.posicionX, this.posicionY);
 
+        System.out.println("🎯 Posiciones ocupadas:");
+for (String pos : posicionesOcupadas) {
+    System.out.println(" - " + pos);
+}
         // Dibuja los enemigos en sus posiciones guardadas (aquí solo si tienes
         // posiciones guardadas)
         List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
@@ -153,15 +148,15 @@ public class Mapa {
 
     // METODO MOVER JUGADOR
     public boolean moverJugador(int dx, int dy, GridPane gridPanePersonajes, StackPane stackPaneJuego) {
-        int nuevoX = jugadorX + dx;
-        int nuevoY = jugadorY + dy;
+        int nuevoX = posicionX + dx;
+        int nuevoY = posicionY + dy;
 
         if (nuevoX >= 0 && nuevoX < mapaMatriz[0].length &&
                 nuevoY >= 0 && nuevoY < mapaMatriz.length &&
                 mapaMatriz[nuevoY][nuevoX] == 0) {
 
-            jugadorX = nuevoX;
-            jugadorY = nuevoY;
+            posicionX = nuevoX;
+            posicionY = nuevoY;
             // Mueve los enemigos tras mover el jugador
             moverEnemigos();
 
@@ -177,7 +172,7 @@ public class Mapa {
         Set<String> posicionesOcupadas = new HashSet<>();
 
         // Añade la posición del jugador para que los enemigos no puedan ir ahí
-        posicionesOcupadas.add(jugadorX + "," + jugadorY);
+        posicionesOcupadas.add(posicionX + "," + posicionY);
 
         // Añade posiciones actuales de enemigos para evitar que se pisen
         for (Enemigo enemigo : enemigos) {
