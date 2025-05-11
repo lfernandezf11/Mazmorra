@@ -159,6 +159,7 @@ for (String pos : posicionesOcupadas) {
 
             posicionX = nuevoX;
             posicionY = nuevoY;
+            jugador.setPosicion(nuevoX, nuevoY);
             // Mueve los enemigos tras mover el jugador
             moverEnemigos();
 
