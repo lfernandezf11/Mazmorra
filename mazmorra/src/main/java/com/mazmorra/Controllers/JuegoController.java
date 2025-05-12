@@ -164,6 +164,24 @@ public class JuegoController implements Observer {
     }
 
     private void siguienteTurno() {
+        // Limpia la lista de personajes muertos antes de avanzar turno
+        personajesPorTurno.removeIf(personaje -> personaje.getVida() <= 0);
+
+        // // Si ya no quedan enemigos o el jugador ha muerto, puedes gestionar el fin del
+        // // juego aquí
+        // if (personajesPorTurno.stream().noneMatch(p -> p instanceof Enemigo)) {
+        //     // ¡Victoria!
+        //     System.out.println("¡Has derrotado a todos los enemigos!");
+        //     // Aquí puedes mostrar un mensaje en la UI o terminar el juego
+        //     return;
+        // }
+        // if (personajesPorTurno.stream().noneMatch(p -> p instanceof Jugador)) {
+        //     // Derrota
+        //     System.out.println("¡El jugador ha sido derrotado!");
+        //     // Aquí puedes mostrar un mensaje en la UI o terminar el juego
+        //     return;
+        // }
+
         indiceTurnoActual = (indiceTurnoActual + 1) % personajesPorTurno.size();
         Personaje actual = personajesPorTurno.get(indiceTurnoActual);
 

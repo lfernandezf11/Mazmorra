@@ -171,8 +171,25 @@ public class Mapa {
 
         // Hay otro personaje (enemigo)
         String posStr = nuevoX + "," + nuevoY;
-        if (posicionesOcupadas.contains(posStr)) {
-            return false;
+        Enemigo enemigo = getEnemigoEnPosicion(nuevoX, nuevoY);
+        if (enemigo != null) {
+            // ¡PELEA!
+            int danio = Math.max(1, jugador.getAtaque() - enemigo.getDefensa());
+            boolean critico = random.nextDouble() < 0.3;
+            if (critico) {
+                danio *= 2;
+            }
+            enemigo.setVida(enemigo.getVida() - danio);
+
+            System.out.println("¡Atacas al enemigo! Daño: " + danio + (critico ? " (¡CRÍTICO!)" : ""));
+            if (enemigo.getVida() <= 0) {
+                System.out.println("¡Enemigo derrotado!");
+                enemigos.remove(enemigo);
+                // Opcional: elimina la posición ocupada
+                posicionesOcupadas.remove(posStr);
+            }
+            dibujarPersonajes(gridPanePersonajes);
+            return false; // No te mueves, sólo atacas
         }
 
         // Movimiento válido
@@ -184,15 +201,32 @@ public class Mapa {
         return true;
     }
 
+    private Enemigo getEnemigoEnPosicion(int x, int y) {
+        for (Enemigo enemigo : enemigos) {
+            if (enemigo.getPosicionX() == x && enemigo.getPosicionY() == y) {
+                return enemigo;
+            }
+        }
+        return null;
+    }
+
     public boolean moverEnemigo(Enemigo enemigo, GridPane gridPanePersonajes, StackPane stackPaneJuego) {
         int x = enemigo.getPosicionX();
         int y = enemigo.getPosicionY();
         int[][] direcciones = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
         List<int[]> posiblesMovimientos = new java.util.ArrayList<>();
-        int jugadorX = Proveedor.getInstance().getJugador().getColumna();
-        int jugadorY = Proveedor.getInstance().getJugador().getFila();
+        int jugadorX = jugador.getColumna();
+        int jugadorY = jugador.getFila();
 
-        List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
+        // Calcula distancia Manhattan
+        int distancia = Math.abs(jugadorX - x) + Math.abs(jugadorY - y);
+
+        // Evita que un enemigo muerto actúe
+        if (enemigo.getVida() <= 0) {
+            return false;
+        }
+
+        // Recolecta posiciones ocupadas por otros enemigos
         java.util.Set<String> posicionesOcupadas = new java.util.HashSet<>();
         for (Enemigo e : enemigos) {
             if (e != enemigo) {
@@ -200,33 +234,72 @@ public class Mapa {
             }
         }
 
+        // Si el jugador está dentro del rango de percepción, moverse hacia él
+        if (distancia <= enemigo.getPercepcion()) {
+            // Busca el movimiento que acerque más al jugador
+            int mejorDistancia = distancia;
+            int[] mejorMovimiento = null;
+            for (int[] dir : direcciones) {
+                int nx = x + dir[0];
+                int ny = y + dir[1];
+                String posStr = nx + "," + ny;
+                if (nx >= 0 && nx < mapaMatriz[0].length &&
+                        ny >= 0 && ny < mapaMatriz.length &&
+                        mapaMatriz[ny][nx] == 0 &&
+                        !posicionesOcupadas.contains(posStr)) {
+                    int nuevaDistancia = Math.abs(jugadorX - nx) + Math.abs(jugadorY - ny);
+                    if (nuevaDistancia < mejorDistancia) {
+                        mejorDistancia = nuevaDistancia;
+                        mejorMovimiento = new int[] { nx, ny };
+                    }
+                    // Si puede atacar al jugador
+                    if (nx == jugadorX && ny == jugadorY) {
+                        mejorMovimiento = new int[] { nx, ny };
+                        break;
+                    }
+                }
+            }
+            if (mejorMovimiento != null) {
+                // Si va a atacar al jugador
+                if (mejorMovimiento[0] == jugadorX && mejorMovimiento[1] == jugadorY) {
+                    // Ataque igual que antes
+                    int danio = Math.max(1, enemigo.getAtaque() - jugador.getDefensa());
+                    boolean critico = random.nextDouble() < 0.3;
+                    if (critico)
+                        danio *= 2;
+                    jugador.setVida(jugador.getVida() - danio);
+                    System.out
+                            .println("¡El enemigo ataca al jugador! Daño: " + danio + (critico ? " (¡CRÍTICO!)" : ""));
+                    if (jugador.getVida() <= 0) {
+                        System.out.println("¡El jugador ha sido derrotado!");
+                    }
+                } else {
+                    enemigo.setPosicion(mejorMovimiento[0], mejorMovimiento[1]);
+                }
+                dibujarPersonajes(gridPanePersonajes);
+                return true;
+            }
+        }
+
+        // Si el jugador está fuera de percepción, moverse aleatoriamente
         for (int[] dir : direcciones) {
             int nx = x + dir[0];
             int ny = y + dir[1];
             String posStr = nx + "," + ny;
             if (nx >= 0 && nx < mapaMatriz[0].length &&
                     ny >= 0 && ny < mapaMatriz.length &&
-                    mapaMatriz[ny][nx] == 0) {
-                // Permite moverse a la casilla del jugador para atacar
-                if (!posicionesOcupadas.contains(posStr)) {
-                    posiblesMovimientos.add(new int[] { nx, ny });
-                }
+                    mapaMatriz[ny][nx] == 0 &&
+                    !posicionesOcupadas.contains(posStr)) {
+                posiblesMovimientos.add(new int[] { nx, ny });
             }
         }
-
         if (!posiblesMovimientos.isEmpty()) {
             int[] movimiento = posiblesMovimientos.get(random.nextInt(posiblesMovimientos.size()));
-            if (movimiento[0] == jugadorX && movimiento[1] == jugadorY) {
-                // Aquí puedes poner la lógica de ataque al jugador
-                System.out.println("¡El enemigo ataca al jugador!");
-                // No muevas al enemigo a la casilla del jugador
-            } else {
-                enemigo.setPosicion(movimiento[0], movimiento[1]);
-            }
+            enemigo.setPosicion(movimiento[0], movimiento[1]);
             dibujarPersonajes(gridPanePersonajes);
             return true;
         }
-        dibujarPersonajes(gridPanePersonajes); // Redibuja aunque no se mueva
+        dibujarPersonajes(gridPanePersonajes);
         return false;
     }
 
