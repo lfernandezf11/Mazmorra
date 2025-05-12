@@ -163,13 +163,13 @@ public class Mapa {
                 //         return; //Si hay enemigo, no realiza el movimiento.
                 //     } 
                 // }
-                        posicionX = nuevoX;
-                        posicionY = nuevoY;
-                        jugador.setPosicion(nuevoX, nuevoY);
+                posicionX = nuevoX;
+                posicionY = nuevoY;
+                jugador.setPosicion(nuevoX, nuevoY);
 
-            // Redibuja los personajes en la nueva posición (sin regenerar aleatorio)
-            dibujarPersonajes(gridPanePersonajes);
-            return true;
+                // Redibuja los personajes en la nueva posición (sin regenerar aleatorio)
+                dibujarPersonajes(gridPanePersonajes);
+                return true;
         }
         return false;
     }
