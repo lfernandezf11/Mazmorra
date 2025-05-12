@@ -11,7 +11,6 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import java.util.Random;
 import java.util.HashSet;
-import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -128,7 +127,7 @@ public class Mapa {
         posicionesOcupadas.clear();
         posicionesOcupadas.add(jugador.getColumna() + "," + jugador.getFila());
         for (Enemigo enemigo : enemigos) {
-            posicionesOcupadas.add(enemigo.getPosicionX() + "," + enemigo.getPosicionY());
+            posicionesOcupadas.add(enemigo.getColumna() + "," + enemigo.getFila());
         }
 
         // Dibuja el jugador en la posición actual
@@ -140,8 +139,8 @@ public class Mapa {
         gridPanePersonajes.add(entidadJugador, jugador.getColumna(), jugador.getFila());
 
         for (Enemigo enemigo : enemigos) {
-            int enemigoX = enemigo.getPosicionX();
-            int enemigoY = enemigo.getPosicionY();
+            int enemigoX = enemigo.getColumna();
+            int enemigoY = enemigo.getFila();
             ImageView enemigoView = new ImageView();
             String urlEnemigo = enemigo.getRutaImagen();
             enemigoView.setImage(new Image(getClass().getResource(urlEnemigo).toExternalForm()));
@@ -200,7 +199,7 @@ public class Mapa {
 
     private Enemigo getEnemigoEnPosicion(int x, int y) {
         for (Enemigo enemigo : enemigos) {
-            if (enemigo.getPosicionX() == x && enemigo.getPosicionY() == y) {
+            if (enemigo.getColumna() == x && enemigo.getFila() == y) {
                 return enemigo;
             }
         }
@@ -208,8 +207,8 @@ public class Mapa {
     }
 
     public boolean moverEnemigo(Enemigo enemigo, GridPane gridPanePersonajes, StackPane stackPaneJuego) {
-        int x = enemigo.getPosicionX();
-        int y = enemigo.getPosicionY();
+        int x = enemigo.getColumna();
+        int y = enemigo.getFila();
         int[][] direcciones = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
         List<int[]> posiblesMovimientos = new java.util.ArrayList<>();
         int jugadorX = jugador.getColumna();
@@ -227,7 +226,7 @@ public class Mapa {
         java.util.Set<String> posicionesOcupadas = new java.util.HashSet<>();
         for (Enemigo e : enemigos) {
             if (e != enemigo) {
-                posicionesOcupadas.add(e.getPosicionX() + "," + e.getPosicionY());
+                posicionesOcupadas.add(e.getColumna() + "," + e.getFila());
             }
         }
 

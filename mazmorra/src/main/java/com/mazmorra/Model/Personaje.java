@@ -5,18 +5,21 @@ import com.mazmorra.TipoJugador;
 /**
  * Clase abstracta que representa un personaje genérico del juego.
  * 
- * Centraliza los atributos comunes de las clases Jugador y Enemigo, las cuales
- * heredan de esta clase.
+ * Centraliza los atributos comunes de las clases Jugador y Enemigo, las cuales heredan de esta clase.
  * 
- * -La posición del personaje se establece y gestiona a través de ObjetoMapa.
- * -Los observers son implementados en las clases instanciables hijas: Jugador y
- * Enemigo.
+ * -La posición del personaje se establece y gestiona a través de la clase Mapa y el Controlador del Juego.
+ * -Los observers son implementados en las clases instanciables hijas: Jugador y Enemigo.
+ * 
+ * @author Miguel González Seguro
+ * @author Lucía Fernández Florencio
  * 
  */
+
+
 public abstract class Personaje {
-    /*
-     * Atributos comunes a 'Jugador' y 'Enemigo' : estadísticas de combate, nombre e
-     * imagen gráfica asociada.
+    /**
+     * Atributos comunes a 'Jugador' y 'Enemigo' : estadísticas de combate, nombre,
+     * imagen gráfica asociada y posición en la matriz del tablero de juego.
      */
     protected String nombre;
     protected int ataque;
@@ -25,28 +28,30 @@ public abstract class Personaje {
     protected int velocidad;
     protected TipoJugador tipo;
     protected String rutaImagen;
+    /*
+     * En lugar de almacenar una Image asociada al Personaje, almacenamos la ruta del recurso y después generamos 
+     * la imagen desde el controlador del juego, encapsulando funcionalidades para depender menos de JavaFx.
+     */
+    
+    /** Coordenada X (columna) que ocupa el personaje. */
     protected int columna;
+    
+    /** Coordenada Y (fila) que ocupa el personaje. */
     protected int fila;
 
-    /*
-     * En lugar de almacenar una Image asociada al Personaje, almacenamos la ruta
-     * del recurso
-     * y después generamos la imagen desde el controlador del juego, encapsulando
-     * funcionalidades
-     * para depender menos de JavaFx.
-     */
-
+    
+    /** Valor de la vida inicial del personaje, preestablecido en 5.*/
     private static int vidaInicial = 5;
 
     /**
      * Constructor parametrizado que genera un Personaje no tipado del juego.
      *
      * @param nombre     Nombre del personaje.
-     * @param ataque     Nivel de ataque.
-     * @param defensa    Nivel de defensa.
-     * @param vida       Puntos de vida inicial.
-     * @param tipo       Tipo de personaje (enum TipoJugador).
-     * @param rutaImagen Ruta del archivo de imagen asociado al personaje.
+     * @param ataque     el valor de ataque del personaje.
+     * @param defensa    el valor de defensa del personaje.
+     * @param vida       los puntos de vida del personaje.
+     * @param tipo       el tipo de personaje, definido en los valores del Enum TipoJugador.
+     * @param rutaImagen la ruta del archivo de imagen asociado al personaje.
      */
     protected Personaje(String nombre, int ataque, int defensa, int vida, TipoJugador tipo, String rutaImagen) {
         this.nombre = nombre;
@@ -63,7 +68,7 @@ public abstract class Personaje {
     /**
      * Obtiene el nombre del personaje.
      * 
-     * @return nombre del personaje.
+     * @return el nombre del personaje.
      */
     public String getNombre() {
         return nombre;
@@ -241,12 +246,13 @@ public abstract class Personaje {
     
     
     /**
-     * Asigna al Jugador un valor de velocidad de tipo estático, dependiente del
-     * tipo de jugador seleccionado (arquero, guerrero o mago).
+     * Asigna al personaje un valor de velocidad de tipo estático, dependiente del
+     * tipo de personaje definido en los valores del enum {@code TipoJugador}
+     * (arquero, guerrero o mago para el jugador; cíclope, minotauro o cthulu para el enemigo).
      * 
-     * @param tipo tipo de Jugador seleccionado, definido por el enum
-     *             {@code TipoJugador}.
-     * @return el valor de la velocidad correspondiente a este tipo de jugador.
+     * @param tipo  el tipo de personaje seleccionado, definido por el enum {@code TipoJugador}.
+     *             
+     * @return el valor de la velocidad correspondiente a este tipo de personaje.
      */
     public static int calcularVelocidad(TipoJugador tipo) {
         if (tipo == null) {
@@ -271,8 +277,9 @@ public abstract class Personaje {
     }
 
     /**
-     * Devuelve una cadena que contiene cada atributo del personaje junto con su
-     * valor.
+     * Devuelve una representación en texto del personaje, que contiene cada atributo junto con su valor.
+     * 
+     * @return la cadena de texto con la información del personaje.
      */
     @Override
     public String toString() {
@@ -284,6 +291,8 @@ public abstract class Personaje {
                 ", velocidad='" + getVelocidad() + "'" +
                 ", tipo='" + getTipoJugador() + "'" +
                 ", ruta imagen='" + getRutaImagen() + "'" +
+                ", posición en x='" + getColumna() + "'" +
+                ", posición en y='" + getFila() + "'" +
                 "}";
     }
 }
