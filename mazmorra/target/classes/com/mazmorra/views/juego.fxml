@@ -21,7 +21,7 @@
                <children>
                   <ImageView fx:id="imagenJugador" fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="nombreJugador" prefHeight="30.0" prefWidth="75.0" text="Nombre" />
-                  <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="corazon" fitHeight="30.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/heart.png" />
                      </image>
@@ -31,19 +31,19 @@
             </HBox>
             <HBox fx:id="tituloEstadisticasPlayer1" alignment="CENTER" prefHeight="61.0" prefWidth="250.0">
                <children>
-                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="espada" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/sword.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="ataqueJugador" prefHeight="20.0" prefWidth="30.0" text="1" />
-                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="escudo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/security.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="defensaJugador" prefHeight="20.0" prefWidth="30.0" text="1" />
-                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/lightning.png" />
                      </image>
@@ -57,19 +57,19 @@
                   <HBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0">
                      <children>
                         <ImageView fx:id="imagenEnemigo3" fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="corazon" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/heart.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="vidaEnemigo3" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="2" />
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="espada" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/sword.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="ataqueEnemigo3" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/lightning.png" />
                            </image>
@@ -80,19 +80,19 @@
                   <HBox alignment="CENTER" prefHeight="47.0" prefWidth="250.0">
                      <children>
                         <ImageView fx:id="imagenEnemigo2" fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="corazon" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/heart.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="vidaEnemigo2" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="3" />
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="espada" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/sword.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="ataqueEnemigo2" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="2" />
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/lightning.png" />
                            </image>
@@ -103,19 +103,19 @@
                   <HBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0">
                      <children>
                         <ImageView fx:id="imagenEnemigo1" fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="corazon" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/heart.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="vidaEnemigo1" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="2" />
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="espada" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/sword.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="ataqueEnemigo1" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/lightning.png" />
                            </image>
@@ -124,12 +124,12 @@
                      </children>
                   </HBox>
                   <Separator prefHeight="0.0" prefWidth="250.0" />
-                  <Label prefHeight="25.0" prefWidth="250.0" text="Turnos" />
-                  <Label fx:id="teTocaTurno" prefHeight="30.0" prefWidth="59.0" text="TURNO" />
+                  <Label fx:id="labelTurno" prefHeight="25.0" prefWidth="250.0" text="Turnos" />
+                  <Label fx:id="teTocaTurno" prefHeight="29.0" prefWidth="189.0" text="TURNO" />
                   <Separator prefHeight="0.0" prefWidth="250.0" />
                   <HBox prefHeight="27.0" prefWidth="250.0">
                      <children>
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/lightning.png" />
                            </image>
@@ -140,7 +140,7 @@
                   </HBox>
                   <HBox prefHeight="19.0" prefWidth="250.0">
                      <children>
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/lightning.png" />
                            </image>
@@ -151,7 +151,7 @@
                   </HBox>
                   <HBox prefHeight="27.0" prefWidth="250.0">
                      <children>
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/lightning.png" />
                            </image>
@@ -162,7 +162,7 @@
                   </HBox>
                   <HBox prefHeight="27.0" prefWidth="250.0">
                      <children>
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/lightning.png" />
                            </image>

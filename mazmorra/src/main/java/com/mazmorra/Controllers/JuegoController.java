@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
+import com.mazmorra.SceneID;
+import com.mazmorra.SceneManager;
 import com.mazmorra.Interfaces.Observer;
 import com.mazmorra.Model.Enemigo;
 import com.mazmorra.Model.Jugador;
@@ -21,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 public class JuegoController implements Observer {
     /*
@@ -100,6 +103,8 @@ public class JuegoController implements Observer {
     private Mapa mapa;
     private int indiceTurnoActual = 0;
     private List<Personaje> personajesPorTurno;
+    private boolean jugadorMuerto = false;
+    private boolean juegoTerminado = false;
 
     @FXML
     public void initialize() {
@@ -157,6 +162,7 @@ public class JuegoController implements Observer {
         indiceTurnoActual = -1;
         siguienteTurno();
         actualizarLabelTurno();
+
     }
 
     @Override
@@ -165,24 +171,9 @@ public class JuegoController implements Observer {
     }
 
     private void siguienteTurno() {
+            if (juegoTerminado) return; // Evita procesar turnos tras game over
         // Limpia la lista de personajes muertos antes de avanzar turno
         personajesPorTurno.removeIf(personaje -> personaje.getVida() <= 0);
-
-        // // Si ya no quedan enemigos o el jugador ha muerto, puedes gestionar el fin
-        // del
-        // // juego aquí
-        // if (personajesPorTurno.stream().noneMatch(p -> p instanceof Enemigo)) {
-        // // ¡Victoria!
-        // System.out.println("¡Has derrotado a todos los enemigos!");
-        // // Aquí puedes mostrar un mensaje en la UI o terminar el juego
-        // return;
-        // }
-        // if (personajesPorTurno.stream().noneMatch(p -> p instanceof Jugador)) {
-        // // Derrota
-        // System.out.println("¡El jugador ha sido derrotado!");
-        // // Aquí puedes mostrar un mensaje en la UI o terminar el juego
-        // return;
-        // }
 
         indiceTurnoActual = (indiceTurnoActual + 1) % personajesPorTurno.size();
         Personaje actual = personajesPorTurno.get(indiceTurnoActual);
@@ -193,7 +184,7 @@ public class JuegoController implements Observer {
             stackPaneJuego.requestFocus();
             // Espera a que el jugador pulse tecla
         } else {
-            PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
+            PauseTransition pause = new PauseTransition(Duration.seconds(0.1));
             pause.setOnFinished(event -> {
                 mapa.moverEnemigo((Enemigo) actual, gridPanePersonajes, stackPaneJuego);
                 actualizarStatsTodos();
@@ -206,8 +197,28 @@ public class JuegoController implements Observer {
     // CON ESTE METODO ACTUALIZAMOS LOS STATS CONTINUAMENTE Y LOS
     // LLAMAMOS CONTINUAMENTE EN LOS MOVIMIENTOS PARA QUE SE VAYAN PINTANDO.
     private void actualizarStatsTodos() {
-        actualizarStats(); // Jugador
-        cargarStatsEnemigos(enemigos); // Enemigos
+        if (juegoTerminado)
+            return;
+
+        actualizarStats();
+        cargarStatsEnemigos(enemigos);
+
+        // Control jugador muerto
+        if (!jugadorMuerto && jugador.getVida() <= 0) {
+            juegoTerminado = true;
+            jugadorMuerto = true;
+            SceneManager.getInstance().setScene(SceneID.YOULOSE, "youlose");
+            SceneManager.getInstance().loadScene(SceneID.YOULOSE);
+            return; // Importante para salir temprano
+        }
+
+        // Control victoria
+        if (personajesPorTurno.stream().noneMatch(p -> p instanceof Enemigo)) {
+            juegoTerminado = true;
+            SceneManager.getInstance().setScene(SceneID.YOUWIN, "youwin");
+            SceneManager.getInstance().loadScene(SceneID.YOUWIN);
+        }
+
     }
 
     private void actualizarLabelTurno() {
