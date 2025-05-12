@@ -11,6 +11,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import java.util.Random;
 import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -171,6 +172,11 @@ public class Mapa {
             return false;
         }
 
+        //Es una escalera --> Abrir pantalla de has ganado
+        if (mapaMatriz[nuevoY][nuevoX] == 2) {
+            return true;
+        }
+
         // Movimiento válido
         posicionesOcupadas.remove(jugador.getColumna() + "," + jugador.getFila());
         jugador.setPosicion(nuevoX, nuevoY);
@@ -179,17 +185,20 @@ public class Mapa {
         dibujarPersonajes(gridPanePersonajes);
         return true;
     }
+    
+
+    
 
     public boolean moverEnemigo(Enemigo enemigo, GridPane gridPanePersonajes, StackPane stackPaneJuego) {
         int x = enemigo.getPosicionX();
         int y = enemigo.getPosicionY();
         int[][] direcciones = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
-        List<int[]> posiblesMovimientos = new java.util.ArrayList<>();
+        List<int[]> posiblesMovimientos = new ArrayList<>();
         int jugadorX = Proveedor.getInstance().getJugador().getColumna();
         int jugadorY = Proveedor.getInstance().getJugador().getFila();
 
         List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
-        java.util.Set<String> posicionesOcupadas = new java.util.HashSet<>();
+        Set<String> posicionesOcupadas = new HashSet<>();
         for (Enemigo e : enemigos) {
             if (e != enemigo) {
                 posicionesOcupadas.add(e.getPosicionX() + "," + e.getPosicionY());
