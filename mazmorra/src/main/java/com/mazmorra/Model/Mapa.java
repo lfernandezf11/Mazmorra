@@ -2,6 +2,7 @@ package com.mazmorra.Model;
 
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,6 +13,9 @@ import javafx.scene.layout.StackPane;
 import java.util.Random;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.mazmorra.SceneID;
+import com.mazmorra.SceneManager;
 
 /**
  * Gestiona la construcción gráfica del tablero de juego a partir de una matriz
@@ -35,7 +39,7 @@ public class Mapa {
                                                                         // src/main/resources, porque se recupera desde
                                                                         // el classpath (desde target/classes)
     private static String sueloPath = "/com/mazmorra/Images/suelo.png";
-    private static String escaleraPath = "/com/mazmorra/Images/escalera.png"; 
+    private static String escaleraPath = "/com/mazmorra/Images/escalera.png";
 
     private int[][] mapaMatriz; // Matriz de datos procedente de DataReader.java
     private List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
@@ -88,7 +92,7 @@ public class Mapa {
                     imageView.setImage(new Image(getClass().getResource(sueloPath).toExternalForm()));
                     // Obtiene el recurso dentro de la ruta de clase, y convierte la referencia a
                     // una URL completa que JavaFX pueda interpretar.
-                } else if (celda == 1){
+                } else if (celda == 1) {
                     imageView.setImage(new Image(getClass().getResource(paredPath).toExternalForm()));
                 } else {
                     imageView.setImage(new Image(getClass().getResource(escaleraPath).toExternalForm()));
@@ -104,21 +108,20 @@ public class Mapa {
         if (personajesGenerados)
             return;
 
-    int posicionX, posicionY;
-    for (Personaje personaje : personajes) {
-        do {
-            posicionX = random.nextInt(mapaMatriz[0].length);
-            posicionY = random.nextInt(mapaMatriz.length);
-        } while (mapaMatriz[posicionY][posicionX] != 0 || posicionesOcupadas.contains(posicionX + "," + posicionY));
-        
-        posicionesOcupadas.add(posicionX + "," + posicionY);
-        this.posicionX = posicionX;
-        this.posicionY = posicionY;
-        personaje.setPosicion(posicionX, posicionY);
-    }
-    personajesGenerados = true;
-}
+        int posicionX, posicionY;
+        for (Personaje personaje : personajes) {
+            do {
+                posicionX = random.nextInt(mapaMatriz[0].length);
+                posicionY = random.nextInt(mapaMatriz.length);
+            } while (mapaMatriz[posicionY][posicionX] != 0 || posicionesOcupadas.contains(posicionX + "," + posicionY));
 
+            posicionesOcupadas.add(posicionX + "," + posicionY);
+            this.posicionX = posicionX;
+            this.posicionY = posicionY;
+            personaje.setPosicion(posicionX, posicionY);
+        }
+        personajesGenerados = true;
+    }
 
     public void dibujarPersonajes(GridPane gridPanePersonajes) {
         resetearGridPane(gridPanePersonajes);
@@ -161,7 +164,7 @@ public class Mapa {
         }
 
         // Es una pared
-        if (mapaMatriz[nuevoY][nuevoX] != 0) {
+        if (mapaMatriz[nuevoY][nuevoX] == 1) {
             return false;
         }
 
@@ -171,7 +174,7 @@ public class Mapa {
         if (enemigo != null) {
             // ¡PELEA!
             int danio = Math.max(1, jugador.getAtaque() - enemigo.getDefensa());
-            boolean critico = random.nextDouble() < 0.3;
+            boolean critico = random.nextDouble() < 0.2;
             if (critico) {
                 danio *= 2;
             }
@@ -204,6 +207,14 @@ public class Mapa {
             }
         }
         return null;
+    }
+
+    public boolean estaEnLaEscalera() {
+        int x = jugador.getColumna();
+        int y = jugador.getFila();
+        return y >= 0 && y < mapaMatriz.length &&
+                x >= 0 && x < mapaMatriz[y].length &&
+                mapaMatriz[y][x] == 2;
     }
 
     public boolean moverEnemigo(Enemigo enemigo, GridPane gridPanePersonajes, StackPane stackPaneJuego) {
