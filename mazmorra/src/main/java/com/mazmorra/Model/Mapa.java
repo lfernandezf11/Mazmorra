@@ -35,6 +35,8 @@ public class Mapa {
                                                                         // src/main/resources, porque se recupera desde
                                                                         // el classpath (desde target/classes)
     private static String sueloPath = "/com/mazmorra/Images/suelo.png";
+    private static String escaleraPath = "/com/mazmorra/Images/escalera.png"; 
+
     private int[][] mapaMatriz; // Matriz de datos procedente de DataReader.java
     private List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
     private Jugador jugador = Proveedor.getInstance().getJugador();
@@ -86,8 +88,10 @@ public class Mapa {
                     imageView.setImage(new Image(getClass().getResource(sueloPath).toExternalForm()));
                     // Obtiene el recurso dentro de la ruta de clase, y convierte la referencia a
                     // una URL completa que JavaFX pueda interpretar.
-                } else {
+                } else if (celda == 1){
                     imageView.setImage(new Image(getClass().getResource(paredPath).toExternalForm()));
+                } else {
+                    imageView.setImage(new Image(getClass().getResource(escaleraPath).toExternalForm()));
                 }
                 gridPaneJuego.add(imageView, j, i); // GridPane: (NodeChild, int columna, int fila): j se tiene que
                                                     // especificar antes que i.
@@ -100,21 +104,21 @@ public class Mapa {
         if (personajesGenerados)
             return;
 
-        int posicionX, posicionY;
-        for (Personaje personaje : personajes) {
-            do {
-                posicionX = random.nextInt(mapaMatriz[0].length);
-                posicionY = random.nextInt(mapaMatriz.length);
-            } while (mapaMatriz[posicionY][posicionX] != 0 || posicionesOcupadas.contains(posicionX + "," + posicionY));
-
-            posicionesOcupadas.add(posicionX + "," + posicionY);
-            this.posicionX = posicionX;
-            this.posicionY = posicionY;
-            personaje.setPosicion(posicionX, posicionY);
-        }
-
-        personajesGenerados = true;
+    int posicionX, posicionY;
+    for (Personaje personaje : personajes) {
+        do {
+            posicionX = random.nextInt(mapaMatriz[0].length);
+            posicionY = random.nextInt(mapaMatriz.length);
+        } while (mapaMatriz[posicionY][posicionX] != 0 || posicionesOcupadas.contains(posicionX + "," + posicionY));
+        
+        posicionesOcupadas.add(posicionX + "," + posicionY);
+        this.posicionX = posicionX;
+        this.posicionY = posicionY;
+        personaje.setPosicion(posicionX, posicionY);
     }
+    personajesGenerados = true;
+}
+
 
     public void dibujarPersonajes(GridPane gridPanePersonajes) {
         resetearGridPane(gridPanePersonajes);
@@ -123,11 +127,10 @@ public class Mapa {
         posicionesOcupadas.clear();
         posicionesOcupadas.add(jugador.getColumna() + "," + jugador.getFila());
         for (Enemigo enemigo : enemigos) {
-            posicionesOcupadas.add(enemigo.getPosicionX() + "," + enemigo.getPosicionY());
+            posicionesOcupadas.add(enemigo.getColumna() + "," + enemigo.getFila());
         }
 
         // Dibuja el jugador en la posición actual
-
         ImageView entidadJugador = new ImageView();
         String url = Proveedor.getInstance().getJugador().getRutaImagen();
         entidadJugador.setImage(new Image(getClass().getResource(url).toExternalForm()));
@@ -135,16 +138,9 @@ public class Mapa {
         entidadJugador.setFitHeight(32);
         gridPanePersonajes.add(entidadJugador, jugador.getColumna(), jugador.getFila());
 
-        System.out.println("🎯 Posiciones ocupadas:");
-        for (String pos : posicionesOcupadas) {
-            System.out.println(" - " + pos);
-        }
-        // Dibuja los enemigos en sus posiciones guardadas (aquí solo si tienes
-        // posiciones guardadas)
-        List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
         for (Enemigo enemigo : enemigos) {
-            int enemigoX = enemigo.getPosicionX(); // Debes tener estos métodos si quieres mover enemigos
-            int enemigoY = enemigo.getPosicionY();
+            int enemigoX = enemigo.getColumna();
+            int enemigoY = enemigo.getFila();
             ImageView enemigoView = new ImageView();
             String urlEnemigo = enemigo.getRutaImagen();
             enemigoView.setImage(new Image(getClass().getResource(urlEnemigo).toExternalForm()));
@@ -203,7 +199,7 @@ public class Mapa {
 
     private Enemigo getEnemigoEnPosicion(int x, int y) {
         for (Enemigo enemigo : enemigos) {
-            if (enemigo.getPosicionX() == x && enemigo.getPosicionY() == y) {
+            if (enemigo.getColumna() == x && enemigo.getFila() == y) {
                 return enemigo;
             }
         }
@@ -211,8 +207,8 @@ public class Mapa {
     }
 
     public boolean moverEnemigo(Enemigo enemigo, GridPane gridPanePersonajes, StackPane stackPaneJuego) {
-        int x = enemigo.getPosicionX();
-        int y = enemigo.getPosicionY();
+        int x = enemigo.getColumna();
+        int y = enemigo.getFila();
         int[][] direcciones = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
         List<int[]> posiblesMovimientos = new java.util.ArrayList<>();
         int jugadorX = jugador.getColumna();
@@ -230,7 +226,7 @@ public class Mapa {
         java.util.Set<String> posicionesOcupadas = new java.util.HashSet<>();
         for (Enemigo e : enemigos) {
             if (e != enemigo) {
-                posicionesOcupadas.add(e.getPosicionX() + "," + e.getPosicionY());
+                posicionesOcupadas.add(e.getColumna() + "," + e.getFila());
             }
         }
 
