@@ -157,15 +157,15 @@ public class Mapa {
             mapaMatriz[nuevoY][nuevoX] == 0) {
                 
                 //Verifica si en la nueva posición hay un enemigo.
-                for (Enemigo enemigo : enemigos) {
-                    if (enemigo.getColumna() == nuevoX && enemigo.getFila() == nuevoY) {
-                        iniciarCombate(jugador, enemigo);
-                        return; //Si hay enemigo, no realiza el movimiento.
-                    } else {
+                // for (Enemigo enemigo : enemigos) {
+                //     if (enemigo.getColumna() == nuevoX && enemigo.getFila() == nuevoY) {
+                //         iniciarCombate(jugador, enemigo);
+                //         return; //Si hay enemigo, no realiza el movimiento.
+                //     } 
+                // }
                         posicionX = nuevoX;
                         posicionY = nuevoY;
                         jugador.setPosicion(nuevoX, nuevoY);
-            // Mueve los enemigos tras mover el jugador
 
             // Redibuja los personajes en la nueva posición (sin regenerar aleatorio)
             dibujarPersonajes(gridPanePersonajes);
