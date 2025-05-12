@@ -103,7 +103,6 @@ public class JuegoController implements Observer {
     private Mapa mapa;
     private int indiceTurnoActual = 0;
     private List<Personaje> personajesPorTurno;
-    private boolean jugadorMuerto = false;
     private boolean juegoTerminado = false;
 
     @FXML
@@ -204,16 +203,15 @@ public class JuegoController implements Observer {
         cargarStatsEnemigos(enemigos);
 
         // Control jugador muerto
-        if (!jugadorMuerto && jugador.getVida() <= 0) {
+        if (jugador.getVida() <= 0) {
             juegoTerminado = true;
-            jugadorMuerto = true;
             SceneManager.getInstance().setScene(SceneID.YOULOSE, "youlose");
             SceneManager.getInstance().loadScene(SceneID.YOULOSE);
             return; // Importante para salir temprano
         }
 
         // Control victoria
-        if (personajesPorTurno.stream().noneMatch(p -> p instanceof Enemigo)) {
+        if (personajesPorTurno.stream().noneMatch(p -> p instanceof Enemigo) || mapa.estaEnLaEscalera()) {
             juegoTerminado = true;
             SceneManager.getInstance().setScene(SceneID.YOUWIN, "youwin");
             SceneManager.getInstance().loadScene(SceneID.YOUWIN);

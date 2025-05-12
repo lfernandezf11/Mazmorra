@@ -10,11 +10,11 @@ public class YouWinController {
     @FXML
     private Button salir;
     @FXML
-    private Button reintentar;
+    private Button jugarDeNuevo;
 
     @FXML
     public void initialize() {
-        reintentar.setOnAction(event -> {
+        jugarDeNuevo.setOnAction(event -> {
             SceneManager.getInstance().setScene(SceneID.INICIO, "inicio");
             SceneManager.getInstance().loadScene(SceneID.INICIO);
         });
