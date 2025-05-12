@@ -155,74 +155,76 @@ public class Mapa {
         int nuevoX = jugador.getColumna() + dx;
         int nuevoY = jugador.getFila() + dy;
 
-        //Verifica que la nueva posición esté dentro del mapa y que la celda sea de tipo suelo.
-        if (nuevoX >= 0 && nuevoX < mapaMatriz[0].length &&
-            nuevoY >= 0 && nuevoY < mapaMatriz.length &&
-            mapaMatriz[nuevoY][nuevoX] == 0) {
-                
-                //Verifica si en la nueva posición hay un enemigo.
-                // for (Enemigo enemigo : enemigos) {
-                //     if (enemigo.getColumna() == nuevoX && enemigo.getFila() == nuevoY) {
-                //         iniciarCombate(jugador, enemigo);
-                //         return; //Si hay enemigo, no realiza el movimiento.
-                //     } 
-                // }
-                posicionX = nuevoX;
-                posicionY = nuevoY;
-                jugador.setPosicion(nuevoX, nuevoY);
-
-                // Redibuja los personajes en la nueva posición (sin regenerar aleatorio)
-                dibujarPersonajes(gridPanePersonajes);
-                return true;
+        // Fuera de los límites
+        if (nuevoX < 0 || nuevoX >= mapaMatriz[0].length || nuevoY < 0 || nuevoY >= mapaMatriz.length) {
+            return false;
         }
-        return false;
-    }
 
-public boolean moverEnemigo(Enemigo enemigo, GridPane gridPanePersonajes, StackPane stackPaneJuego) {
-    int x = enemigo.getPosicionX();
-    int y = enemigo.getPosicionY();
-    int[][] direcciones = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
-    List<int[]> posiblesMovimientos = new java.util.ArrayList<>();
-    int jugadorX = Proveedor.getInstance().getJugador().getColumna();
-    int jugadorY = Proveedor.getInstance().getJugador().getFila();
-
-    List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
-    java.util.Set<String> posicionesOcupadas = new java.util.HashSet<>();
-    for (Enemigo e : enemigos) {
-        if (e != enemigo) {
-            posicionesOcupadas.add(e.getPosicionX() + "," + e.getPosicionY());
+        // Es una pared
+        if (mapaMatriz[nuevoY][nuevoX] != 0) {
+            return false;
         }
-    }
 
-    for (int[] dir : direcciones) {
-        int nx = x + dir[0];
-        int ny = y + dir[1];
-        String posStr = nx + "," + ny;
-        if (nx >= 0 && nx < mapaMatriz[0].length &&
-                ny >= 0 && ny < mapaMatriz.length &&
-                mapaMatriz[ny][nx] == 0) {
-            // Permite moverse a la casilla del jugador para atacar
-            if (!posicionesOcupadas.contains(posStr)) {
-                posiblesMovimientos.add(new int[] { nx, ny });
-            }
+        // Hay otro personaje (enemigo)
+        String posStr = nuevoX + "," + nuevoY;
+        if (posicionesOcupadas.contains(posStr)) {
+            return false;
         }
-    }
 
-    if (!posiblesMovimientos.isEmpty()) {
-        int[] movimiento = posiblesMovimientos.get(random.nextInt(posiblesMovimientos.size()));
-        if (movimiento[0] == jugadorX && movimiento[1] == jugadorY) {
-            // Aquí puedes poner la lógica de ataque al jugador
-            System.out.println("¡El enemigo ataca al jugador!");
-            // No muevas al enemigo a la casilla del jugador
-        } else {
-            enemigo.setPosicion(movimiento[0], movimiento[1]);
-        }
+        // Movimiento válido
+        posicionesOcupadas.remove(jugador.getColumna() + "," + jugador.getFila());
+        jugador.setPosicion(nuevoX, nuevoY);
+        posicionesOcupadas.add(posStr);
+
         dibujarPersonajes(gridPanePersonajes);
         return true;
     }
-    dibujarPersonajes(gridPanePersonajes); // Redibuja aunque no se mueva
-    return false;
-}
+
+    public boolean moverEnemigo(Enemigo enemigo, GridPane gridPanePersonajes, StackPane stackPaneJuego) {
+        int x = enemigo.getPosicionX();
+        int y = enemigo.getPosicionY();
+        int[][] direcciones = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
+        List<int[]> posiblesMovimientos = new java.util.ArrayList<>();
+        int jugadorX = Proveedor.getInstance().getJugador().getColumna();
+        int jugadorY = Proveedor.getInstance().getJugador().getFila();
+
+        List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
+        java.util.Set<String> posicionesOcupadas = new java.util.HashSet<>();
+        for (Enemigo e : enemigos) {
+            if (e != enemigo) {
+                posicionesOcupadas.add(e.getPosicionX() + "," + e.getPosicionY());
+            }
+        }
+
+        for (int[] dir : direcciones) {
+            int nx = x + dir[0];
+            int ny = y + dir[1];
+            String posStr = nx + "," + ny;
+            if (nx >= 0 && nx < mapaMatriz[0].length &&
+                    ny >= 0 && ny < mapaMatriz.length &&
+                    mapaMatriz[ny][nx] == 0) {
+                // Permite moverse a la casilla del jugador para atacar
+                if (!posicionesOcupadas.contains(posStr)) {
+                    posiblesMovimientos.add(new int[] { nx, ny });
+                }
+            }
+        }
+
+        if (!posiblesMovimientos.isEmpty()) {
+            int[] movimiento = posiblesMovimientos.get(random.nextInt(posiblesMovimientos.size()));
+            if (movimiento[0] == jugadorX && movimiento[1] == jugadorY) {
+                // Aquí puedes poner la lógica de ataque al jugador
+                System.out.println("¡El enemigo ataca al jugador!");
+                // No muevas al enemigo a la casilla del jugador
+            } else {
+                enemigo.setPosicion(movimiento[0], movimiento[1]);
+            }
+            dibujarPersonajes(gridPanePersonajes);
+            return true;
+        }
+        dibujarPersonajes(gridPanePersonajes); // Redibuja aunque no se mueva
+        return false;
+    }
 
     /**
      * Limpia el contenido y las restricciones del GridPane.

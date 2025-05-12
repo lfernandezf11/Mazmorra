@@ -130,26 +130,23 @@ public class JuegoController implements Observer {
             // Solo permite mover si es el turno del jugador
             Personaje actual = personajesPorTurno.get(indiceTurnoActual);
             if (actual instanceof Jugador) {
-                boolean seMovio = false;
                 switch (event.getCode()) {
                     case UP:
-                        seMovio = mapa.moverJugador(0, -1, gridPanePersonajes, stackPaneJuego);
+                        mapa.moverJugador(0, -1, gridPanePersonajes, stackPaneJuego);
                         break;
                     case DOWN:
-                        seMovio = mapa.moverJugador(0, 1, gridPanePersonajes, stackPaneJuego);
+                        mapa.moverJugador(0, 1, gridPanePersonajes, stackPaneJuego);
                         break;
                     case LEFT:
-                        seMovio = mapa.moverJugador(-1, 0, gridPanePersonajes, stackPaneJuego);
+                        mapa.moverJugador(-1, 0, gridPanePersonajes, stackPaneJuego);
                         break;
                     case RIGHT:
-                        seMovio = mapa.moverJugador(1, 0, gridPanePersonajes, stackPaneJuego);
+                        mapa.moverJugador(1, 0, gridPanePersonajes, stackPaneJuego);
                         break;
                     default:
                         break;
                 }
-                if (seMovio) {
-                    siguienteTurno();
-                }
+                siguienteTurno();
             }
             stackPaneJuego.requestFocus();
         });
