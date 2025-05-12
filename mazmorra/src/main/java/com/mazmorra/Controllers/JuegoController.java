@@ -146,6 +146,7 @@ public class JuegoController implements Observer {
                     default:
                         break;
                 }
+                actualizarStatsTodos();
                 siguienteTurno();
             }
             stackPaneJuego.requestFocus();
@@ -167,19 +168,20 @@ public class JuegoController implements Observer {
         // Limpia la lista de personajes muertos antes de avanzar turno
         personajesPorTurno.removeIf(personaje -> personaje.getVida() <= 0);
 
-        // // Si ya no quedan enemigos o el jugador ha muerto, puedes gestionar el fin del
+        // // Si ya no quedan enemigos o el jugador ha muerto, puedes gestionar el fin
+        // del
         // // juego aquí
         // if (personajesPorTurno.stream().noneMatch(p -> p instanceof Enemigo)) {
-        //     // ¡Victoria!
-        //     System.out.println("¡Has derrotado a todos los enemigos!");
-        //     // Aquí puedes mostrar un mensaje en la UI o terminar el juego
-        //     return;
+        // // ¡Victoria!
+        // System.out.println("¡Has derrotado a todos los enemigos!");
+        // // Aquí puedes mostrar un mensaje en la UI o terminar el juego
+        // return;
         // }
         // if (personajesPorTurno.stream().noneMatch(p -> p instanceof Jugador)) {
-        //     // Derrota
-        //     System.out.println("¡El jugador ha sido derrotado!");
-        //     // Aquí puedes mostrar un mensaje en la UI o terminar el juego
-        //     return;
+        // // Derrota
+        // System.out.println("¡El jugador ha sido derrotado!");
+        // // Aquí puedes mostrar un mensaje en la UI o terminar el juego
+        // return;
         // }
 
         indiceTurnoActual = (indiceTurnoActual + 1) % personajesPorTurno.size();
@@ -191,14 +193,21 @@ public class JuegoController implements Observer {
             stackPaneJuego.requestFocus();
             // Espera a que el jugador pulse tecla
         } else {
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
             pause.setOnFinished(event -> {
                 mapa.moverEnemigo((Enemigo) actual, gridPanePersonajes, stackPaneJuego);
-                // SIEMPRE avanza el turno, mueva o no el enemigo
+                actualizarStatsTodos();
                 siguienteTurno();
             });
             pause.play();
         }
+    }
+
+    // CON ESTE METODO ACTUALIZAMOS LOS STATS CONTINUAMENTE Y LOS
+    // LLAMAMOS CONTINUAMENTE EN LOS MOVIMIENTOS PARA QUE SE VAYAN PINTANDO.
+    private void actualizarStatsTodos() {
+        actualizarStats(); // Jugador
+        cargarStatsEnemigos(enemigos); // Enemigos
     }
 
     private void actualizarLabelTurno() {
@@ -238,21 +247,25 @@ public class JuegoController implements Observer {
      * no determinar una a una cada View y cada Label.
      */
     private void cargarStatsEnemigos(List<Enemigo> enemigos) {
-        // Agrupa en listas las ImageViews y las labels que corresponden al mismo
-        // atributo en la escena.
         List<ImageView> imagenes = List.of(imagenEnemigo1, imagenEnemigo2, imagenEnemigo3);
         List<Label> vidas = List.of(vidaEnemigo1, vidaEnemigo2, vidaEnemigo3);
         List<Label> ataques = List.of(ataqueEnemigo1, ataqueEnemigo2, ataqueEnemigo3);
-        List<Label> velocidad = List.of(velocidadEnemigo1, velocidadEnemigo2, velocidadEnemigo3);
+        List<Label> velocidades = List.of(velocidadEnemigo1, velocidadEnemigo2, velocidadEnemigo3);
 
-        // Recorre la lista de enemigos asignando a cada atributo de la escena el valor
-        // del enemigo actual.
-        for (int i = 0; i < enemigos.size(); i++) {
-            Enemigo enemigo = enemigos.get(i);
-            imagenes.get(i).setImage(cargarImagenJugador(enemigo.getRutaImagen()));
-            vidas.get(i).setText(String.valueOf(enemigo.getVida()));
-            ataques.get(i).setText(String.valueOf(enemigo.getAtaque()));
-            velocidad.get(i).setText(String.valueOf(enemigo.getVelocidad()));
+        for (int i = 0; i < imagenes.size(); i++) {
+            if (i < enemigos.size()) {
+                Enemigo enemigo = enemigos.get(i);
+                imagenes.get(i).setImage(cargarImagenJugador(enemigo.getRutaImagen()));
+                vidas.get(i).setText(String.valueOf(enemigo.getVida()));
+                ataques.get(i).setText(String.valueOf(enemigo.getAtaque()));
+                velocidades.get(i).setText(String.valueOf(enemigo.getVelocidad()));
+                imagenes.get(i).setOpacity(1.0); // Por si antes estaba "tachado"
+            } else {
+                imagenes.get(i).setImage(null);
+                vidas.get(i).setText("");
+                ataques.get(i).setText("");
+                velocidades.get(i).setText("");
+            }
         }
     }
 

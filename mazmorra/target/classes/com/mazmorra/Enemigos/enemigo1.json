@@ -1,29 +1,29 @@
 [
     {
       "nombre": "CTHULU",
-      "ataque": 1,
-      "vida": 3,
+      "ataque": 2,
+      "vida": 4,
       "defensa": 1,
       "velocidad": 4,
       "rutaImagen" : "/com/mazmorra/Images/cthuluAbajo.png",
-      "percepcion": 1
+      "percepcion": 3
     },
     {
       "nombre": "MINOTAURO",
-      "ataque": 2,
+      "ataque": 4,
       "vida": 5,
       "defensa": 2,
       "velocidad": 6,
       "rutaImagen" : "/com/mazmorra/Images/minotauroAbajo.png",
-      "percepcion": 2
+      "percepcion": 5
     },
     {
       "nombre": "CICLOPE",
-      "ataque": 3,
+      "ataque": 4,
       "vida": 7,
       "defensa": 2,
       "velocidad": 5,
       "rutaImagen" : "/com/mazmorra/Images/ciclopeAbajo.png",
-      "percepcion": 3
+      "percepcion": 8
     }
 ]
