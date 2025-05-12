@@ -41,12 +41,13 @@ public class DataReader {
                     matrizMapa[i][j] = 0;
                 } else if (c.toUpperCase().equals("P")) {
                     matrizMapa[i][j] = 1;
+                } else if (c.toUpperCase().equals("E")) {
+                    matrizMapa[i][j] = 2;
                 } else {
                     throw new IllegalArgumentException("Carácter inválido en la coordenada " + matrizMapa[i][j]);
                 }
             }
         }
-
         return matrizMapa;
     }
 

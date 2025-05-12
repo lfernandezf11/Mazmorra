@@ -35,6 +35,8 @@ public class Mapa {
                                                                         // src/main/resources, porque se recupera desde
                                                                         // el classpath (desde target/classes)
     private static String sueloPath = "/com/mazmorra/Images/suelo.png";
+    private static String escaleraPath = "/com/mazmorra/Images/escalera.png"; 
+
     private int[][] mapaMatriz; // Matriz de datos procedente de DataReader.java
     private List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
     private Jugador jugador = Proveedor.getInstance().getJugador();
@@ -86,8 +88,10 @@ public class Mapa {
                     imageView.setImage(new Image(getClass().getResource(sueloPath).toExternalForm()));
                     // Obtiene el recurso dentro de la ruta de clase, y convierte la referencia a
                     // una URL completa que JavaFX pueda interpretar.
-                } else {
+                } else if (celda == 1){
                     imageView.setImage(new Image(getClass().getResource(paredPath).toExternalForm()));
+                } else {
+                    imageView.setImage(new Image(getClass().getResource(escaleraPath).toExternalForm()));
                 }
                 gridPaneJuego.add(imageView, j, i); // GridPane: (NodeChild, int columna, int fila): j se tiene que
                                                     // especificar antes que i.
