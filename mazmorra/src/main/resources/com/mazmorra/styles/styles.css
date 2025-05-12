@@ -132,3 +132,121 @@
     -fx-effect: dropshadow(gaussian, #181a20, 1.5, 0.6, 0, 1);
     -fx-padding: 2 8 2 8;
 }
+
+#corazon {
+    -fx-effect: dropshadow(gaussian, #ff3b3b, 10, 0.5, 0, 0);
+    -fx-background-color: #ffdddd;
+    -fx-padding: 3;
+    -fx-border-radius: 8;
+}
+
+/* Espada (ataque) - Verde */
+#espada {
+    -fx-effect: dropshadow(gaussian, #2ecc40, 10, 0.5, 0, 0);
+    -fx-background-color: #eaffdd;
+    -fx-padding: 3;
+    -fx-border-radius: 8;
+}
+
+/* Escudo (defensa) - Azul */
+#escudo {
+    -fx-effect: dropshadow(gaussian, #3b82ff, 10, 0.5, 0, 0);
+    -fx-background-color: #ddeaff;
+    -fx-padding: 3;
+    -fx-border-radius: 8;
+}
+
+/* Rayo (velocidad) - Amarillo */
+#rayo {
+    -fx-effect: dropshadow(gaussian, #ffe100, 10, 0.5, 0, 0);
+    -fx-background-color: #fffbe1;
+    -fx-padding: 3;
+    -fx-border-radius: 8;
+}
+
+/* Aplica a todos los labels de ataque */
+#ataqueJugador,
+#ataqueEnemigo1,
+#ataqueEnemigo2,
+#ataqueEnemigo3 {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-color: rgba(0,0,0,0.7); /* Fondo negro semitransparente */
+    -fx-background-radius: 6;
+    -fx-padding: 3 10 3 10; /* Arriba, derecha, abajo, izquierda */
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #222, 8, 0.3, 0, 1);
+    -fx-border-color: #2ecc40; /* Borde verde para destacar el ataque */
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+}
+
+#defensaJugador{
+        -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-color: rgba(0,0,0,0.7); /* Fondo negro semitransparente */
+    -fx-background-radius: 6;
+    -fx-padding: 3 10 3 10; /* Arriba, derecha, abajo, izquierda */
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #222, 8, 0.3, 0, 1);
+    -fx-border-color: #3b82ff; /* Borde verde para destacar el ataque */
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+}
+
+#vidaJugador,
+#vidaEnemigo1,
+#vidaEnemigo2,
+#vidaEnemigo3 {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-color: rgba(0,0,0,0.7); /* Fondo negro semitransparente */
+    -fx-background-radius: 6;
+    -fx-padding: 3 10 3 10; /* Arriba, derecha, abajo, izquierda */
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #222, 8, 0.3, 0, 1);
+    -fx-border-color: #ff3b3b; /* Borde verde para destacar el ataque */
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+}
+
+#velocidadJugador,
+#velocidadEnemigo1,
+#velocidadEnemigo2,
+#velocidadEnemigo3, 
+#masVelocidad,
+#velocidadMedia,
+#masLento,
+#masMasLento {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-color: rgba(0,0,0,0.7); /* Fondo negro semitransparente */
+    -fx-background-radius: 6;
+    -fx-padding: 3 10 3 10; /* Arriba, derecha, abajo, izquierda */
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #222, 8, 0.3, 0, 1);
+    -fx-border-color: #ff3b3b; /* Borde verde para destacar el ataque */
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+}
+
+#labelTurno, 
+#teTocaTurno,
+#nombreJugador{
+        -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-color: rgba(0,0,0,0.7); /* Fondo negro semitransparente */
+    -fx-background-radius: 6;
+    -fx-padding: 3 10 3 10; /* Arriba, derecha, abajo, izquierda */
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #222, 8, 0.3, 0, 1);
+    -fx-border-color: #ffffff; /* Borde verde para destacar el ataque */
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+}
+
