@@ -96,7 +96,7 @@
     -fx-effect: dropshadow(gaussian, #000 0.7, 2, 0.6, 0, 1);
 }
 
-#introUno, #iniciarJuego {
+#introUno, #iniciarJuego, #salir, #reintentar, #jugarDeNuevo {
     -fx-background-color: linear-gradient(to bottom, #b4ddff 0%, #000000 100%);
     -fx-text-fill: #94d1fc;
     -fx-font-weight: bold;
@@ -116,7 +116,7 @@
     -fx-translate-y: 0;
     -fx-transition: all 0.3s;
 }
-#introUno:hover, #iniciarJuego:hover {
+#introUno:hover, #iniciarJuego:hover, #salir:hover, #reintentar:hover, #jugarDeNuevo:hover {
     -fx-background-color: linear-gradient(to bottom, #94d1fc, #000000);
     -fx-border-color: #fffbe6;
     -fx-effect: dropshadow(gaussian, #fffbe6cc, 20, 0.8, 0, 4);
