@@ -25,6 +25,9 @@ public class Jugador extends Personaje {
     
     /** Puntos a distribuir entre los atributos del jugador, en el momento de su creación. Por defecto, 10. */
     private static int puntosRestantesIniciales = 10;
+    
+    /** Valor de la vida inicial del jugador, preestablecido en 5.*/
+    private static int vidaInicial = 5; 
 
     /**
      * Constructor que crea un nuevo jugador con los parámetros especificados.
@@ -33,12 +36,12 @@ public class Jugador extends Personaje {
      * @param nombre            el nombre del jugador.
      * @param ataque            el valor de ataque del jugador.
      * @param defensa           el valor de defensa del jugador.
-     * @param vida              los puntos de vida del jugador.
+     * @param vida              los puntos de vida iniciales del jugador, con un valor preestablecido. 
      * @param tipo              el tipo de jugador, definido en los valores del Enum TipoJugador: mago, guerrero o arquero.
      * @param rutaImagen        la ruta del archivo de imagen asociado al jugador.
      */
     public Jugador(String nombre, int ataque, int defensa, int vida, String rutaImagen, TipoJugador tipo) {
-        super(nombre, ataque, defensa, vida, tipo, rutaImagen);
+        super(nombre, ataque, defensa, vida = vidaInicial, tipo, rutaImagen);
         this.puntosRestantes = puntosRestantesIniciales;
     }
 
