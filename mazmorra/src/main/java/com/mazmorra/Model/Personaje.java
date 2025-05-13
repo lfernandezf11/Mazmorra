@@ -271,7 +271,7 @@ public abstract class Personaje {
             case MINOTAURO:
                 return 5;
             default:
-                return 5;
+                return 5; // Valor por defecto si el tipo de personaje no existe. 
         }
     }
 
