@@ -14,19 +14,22 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 /**
- * Controlador para la escena de configuración del jugador.
+ * Controlador para la escena de selección y configuración del jugador.
  * 
- * Permite al usuario introducir su nombre, elegir el tipo de personaje (maga,
- * guerrero, arquero),
- * y distribuir 5 puntos iniciales entre las estadísticas de vida, ataque,
- * defensa y velocidad.
+ * Permite al usuario introducir su nombre, elegir un tipo de personaje 
+ * (MAGO, GUERRERO, ARQUERO) y distribuir una cantidad predeterminada de
+ * puntos iniciales entre las estadísticas de vida, ataque, defensa y velocidad
+ * antes de iniciar la partida.
  * 
- * Implementa la interfaz Observer para plasmar en la escena los cambios en la
+ * Implementa la interfaz {@link Observer} para plasmar en la escena los cambios en la
  * entidad Jugador de forma dinámica.
+ * 
+ * @author Miguel González Seguro
+ * @author Lucía Fernández Florencio
  */
 
 public class JugadorController implements Observer {
-
+    //Etiquetas de atributos
     @FXML
     private Label Vida;
     @FXML
@@ -35,6 +38,8 @@ public class JugadorController implements Observer {
     private Label Defensa;
     @FXML
     private Label Velocidad;
+    
+    //Etiquetas de puntos asignados a cada atributo
     @FXML
     private Label pDisponible;
     @FXML
@@ -47,8 +52,12 @@ public class JugadorController implements Observer {
     private Label puntosVelocidad;
     @FXML
     private Label PuntosRestantes;
+
+    // Campo de texto para introducir el nombre
     @FXML
     private TextField introNombre;
+
+    // Selección del tipo de jugador
     @FXML
     private ImageView imagenMago;
     @FXML
@@ -56,6 +65,7 @@ public class JugadorController implements Observer {
     @FXML
     private ImageView imagenElfo;
 
+    // Botones para modificar estadísticas
     @FXML
     private Button addVida;
     @FXML
@@ -72,21 +82,62 @@ public class JugadorController implements Observer {
     private Button addVelocidad;
     @FXML
     private Button restVelocidad;
+    
+    // Botones para confirmar
     @FXML
     private Button iniciarJuego;
     @FXML
     private Button introUno;
 
+    /** Instancia del jugador actual */
     private Jugador jugador;
 
     /**
      * Método de inicialización automática llamado por JavaFX.
-     * Configura el estado inicial de los componentes visuales,
-     * suscriptores del modelo, y los eventos de los botones.
+     * Configura el estado inicial de los componentes visuales, suscriptores del modelo, y los eventos de los botones.
+     * 
+     * Los controles permanecen ocultas hasta que el usuario introduce su nombre. 
      */
     @FXML
     public void initialize() {
+        // Oculta los componentes hasta la introducción del nombre
+        ocultarComponentesIniciales();
 
+        // Hace visibles las imágenes de cada tipo de jugador cuando el nombre no está vacío. 
+        introUno.setOnAction(e -> {
+            if (!introNombre.getText().isEmpty()) {
+                // Mostrar las imágenes
+                imagenMago.setVisible(true);
+                imagenGuerrero.setVisible(true);
+                imagenElfo.setVisible(true);
+            }
+        });
+
+        /* Configura los ImageView para que sean clickables y genera el objeto Jugador sólo cuando se ha seleccionado el tipo.
+           Si lo hiciésemos antes, el Jugador se iniciaría con el valor TipoJugador null, con lo que no se generaría correctamente
+           ni sus datos podrían pasar entre pantallas.*/
+        imagenMago.setOnMouseClicked(e -> {
+            crearJugador(TipoJugador.MAGO, "/com/mazmorra/Images/magaAbajo.png");
+        });
+           
+        imagenGuerrero.setOnMouseClicked(e -> {
+            crearJugador(TipoJugador.GUERRERO, "/com/mazmorra/Images/guerreroAbajo.png");
+        });
+           
+        imagenElfo.setOnMouseClicked(e -> {
+            crearJugador(TipoJugador.ARQUERO, "/com/mazmorra/Images/arqueroAbajo.png");       
+        });
+            
+    }
+
+
+     /**
+     * Oculta todos los componentes de edición de estadísticas, botones y etiquetas.
+     * Se utiliza al iniciar la escena para que la configuración sólo sea posible tras la
+     * introducción del nombre.
+     * 
+     */
+    private void ocultarComponentesIniciales() {
         puntosVida.setVisible(false);
         puntosAtaque.setVisible(false);
         puntosDefensa.setVisible(false);
@@ -109,35 +160,17 @@ public class JugadorController implements Observer {
         Defensa.setVisible(false);
         Vida.setVisible(false);
         Velocidad.setVisible(false);
-
-        introUno.setOnAction(e -> {
-            if (!introNombre.getText().isEmpty()) {
-                // Mostrar las imágenes
-                imagenMago.setVisible(true);
-                imagenGuerrero.setVisible(true);
-                imagenElfo.setVisible(true);
-            }
-        });
-
-        // Configurar los ImageView para que sean "clickables"
-        imagenMago.setOnMouseClicked(e -> {
-            crearJugador(TipoJugador.MAGO, "/com/mazmorra/Images/magaAbajo.png");
-        });
-           
-        imagenGuerrero.setOnMouseClicked(e -> {
-            crearJugador(TipoJugador.GUERRERO, "/com/mazmorra/Images/guerreroAbajo.png");
-        });
-           
-        imagenElfo.setOnMouseClicked(e -> {
-            crearJugador(TipoJugador.ARQUERO, "/com/mazmorra/Images/arqueroAbajo.png");       
-        });
-            
     }
-
+    
+    
     /**
-     * Genera el Jugador una vez seleccionado el tipo de Personaje (mago, arquero, guerrero).
-     * @param tipo
-     * @param rutaImagen
+     * Crea el objeto Jugador tras seleccionar el tipo de personaje y lo registra en el proveedor,
+     * desde el cual se recuperarán sus datos. 
+     * También suscribe al controlador como observador y actualiza la interfaz con la llamada a los métodos
+     * indicados para ello.
+     *
+     * @param tipo el tipo de jugador seleccionado (MAGO, GUERRERO, ARQUERO).
+     * @param rutaImagen la ruta al recurso gráfico correspondiente al tipo.
      */
     private void crearJugador(TipoJugador tipo, String rutaImagen) {
         jugador = new Jugador(introNombre.getText(), 0, 0, 5, rutaImagen, tipo);
@@ -147,7 +180,10 @@ public class JugadorController implements Observer {
         configurarBotones();
         actualizarPersonaje();
     }
-          
+        
+    /**
+     * Muestra en la interfaz todos los controles (etiquetas y botones) asociados a la modificación de las estadísticas.
+     */
     private void mostrarStats() {
         puntosVida.setVisible(true);
         puntosAtaque.setVisible(true);
@@ -170,6 +206,13 @@ public class JugadorController implements Observer {
         pDisponible.setVisible(true);
     }
 
+
+    /**
+     * Configura las acciones de los botones para modificar las estadísticas del jugador,
+     * a través de los métodos propios de {@link Jugador}.
+     * 
+     * IniciarJuego gestiona la acción de iniciar el juego una vez completada la configuración.
+     */
     private void configurarBotones() {
         // Configuración usando métodos del modelo
         addVida.setOnAction(e -> {
@@ -203,6 +246,7 @@ public class JugadorController implements Observer {
         });
 
         iniciarJuego.setOnAction(e -> {
+            // Actualiza los valores del Jugador.
             jugador.setNombre(introNombre.getText());
             
             Proveedor.getInstance().setJugador(jugador);
@@ -212,11 +256,20 @@ public class JugadorController implements Observer {
         });
     }
 
+
+    /**
+     * Método de la interfaz {@link Observer} que se ejecuta cada vez que cambia el modelo del Jugador.
+     */
     @Override
     public void onChange() {
         actualizarPersonaje();
     }
 
+
+    /**
+     * Sincroniza los valores actuales del jugador con los las etiquetas visuales de la escena.
+     * También habilita o deshabilita los botones según el número de puntos restantes.
+     */
     private void actualizarPersonaje() {
         // Sincronización completa de valores
         puntosVida.setText(String.valueOf(jugador.getVida()));
