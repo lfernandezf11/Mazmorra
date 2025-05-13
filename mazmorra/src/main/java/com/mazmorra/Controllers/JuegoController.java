@@ -24,6 +24,27 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
+/**
+ * Controlador principal del juego.
+ * <p>
+ * Se encarga de inicializar la escena, gestionar los turnos entre el jugador y los enemigos,
+ * actualizar la interfaz gráfica (stats, imágenes y etiquetas) y controlar el estado general
+ * de la partida (victoria, derrota).
+ * </p>
+ * 
+ * <p>
+ * Implementa la interfaz Observer para poder actualizar dinámicamente la vista
+ * cuando el modelo (jugador) sufre cambios.
+ * </p>
+ * 
+ * <p>
+ * Este controlador gestiona las acciones del usuario mediante eventos de teclado y 
+ * coordina la lógica de combate por turnos.
+ * </p>
+ * 
+ * @author Miguel González Seguro
+ * @author Lucía Fernández Florencio
+ */
 public class JuegoController implements Observer {
     /*
      * Para acceder a archivos físicos hay que especificar la ruta RELATIVA A LA
@@ -104,33 +125,45 @@ public class JuegoController implements Observer {
     private List<Personaje> personajesPorTurno;
     private boolean juegoTerminado = false;
 
+
+    /**
+     * Inicializa la escena de juego.
+     * 
+     * <p>
+     * Carga los datos del jugador y enemigos, construye el mapa, genera posiciones iniciales,
+     * y asigna los eventos de teclado para mover al jugador. También organiza los personajes por velocidad
+     * para ejecutar el sistema de turnos.
+     * </p>
+     */
     @FXML
     public void initialize() {
 
         // Obtiene el jugador e inserta sus stats en la escena
         if (jugador.getRutaImagen() != null) {
             imagenJugador.setImage(cargarImagenJugador(jugador.getRutaImagen()));
-            jugador.subscribe(this);
+            jugador.subscribe(this); // Suscribe el controlador al jugador para actualizar la UI si cambia
             actualizarStats();
         }
-        // Obtiene los enemigos, los inserta en el proveedor y los muestra en la escena
-        // por velocidad.
+
+        // Carga los enemigos desde JSON y los almacena en el proveedor
         enemigos = DataReader.leerJsonEnemigos(rutaBase + "/Enemigos/enemigo1.json");
         Proveedor.getInstance().setEnemigos(enemigos);
 
+        // Obtiene la lista de personajes 
         personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
-        cargarStatsEnemigos(enemigos);
-        mostrarpersonajesPorVelocidad(personajes);
 
-        cargarMapa();
-        mapa.generarPosicionesIniciales();
-        dibujarTablero();
-        mapa.dibujarPersonajes(gridPanePersonajes);
+        cargarStatsEnemigos(enemigos); // Inicializa la UI de enemigos
+        mostrarpersonajesPorVelocidad(personajes); // Muestra las miniaturas según velocidad
 
-        stackPaneJuego.setFocusTraversable(true);
+        cargarMapa(); // Carga la matriz del mapa desde archivo
+        mapa.generarPosicionesIniciales(); // Coloca personajes aleatoriamente
+        dibujarTablero(); // Dibuja el tablero visualmente
+        mapa.dibujarPersonajes(gridPanePersonajes); // Dibuja personajes sobre el tablero
 
+        stackPaneJuego.setFocusTraversable(true); // Permite que el StackPane reciba eventos de teclado
+
+        // Asigna comportamiento al presionar teclas si es el turno del jugador
         stackPaneJuego.setOnKeyPressed(event -> {
-            // Solo permite mover si es el turno del jugador
             Personaje actual = personajesPorTurno.get(indiceTurnoActual);
             if (actual instanceof Jugador) {
                 switch (event.getCode()) {
@@ -149,75 +182,100 @@ public class JuegoController implements Observer {
                     default:
                         break;
                 }
-                actualizarStatsTodos();
-                siguienteTurno();
+                actualizarStatsTodos(); // Actualiza toda la interfaz tras el movimiento y pasa de turno
+                siguienteTurno(); 
             }
-            stackPaneJuego.requestFocus();
+            stackPaneJuego.requestFocus(); // Mantiene el foco en el StackPane tras pulsar tecla
         });
-        stackPaneJuego.requestFocus(); // Para que el stackPane reciba el foco y capture las teclas
+
+        stackPaneJuego.requestFocus(); // Asegura que el StackPane tenga el foco inicial
+
+        // Ordena personajes por velocidad para gestionar los turnos
         personajesPorTurno = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
         personajesPorTurno.sort(Comparator.comparingInt(Personaje::getVelocidad).reversed());
-        indiceTurnoActual = -1;
-        siguienteTurno();
-        actualizarLabelTurno();
 
+        indiceTurnoActual = -1; // Inicializa el índice de turno antes del primer avance
+        siguienteTurno(); // Comienza el primer turno del combate
+        actualizarLabelTurno(); // Muestra mensaje de "¡Tu turno!" si es necesario
     }
 
+
+    /**
+     * Lógica que se ejecuta cuando el jugador (modelo) notifica un cambio.
+     * Actualiza los valores mostrados en la interfaz de usuario.
+     */
     @Override
     public void onChange() {
-        actualizarStats(); // Actualiza la UI cuando hay un cambio en el jugador
+        actualizarStats(); // Actualiza la UI cuando hay un cambio en el modelo (Jugador)
     }
 
+
+    /**
+     * Avanza al siguiente personaje en el orden de turnos.
+     * 
+     * - Si es el turno del jugador, se espera entrada por teclado.
+     * - Si es el turno de un enemigo, se lanza un movimiento automático tras un breve delay.
+     */
     private void siguienteTurno() {
-            if (juegoTerminado) return; // Evita procesar turnos tras game over
-        // Limpia la lista de personajes muertos antes de avanzar turno
+        if (juegoTerminado) return; // Evita seguir si la partida terminó
+
+        // Elimina personajes muertos de la lista de turnos
         personajesPorTurno.removeIf(personaje -> personaje.getVida() <= 0);
 
+        // Calcula el índice del siguiente personaje en la lista
         indiceTurnoActual = (indiceTurnoActual + 1) % personajesPorTurno.size();
         Personaje actual = personajesPorTurno.get(indiceTurnoActual);
 
-        actualizarLabelTurno();
+        actualizarLabelTurno(); // Muestra o esconde el cartel de turno
 
         if (actual instanceof Jugador) {
-            stackPaneJuego.requestFocus();
-            // Espera a que el jugador pulse tecla
+            stackPaneJuego.requestFocus(); // Espera a que el jugador actúe manualmente
         } else {
+            // Activa movimiento enemigo con un pequeño retardo
             PauseTransition pause = new PauseTransition(Duration.seconds(0.1));
             pause.setOnFinished(event -> {
                 mapa.moverEnemigo((Enemigo) actual, gridPanePersonajes, stackPaneJuego);
-                actualizarStatsTodos();
-                siguienteTurno();
+                actualizarStatsTodos(); // Actualiza interfaz tras actuar enemigo
+                siguienteTurno(); // Llama al siguiente turno automáticamente
             });
-            pause.play();
+            pause.play(); // Inicia la pausa
         }
     }
-
-    // CON ESTE METODO ACTUALIZAMOS LOS STATS CONTINUAMENTE Y LOS
-    // LLAMAMOS CONTINUAMENTE EN LOS MOVIMIENTOS PARA QUE SE VAYAN PINTANDO.
+    
+    
+     /**
+     * Actualiza la interfaz con los valores actuales del jugador y los enemigos.
+     * 
+     * También verifica si se ha alcanzado una condición de fin de partida,
+     * como la derrota del jugador o la victoria por eliminación o llegada a la escalera.
+     */
     private void actualizarStatsTodos() {
         if (juegoTerminado)
             return;
 
-        actualizarStats();
-        cargarStatsEnemigos(enemigos);
+        actualizarStats(); // Refresca stats del jugador
+        cargarStatsEnemigos(enemigos); // Refresca stats de enemigos
 
-        // Control jugador muerto
+        // Verifica si el jugador ha sido derrotado
         if (jugador.getVida() <= 0) {
             juegoTerminado = true;
             SceneManager.getInstance().setScene(SceneID.YOULOSE, "youlose");
             SceneManager.getInstance().loadScene(SceneID.YOULOSE);
-            return; // Importante para salir temprano
+            return; // Termina ejecución del método
         }
 
-        // Control victoria
+        // Verifica condición de victoria: sin enemigos o en la escalera
         if (personajesPorTurno.stream().noneMatch(p -> p instanceof Enemigo) || mapa.estaEnLaEscalera()) {
             juegoTerminado = true;
             SceneManager.getInstance().setScene(SceneID.YOUWIN, "youwin");
             SceneManager.getInstance().loadScene(SceneID.YOUWIN);
         }
-
     }
 
+
+    /**
+     * Muestra u oculta el mensaje de "¡Tu turno!" dependiendo del turno actual.
+     */
     private void actualizarLabelTurno() {
         Personaje actual = personajesPorTurno.get(indiceTurnoActual);
         if (actual instanceof Jugador) {
@@ -229,11 +287,22 @@ public class JuegoController implements Observer {
         }
     }
 
+
+    /**
+     * Carga una imagen desde la ruta proporcionada.
+     *
+     * @param rutaImagen ruta del recurso dentro del classpath.
+     * @return imagen de tipo Image generada a partir del recurso.
+     */
     private Image cargarImagenJugador(String rutaImagen) {
         return new Image(getClass().getResource(rutaImagen).toExternalForm());
-
     }
 
+
+    /**
+     * Actualiza los valores mostrados en pantalla asociados al jugador:
+     * nombre, vida, ataque, defensa, velocidad e imagen.
+     */
     private void actualizarStats() {
         if (jugador != null) {
             nombreJugador.setText(jugador.getNombre());
@@ -250,9 +319,16 @@ public class JuegoController implements Observer {
     }
 
     /*
-     * Lo ideal es establecer un grid en la escena y asignar los valores a las
-     * celdas, pero esto es un arreglo para
+     * Lo ideal para las stats de enemigos es establecer un grid en la escena y asignar los valores a las
+     * celdas, pero esto es un arreglo más fino, para
      * no determinar una a una cada View y cada Label.
+     */
+
+    /**
+     * Inserta en la interfaz los datos de los enemigos activos.
+     * Asigna imágenes y estadísticas en las posiciones correspondientes.
+     *
+     * @param enemigos lista de enemigos a representar gráficamente.
      */
     private void cargarStatsEnemigos(List<Enemigo> enemigos) {
         List<ImageView> imagenes = List.of(imagenEnemigo1, imagenEnemigo2, imagenEnemigo3);
@@ -277,6 +353,13 @@ public class JuegoController implements Observer {
         }
     }
 
+
+    /**
+     * Ordena los personajes por velocidad descendente y actualiza
+     * las miniaturas de la sección lateral de la vista, indicando quién es más rápido.
+     *
+     * @param personajes lista completa de personajes, incluyendo al jugador.
+     */
     private void mostrarpersonajesPorVelocidad(List<Personaje> personajes) {
     personajes.sort(Comparator.comparingInt(Personaje::getVelocidad).reversed());
 
@@ -322,9 +405,14 @@ public class JuegoController implements Observer {
     /**
      * Asegura que el método initialize del controlador del juego se haya ejecutado
      * antes de generar la interfaz gráfica para el tablero.
-     * El objetivo es que las propiedades de los nodos ya estén establecidas antes
-     * de extraerlas y operar sobre ellos.
      * 
+     * <p>
+     * El objetivo es que las propiedades de los nodos ya estén establecidas antes
+     * de extraerlas y operar sobre ellos.<br><br>
+     * 
+     * También añade un listener para que el tablero se regenere dinámicamente
+     * si el ancho del contenedor cambia (responsive design).
+     * </p>
      */
     private void dibujarTablero() {
         /*
