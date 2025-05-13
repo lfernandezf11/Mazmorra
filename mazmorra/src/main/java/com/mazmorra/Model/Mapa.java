@@ -21,34 +21,39 @@ import com.mazmorra.SceneManager;
  * Gestiona la construcción gráfica del tablero de juego a partir de una matriz
  * de números enteros proveniente del DataReader.
  * <p>
- * Las imágenes correspondientes a "suelo" y "pared" son enrutadas de forma
+ * Las imágenes correspondientes a "suelo", "pared" y "escalera" son enrutadas de forma
  * estática desde Resources. <br>
  * La matriz se dibuja programáticamente mediante la creación de un elemento de
- * tipo Grid, <br>
- * que posteriormente conecta con la escena a través de un AnchorPane.
+ * tipo Grid, que posteriormente conecta con la escena a través de un AnchorPane.
  * </p>
  * 
  * @author Miguel González Seguro
  * @author Lucía Fernández Florencio
- * 
  */
 
 public class Mapa {
+    /** Clase Random que utilizaremos para mover los enemigos y aplicar parte de la lógica de juego */
     Random random = new Random();
-    private static String paredPath = "/com/mazmorra/Images/pared.png"; // La ruta relativa de img prescinde de
-                                                                        // src/main/resources, porque se recupera desde
-                                                                        // el classpath (desde target/classes)
+    
+    /** Rutas estáticas de las imágenes asociadas a cada tipo de casilla */
+    private static String paredPath = "/com/mazmorra/Images/pared.png"; 
     private static String sueloPath = "/com/mazmorra/Images/suelo.png";
     private static String escaleraPath = "/com/mazmorra/Images/escalera.png";
 
-    private int[][] mapaMatriz; // Matriz de datos procedente de DataReader.java
+    /**Matriz de datos procedente de DataReader.java*/
+    private int[][] mapaMatriz; 
+
+    /** Estructuras de datos proporcionadas por el Proveedor. */
     private List<Personaje> personajes = Proveedor.getInstance().getListaDePersonajesIncluyendoJugador();
     private Jugador jugador = Proveedor.getInstance().getJugador();
     private List<Enemigo> enemigos = Proveedor.getInstance().getListaEnemigos();
 
+    /** Estructura de datos de tipo Set para almacenar las posiciones que están ocupadas en el momento actual. */
     private Set<String> posicionesOcupadas = new HashSet<>();
     // POSICION DEL JUGADOR
+    @SuppressWarnings("unused")
     private int posicionX;
+    @SuppressWarnings("unused")
     private int posicionY;
 
     private boolean personajesGenerados = false;

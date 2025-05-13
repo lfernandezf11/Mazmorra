@@ -140,10 +140,7 @@ public class JugadorController implements Observer {
      * @param rutaImagen
      */
     private void crearJugador(TipoJugador tipo, String rutaImagen) {
-        jugador = new Jugador(
-            introNombre.getText(),
-            0, 0, 5, rutaImagen, tipo, 10
-        );
+        jugador = new Jugador(introNombre.getText(), 0, 0, 5, rutaImagen, tipo);
         jugador.subscribe(this);
         Proveedor.getInstance().setJugador(jugador); 
         mostrarStats();

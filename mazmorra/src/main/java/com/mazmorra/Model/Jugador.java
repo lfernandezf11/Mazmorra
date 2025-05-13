@@ -20,9 +20,11 @@ public class Jugador extends Personaje {
     /** Lista de observadores suscritos a cambios en el jugador. */
     private ArrayList<Observer> observers = new ArrayList<>();
 
-    /** Puntos a distribuir entre los atributos del jugador, en el momento de su creación. */
-    private int puntosRestantes = 10; // Ahora es de instancia, no estático
-
+    /** Puntos a distribuir entre los atributos del jugador. */
+    private int puntosRestantes;
+    
+    /** Puntos a distribuir entre los atributos del jugador, en el momento de su creación. Por defecto, 10. */
+    private static int puntosRestantesIniciales = 10;
 
     /**
      * Constructor que crea un nuevo jugador con los parámetros especificados.
@@ -34,11 +36,10 @@ public class Jugador extends Personaje {
      * @param vida              los puntos de vida del jugador.
      * @param tipo              el tipo de jugador, definido en los valores del Enum TipoJugador: mago, guerrero o arquero.
      * @param rutaImagen        la ruta del archivo de imagen asociado al jugador.
-     * @param puntosRestantes   los puntos a por distribuir entre los atributos del jugador, en el momento de su creación.
      */
-    public Jugador(String nombre, int ataque, int defensa, int vida, String rutaImagen, TipoJugador tipo, int puntosRestantes) {
+    public Jugador(String nombre, int ataque, int defensa, int vida, String rutaImagen, TipoJugador tipo) {
         super(nombre, ataque, defensa, vida, tipo, rutaImagen);
-        this.puntosRestantes = puntosRestantes;
+        this.puntosRestantes = puntosRestantesIniciales;
     }
 
       
@@ -61,6 +62,12 @@ public class Jugador extends Personaje {
         notifyObservers();
     }
 
+
+    /** SETTERS PARA LOS ATRIBUTOS DEL PERSONAJE
+     * Es necesario sobreescribir los setters para los atributos heredados puesto que, en el caso del Jugador,
+     * cada cambio ha de ser notificado a los observadores. 
+     */
+    
     /**
      * Establece el nombre del jugador y notifica a los observadores.
      *
@@ -136,7 +143,7 @@ public class Jugador extends Personaje {
     }
 
     /**
-     * Notifica a todos los observadores suscritos que el estado del jugador ha cambiado.
+     * Notifica a todos los observadores suscritos de que el estado del jugador ha cambiado.
      */
     public void notifyObservers() {
         observers.forEach(Observer::onChange);
@@ -184,8 +191,10 @@ public class Jugador extends Personaje {
                 '}';
     }
 
+
+    /** MÉTODOS PARA MODIFICAR LOS ATRIBUTOS DEL JUGADOR */
     /**
-     * Incrementa el valor de ataque en 1 si hay puntos restantes y notifica a los observadores.
+     * Incrementa el valor de ataque en 1 si hay puntos restantes, y notifica a los observadores.
      */
     public void incrementarAtaque() {
         if(puntosRestantes > 0) {
@@ -196,7 +205,7 @@ public class Jugador extends Personaje {
     }
 
     /**
-     * Decrementa el valor de ataque en 1 si es mayor que 0 y notifica a los observadores.
+     * Decrementa el valor de ataque en 1 si es mayor que 0, y notifica a los observadores.
      */
     public void decrementarAtaque() {
         if(ataque > 0) {
@@ -207,7 +216,7 @@ public class Jugador extends Personaje {
     }
 
     /**
-     * Incrementa el valor de defensa en 1 si hay puntos restantes y notifica a los observadores.
+     * Incrementa el valor de defensa en 1 si hay puntos restantes, y notifica a los observadores.
      */
     public void incrementarDefensa() {
         if(puntosRestantes > 0) {
@@ -218,7 +227,7 @@ public class Jugador extends Personaje {
     }
 
     /**
-     * Decrementa el valor de defensa en 1 si es mayor que 0 y notifica a los observadores.
+     * Decrementa el valor de defensa en 1 si es mayor que 0, y notifica a los observadores.
      */
     public void decrementarDefensa() {
         if(defensa > 0) {
@@ -229,7 +238,7 @@ public class Jugador extends Personaje {
     }
 
     /**
-     * Incrementa el valor de vida en 1 si hay puntos restantes y notifica a los observadores.
+     * Incrementa el valor de vida en 1 si hay puntos restantes, y notifica a los observadores.
      */
     public void incrementarVida() {
         if(puntosRestantes > 0) {
@@ -240,7 +249,7 @@ public class Jugador extends Personaje {
     }
 
     /**
-     * Decrementa el valor de vida en 1 si es mayor que 0 y notifica a los observadores.
+     * Decrementa el valor de vida en 1 si es mayor que 0, y notifica a los observadores.
      */
     public void decrementarVida() {
         if(vida > 0) {
@@ -262,7 +271,7 @@ public class Jugador extends Personaje {
     }
 
     /**
-     * Decrementa el valor de velocidad en 1 si es mayor que 0 y notifica a los observadores.
+     * Decrementa el valor de velocidad en 1 si es mayor que 0, y notifica a los observadores.
      */
     public void decrementarVelocidad() {
         if(velocidad > 0) {
