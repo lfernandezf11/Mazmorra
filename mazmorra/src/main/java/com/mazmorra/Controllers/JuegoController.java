@@ -23,7 +23,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 public class JuegoController implements Observer {
     /*
@@ -279,30 +278,24 @@ public class JuegoController implements Observer {
     }
 
     private void mostrarpersonajesPorVelocidad(List<Personaje> personajes) {
-        personajes.sort(Comparator.comparingInt(Personaje::getVelocidad).reversed());
+    personajes.sort(Comparator.comparingInt(Personaje::getVelocidad).reversed());
 
-        if (personajes.size() > 0 && personajes.get(0).getRutaImagen() != null) {
-            imagenMasVelocidad.setImage(cargarImagenJugador(personajes.get(0).getRutaImagen()));
-            masVelocidad.setText(String.valueOf(personajes.get(0).getVelocidad()));
-        }
-        if (personajes.size() > 1 && personajes.get(1).getRutaImagen() != null) {
-            imagenVelocidadMedia.setImage(cargarImagenJugador(personajes.get(1).getRutaImagen()));
-            velocidadMedia.setText(String.valueOf(personajes.get(1).getVelocidad()));
-        }
-        if (personajes.size() > 2 && personajes.get(2).getRutaImagen() != null) {
-            imagenMasLento.setImage(cargarImagenJugador(personajes.get(2).getRutaImagen()));
-            masLento.setText(String.valueOf(personajes.get(2).getVelocidad()));
-        }
-        if (personajes.size() > 3 && personajes.get(3).getRutaImagen() != null) {
-            imagenMasMasLento.setImage(cargarImagenJugador(personajes.get(3).getRutaImagen()));
-            masMasLento.setText(String.valueOf(personajes.get(3).getVelocidad()));
+    List<ImageView> imagenesVelocidad = List.of(imagenMasVelocidad, imagenVelocidadMedia, imagenMasLento, imagenMasMasLento);
+    List<Label> etiquetasVelocidad = List.of(masVelocidad, velocidadMedia, masLento, masMasLento);
+
+    for (int i = 0; i < imagenesVelocidad.size(); i++) {
+        if (i < personajes.size() && personajes.get(i).getRutaImagen() != null) {
+            imagenesVelocidad.get(i).setImage(cargarImagenJugador(personajes.get(i).getRutaImagen()));
+            etiquetasVelocidad.get(i).setText(String.valueOf(personajes.get(i).getVelocidad()));
+            imagenesVelocidad.get(i).setOpacity(1.0); // Por si acaso se oculta visualmente
+        } else {
+            imagenesVelocidad.get(i).setImage(null);
+            etiquetasVelocidad.get(i).setText("");
         }
     }
+}
 
-    /*
-     * De momento vamos a trabajar con personaje y dos enemigos, es posible que haya
-     * que modificar este trozo
-     */
+
 
     /**
      * Genera una instancia Mapa en la que establece la correspondencia gráfica

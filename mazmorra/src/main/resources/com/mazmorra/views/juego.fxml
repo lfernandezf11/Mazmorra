@@ -200,7 +200,6 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
-                  <Pane fx:id="gameOverPane" prefHeight="450.0" prefWidth="450.0" />
                </children>
             </StackPane>
          </children>
