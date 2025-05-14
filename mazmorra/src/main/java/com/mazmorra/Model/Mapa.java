@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
 
-
 /**
  * Gestiona la lógica del escenario de juego y su representación gráfica.
  * <p>
@@ -23,7 +22,8 @@ import java.util.ArrayList;
  * colocación y movimiento del jugador y los enemigos.
  * </p>
  * <p>
- * Los personajes se ubican al inicio de forma aleatoria sobre celdas válidas (tipo suelo),
+ * Los personajes se ubican al inicio de forma aleatoria sobre celdas válidas
+ * (tipo suelo),
  * y cada entidad ocupa una única celda en el tablero.
  * </p>
  * 
@@ -39,6 +39,7 @@ public class Mapa {
     private static String paredPath = "/com/mazmorra/Images/pared.png";
     private static String sueloPath = "/com/mazmorra/Images/suelo.png";
     private static String escaleraPath = "/com/mazmorra/Images/escalera.png";
+    private static String trampaPath = "/com/mazmorra/Images/trampa.jpg";
 
     /** Matriz que representa el escenario de juego */
     private int[][] mapaMatriz;
@@ -55,7 +56,10 @@ public class Mapa {
     /** Set de posiciones ocupadas (en formato "x,y") para evitar solapamientos */
     private Set<String> posicionesOcupadas = new HashSet<>();
 
-    /** Posición actual del jugador (no usada directamente, pero mantenida como referencia) */
+    /**
+     * Posición actual del jugador (no usada directamente, pero mantenida como
+     * referencia)
+     */
     @SuppressWarnings("unused")
     private int posicionX;
     @SuppressWarnings("unused")
@@ -71,6 +75,7 @@ public class Mapa {
 
     /**
      * Devuelve la matriz actual del mapa.
+     * 
      * @return matriz de enteros del mapa
      */
     public int[][] getMapaMatriz() {
@@ -81,7 +86,7 @@ public class Mapa {
      * Genera visualmente el tablero dentro de un GridPane.
      * Carga imágenes según el valor de cada celda.
      *
-     * @param gridPaneJuego contenedor gráfico donde se coloca el tablero
+     * @param gridPaneJuego  contenedor gráfico donde se coloca el tablero
      * @param stackPaneJuego nodo padre para obtener dimensiones
      */
     public void generarTablero(GridPane gridPaneJuego, StackPane stackPaneJuego) {
@@ -100,8 +105,10 @@ public class Mapa {
                     imageView.setImage(new Image(getClass().getResource(sueloPath).toExternalForm()));
                 } else if (celda == 1) {
                     imageView.setImage(new Image(getClass().getResource(paredPath).toExternalForm()));
-                } else {
+                } else if (celda == 2) {
                     imageView.setImage(new Image(getClass().getResource(escaleraPath).toExternalForm()));
+                } else {
+                    imageView.setImage(new Image(getClass().getResource(trampaPath).toExternalForm()));
                 }
                 gridPaneJuego.add(imageView, j, i);
                 actualizarTamCelda(gridPaneJuego, mapaMatriz.length, anchoStack);
@@ -114,15 +121,16 @@ public class Mapa {
      * ubicándolos aleatoriamente sobre celdas válidas.
      */
     public void generarPosicionesIniciales() {
-        if (personajesGenerados) return;
+        if (personajesGenerados)
+            return;
 
         int posicionX, posicionY;
         for (Personaje personaje : personajes) {
             do {
                 posicionX = random.nextInt(mapaMatriz[0].length);
                 posicionY = random.nextInt(mapaMatriz.length);
-            } while (mapaMatriz[posicionY][posicionX] != 0 ||
-                     posicionesOcupadas.contains(posicionX + "," + posicionY));
+            } while (mapaMatriz[posicionY][posicionX] != 0 && mapaMatriz[posicionY][posicionX] != 3 ||
+                    posicionesOcupadas.contains(posicionX + "," + posicionY));
 
             posicionesOcupadas.add(posicionX + "," + posicionY);
             this.posicionX = posicionX;
@@ -169,10 +177,10 @@ public class Mapa {
     /**
      * Lógica de movimiento del jugador. Detecta colisiones y combate.
      *
-     * @param dx desplazamiento en X
-     * @param dy desplazamiento en Y
+     * @param dx                 desplazamiento en X
+     * @param dy                 desplazamiento en Y
      * @param gridPanePersonajes contenedor visual
-     * @param stackPaneJuego pane padre
+     * @param stackPaneJuego     pane padre
      * @return true si se ha movido, false si ha habido combate o bloqueo
      */
     public boolean moverJugador(int dx, int dy, GridPane gridPanePersonajes, StackPane stackPaneJuego) {
@@ -194,17 +202,20 @@ public class Mapa {
         // Si hay un enemigo, se realiza un ataque en lugar de moverse
         if (enemigo != null) {
             int danio = Math.max(1, jugador.getAtaque() - enemigo.getDefensa());
-            boolean critico = random.nextDouble() < 0.2; // 20% de posibilidades de recibir un ataque crítico (duplica su valor)
-            if (critico) danio *= 2;
+            boolean critico = random.nextDouble() < 0.2; // 20% de posibilidades de recibir un ataque crítico (duplica
+                                                         // su valor)
+            if (critico)
+                danio *= 2;
             enemigo.setVida(enemigo.getVida() - danio);
 
-            // Si el enemigo muere, se elimina del proveedor y, consecuentemente, del tablero de juego.
+            // Si el enemigo muere, se elimina del proveedor y, consecuentemente, del
+            // tablero de juego.
             if (enemigo.getVida() <= 0) {
-                enemigos.remove(enemigo); 
+                enemigos.remove(enemigo);
                 posicionesOcupadas.remove(posStr);
             }
-            // Actualiza la escena, manteniendo la posición durante el combate. 
-            dibujarPersonajes(gridPanePersonajes); 
+            // Actualiza la escena, manteniendo la posición durante el combate.
+            dibujarPersonajes(gridPanePersonajes);
             return false; // No se mueve
         }
 
@@ -217,7 +228,6 @@ public class Mapa {
         dibujarPersonajes(gridPanePersonajes);
         return true;
     }
-
 
     /**
      * Devuelve el enemigo que ocupa la posición dada.
@@ -244,35 +254,47 @@ public class Mapa {
         int x = jugador.getColumna();
         int y = jugador.getFila();
         return y >= 0 && y < mapaMatriz.length &&
-               x >= 0 && x < mapaMatriz[y].length &&
-               mapaMatriz[y][x] == 2;
+                x >= 0 && x < mapaMatriz[y].length &&
+                mapaMatriz[y][x] == 2;
+    }
+
+        public boolean esUnaTrampa() {
+        int x = jugador.getColumna();
+        int y = jugador.getFila();
+        return y >= 0 && y < mapaMatriz.length &&
+                x >= 0 && x < mapaMatriz[y].length &&
+                mapaMatriz[y][x] == 3;
     }
 
     /**
-     * Lógica de movimiento de los enemigos: detección de jugador y movimiento inteligente o aleatorio.
+     * Lógica de movimiento de los enemigos: detección de jugador y movimiento
+     * inteligente o aleatorio.
      *
-     * @param enemigo enemigo a mover
+     * @param enemigo            enemigo a mover
      * @param gridPanePersonajes grid visual
-     * @param stackPaneJuego contenedor principal
+     * @param stackPaneJuego     contenedor principal
      * @return true si se ha movido o ha atacado, false si no ha hecho nada
      */
     public boolean moverEnemigo(Enemigo enemigo, GridPane gridPanePersonajes, StackPane stackPaneJuego) {
         int x = enemigo.getColumna();
         int y = enemigo.getFila();
 
-        /* En una matriz, las posiciones se guardan en orden fila, columna, o lo que es lo mismo, (y,x)
-         * La columna (x) crece hacia la derecha, y la fila (y) crece hacia abajo. 
+        /*
+         * En una matriz, las posiciones se guardan en orden fila, columna, o lo que es
+         * lo mismo, (y,x)
+         * La columna (x) crece hacia la derecha, y la fila (y) crece hacia abajo.
          */
-        int[][] direcciones = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} }; //Abajo, Derecha, Arriba, Izquierda
+        int[][] direcciones = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } }; // Abajo, Derecha, Arriba, Izquierda
         List<int[]> posiblesMovimientos = new ArrayList<>();
 
         int jugadorX = jugador.getColumna();
         int jugadorY = jugador.getFila();
 
         // Distancia Manhattan
-        int distancia = Math.abs(jugadorX - x) + Math.abs(jugadorY - y); 
+        int distancia = Math.abs(jugadorX - x) + Math.abs(jugadorY - y);
 
-        if (enemigo.getVida() <= 0) return false; // El enemigo no actúa si está muerto
+        if (enemigo.getVida() <= 0)
+            return false; // El enemigo no actúa si está muerto
 
         // Calcula qué celdas están ocupadas por otros enemigos
         Set<String> posicionesOcupadas = new HashSet<>();
@@ -294,7 +316,7 @@ public class Mapa {
 
                 // Evalúa movimiento válido y si reduce distancia
                 if (nx >= 0 && ny >= 0 && nx < mapaMatriz[0].length && ny < mapaMatriz.length &&
-                    mapaMatriz[ny][nx] == 0 && !posicionesOcupadas.contains(posStr)) {
+                        mapaMatriz[ny][nx] == 0 && !posicionesOcupadas.contains(posStr)) {
 
                     int nuevaDistancia = Math.abs(jugadorX - nx) + Math.abs(jugadorY - ny);
                     if (nuevaDistancia < mejorDistancia) {
@@ -315,7 +337,8 @@ public class Mapa {
                     // Ataque enemigo al jugador
                     int danio = Math.max(1, enemigo.getAtaque() - jugador.getDefensa());
                     boolean critico = random.nextDouble() < 0.2;
-                    if (critico) danio *= 2;
+                    if (critico)
+                        danio *= 2;
                     jugador.setVida(jugador.getVida() - danio);
                     if (jugador.getVida() <= 0) {
                         System.out.println("¡El jugador ha sido derrotado!");
@@ -334,7 +357,7 @@ public class Mapa {
             int ny = y + dir[1];
             String posStr = nx + "," + ny;
             if (nx >= 0 && ny >= 0 && nx < mapaMatriz[0].length && ny < mapaMatriz.length &&
-                mapaMatriz[ny][nx] == 0 && !posicionesOcupadas.contains(posStr)) {
+                    mapaMatriz[ny][nx] == 0 && !posicionesOcupadas.contains(posStr)) {
                 posiblesMovimientos.add(new int[] { nx, ny });
             }
         }
@@ -351,7 +374,6 @@ public class Mapa {
         return false;
     }
 
-
     /**
      * Limpia el contenido y las restricciones del GridPane.
      * 
@@ -367,9 +389,9 @@ public class Mapa {
         return gridPane;
     }
 
-
     /**
-     * Añade las restricciones en las columnas y filas del GridPane sobre el que se trabaja.
+     * Añade las restricciones en las columnas y filas del GridPane sobre el que se
+     * trabaja.
      * 
      * @param gridPaneJuego el GridPane del tablero de juego.
      * 
@@ -379,7 +401,8 @@ public class Mapa {
             ColumnConstraints cc = new ColumnConstraints();
             RowConstraints rc = new RowConstraints();
 
-            cc.setPercentWidth(100.0 / mapaMatriz.length);// Establece que el grid tiene que ocupar todo el espacio disponible.
+            cc.setPercentWidth(100.0 / mapaMatriz.length);// Establece que el grid tiene que ocupar todo el espacio
+                                                          // disponible.
             rc.setPercentHeight(100.0 / mapaMatriz.length);
 
             gridPane.getColumnConstraints().add(cc);// Añade las restricciones al grid.
@@ -391,9 +414,11 @@ public class Mapa {
      * Calcula el tamaño de cada celda del tablero en función de las dimensiones
      * obtenidas de la matriz.
      * 
-     * @param gridPane   estructura de tipo GridPane donde se dispondrán las imágenes de 'suelo', 'pared' y 'escalera'.
+     * @param gridPane   estructura de tipo GridPane donde se dispondrán las
+     *                   imágenes de 'suelo', 'pared' y 'escalera'.
      * @param size       tamaño del mapa, suponiendo que es un cuadrado perfecto.
-     * @param anchoStack ancho disponible en la estructura AnchorPane para distribuir las celdas.
+     * @param anchoStack ancho disponible en la estructura AnchorPane para
+     *                   distribuir las celdas.
      * 
      */
     private void actualizarTamCelda(GridPane gridPane, int size, double anchoStack) {

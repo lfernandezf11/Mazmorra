@@ -71,6 +71,9 @@ public class DataReader {
                     case 'E':
                         matrizMapa[i][j] = 2;
                         break;
+                    case 'T':
+                        matrizMapa[i][j] = 3;
+                        break;
                     default:
                         throw new IllegalArgumentException("Carácter inválido en la coordenada [" + i + "," + j + "]");
                 }

@@ -184,6 +184,9 @@ public class JuegoController implements Observer {
                 }
                 actualizarStatsTodos(); // Actualiza toda la interfaz tras el movimiento y pasa de turno
                 siguienteTurno(); 
+                if (mapa.esUnaTrampa()) {
+                    jugador.setVida(jugador.getVida()-1);
+                }
             }
             stackPaneJuego.requestFocus(); // Mantiene el foco en el StackPane tras pulsar tecla
         });
