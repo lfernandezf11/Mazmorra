@@ -312,7 +312,7 @@ public class Mapa {
 
             if (mejorMovimiento != null) {
                 if (mejorMovimiento[0] == jugadorX && mejorMovimiento[1] == jugadorY) {
-                    // ⚔️ Ataque enemigo al jugador
+                    // Ataque enemigo al jugador
                     int danio = Math.max(1, enemigo.getAtaque() - jugador.getDefensa());
                     boolean critico = random.nextDouble() < 0.2;
                     if (critico) danio *= 2;
