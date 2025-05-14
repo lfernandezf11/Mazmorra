@@ -282,7 +282,7 @@ public class Mapa {
             }
         }
 
-        // 👀 Si el jugador está dentro del rango de percepción
+        // Si el jugador está dentro del rango de percepción
         if (distancia <= enemigo.getPercepcion()) {
             int mejorDistancia = distancia;
             int[] mejorMovimiento = null;
@@ -292,7 +292,7 @@ public class Mapa {
                 int ny = y + dir[1];
                 String posStr = nx + "," + ny;
 
-                // 🧠 Evalúa movimiento válido y si reduce distancia
+                // Evalúa movimiento válido y si reduce distancia
                 if (nx >= 0 && ny >= 0 && nx < mapaMatriz[0].length && ny < mapaMatriz.length &&
                     mapaMatriz[ny][nx] == 0 && !posicionesOcupadas.contains(posStr)) {
 
