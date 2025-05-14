@@ -1,0 +1,252 @@
+.boton-inicio {
+    -fx-background-color: linear-gradient(to bottom, #b4ddff 0%, #000000 100%);
+    -fx-text-fill: #94d1fc;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-font-family: "Papyrus", "Georgia", serif;
+    -fx-background-radius: 30;
+    -fx-padding: 2 25 2 25;
+    -fx-effect: dropshadow(gaussian, #94d1fc, 10, 0.5, 0, 2);
+    -fx-cursor: hand;
+    -fx-border-color: #94d1fc;
+    -fx-border-width: 2;
+    -fx-border-radius: 30;
+    -fx-letter-spacing: 2px;
+    -fx-shadow-highlight-color: #fffbe6;
+    -fx-graphic-text-gap: 12;
+    -fx-opacity: 0.95;
+    -fx-translate-y: 100;
+    -fx-transition: all 0.3s;
+}
+.boton-inicio:hover {
+    -fx-background-color: linear-gradient(to bottom, #94d1fc, #000000);
+    -fx-border-color: #fffbe6;
+    -fx-effect: dropshadow(gaussian, #fffbe6cc, 20, 0.8, 0, 4);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.root, .pane {
+    -fx-background-color: linear-gradient(to bottom, #181a20 80%, #23272e 100%);
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, #00000088, 30, 0.5, 0, 8);
+}
+
+#restVida, #restAtaque, #restDefensa, #restVelocidad,
+#addVida, #addAtaque, #addDefensa, #addVelocidad {
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, #00000055, 4, 0.6, 0, 1);
+}
+
+#restVida, #restAtaque, #restDefensa, #restVelocidad {
+    -fx-background-color: #2c1a1a;
+    -fx-text-fill: #ff3c3c;
+    -fx-border-color: #ff3c3c;
+    -fx-border-width: 2;
+}
+#addVida, #addAtaque, #addDefensa, #addVelocidad {
+    -fx-background-color: #1a2c1a;
+    -fx-text-fill: #00ff2f;
+    -fx-border-color: #00ff2f;
+    -fx-border-width: 2;
+}
+#restVida:hover, #restAtaque:hover, #restDefensa:hover, #restVelocidad:hover {
+    -fx-background-color: #ff3c3c;
+    -fx-text-fill: #fff;
+}
+#addVida:hover, #addAtaque:hover, #addDefensa:hover, #addVelocidad:hover {
+    -fx-background-color: #00ff2f;
+    -fx-text-fill: #181a20;
+}
+
+#imagenMago, #imagenGuerrero, #imagenElfo {
+    -fx-effect: dropshadow(gaussian, #00000088, 8, 0.8, 0, 2);
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 6;
+}
+#imagenMago:hover, #imagenGuerrero:hover, #imagenElfo:hover {
+    -fx-border-color: #f2f600;
+    -fx-border-width: 3;
+    -fx-effect: dropshadow(gaussian, #f2f60099, 12, 0.9, 0, 3);
+}
+
+#introNombre {
+    -fx-background-color: #23272e;
+    -fx-text-fill: #94d1fc;
+    -fx-font-size: 13px;            /* Antes 15px */
+    -fx-font-family: "Papyrus", "Georgia", serif;
+    -fx-background-radius: 12;
+    -fx-border-color: #b4ddff;
+    -fx-border-width: 1.2;
+    -fx-padding: 2 10 2 10;         /* Menos padding */
+    -fx-effect: dropshadow(gaussian, #b4ddff, 6, 0.5, 0, 1);
+}
+
+#PuntosRestantes {
+    -fx-font-size: 15px;
+    -fx-font-family: "Papyrus", "Georgia", serif;
+    -fx-text-fill: #f2f600;
+    -fx-background-color: #222;
+    -fx-background-radius: 8;
+    -fx-padding: 3 12 3 12;
+    -fx-effect: dropshadow(gaussian, #000 0.7, 2, 0.6, 0, 1);
+}
+
+#introUno, #iniciarJuego, #salir, #reintentar, #jugarDeNuevo {
+    -fx-background-color: linear-gradient(to bottom, #b4ddff 0%, #000000 100%);
+    -fx-text-fill: #94d1fc;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-font-family: "Papyrus", "Georgia", serif;
+    -fx-background-radius: 30;
+    -fx-padding: 2 25 2 25;
+    -fx-effect: dropshadow(gaussian, #94d1fc, 10, 0.5, 0, 2);
+    -fx-cursor: hand;
+    -fx-border-color: #94d1fc;
+    -fx-border-width: 2;
+    -fx-border-radius: 30;
+    -fx-letter-spacing: 2px;
+    -fx-shadow-highlight-color: #fffbe6;
+    -fx-graphic-text-gap: 12;
+    -fx-opacity: 0.95;
+    -fx-translate-y: 0;
+    -fx-transition: all 0.3s;
+}
+#introUno:hover, #iniciarJuego:hover, #salir:hover, #reintentar:hover, #jugarDeNuevo:hover {
+    -fx-background-color: linear-gradient(to bottom, #94d1fc, #000000);
+    -fx-border-color: #fffbe6;
+    -fx-effect: dropshadow(gaussian, #fffbe6cc, 20, 0.8, 0, 4);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#Vida, #Ataque, #Defensa, #Velocidad, #pDisponible, #labelPrincipal {
+    -fx-font-size: 13px;
+    -fx-font-family: "Papyrus", "Georgia", serif;
+    -fx-text-fill: #b4ddff;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #181a20, 1.5, 0.6, 0, 1);
+    -fx-padding: 2 8 2 8;
+}
+
+#corazon {
+    -fx-effect: dropshadow(gaussian, #ff3b3b, 10, 0.5, 0, 0);
+    -fx-background-color: #ffdddd;
+    -fx-padding: 3;
+    -fx-border-radius: 8;
+}
+
+/* Espada (ataque) - Verde */
+#espada {
+    -fx-effect: dropshadow(gaussian, #2ecc40, 10, 0.5, 0, 0);
+    -fx-background-color: #eaffdd;
+    -fx-padding: 3;
+    -fx-border-radius: 8;
+}
+
+/* Escudo (defensa) - Azul */
+#escudo {
+    -fx-effect: dropshadow(gaussian, #3b82ff, 10, 0.5, 0, 0);
+    -fx-background-color: #ddeaff;
+    -fx-padding: 3;
+    -fx-border-radius: 8;
+}
+
+/* Rayo (velocidad) - Amarillo */
+#rayo {
+    -fx-effect: dropshadow(gaussian, #ffe100, 10, 0.5, 0, 0);
+    -fx-background-color: #fffbe1;
+    -fx-padding: 3;
+    -fx-border-radius: 8;
+}
+
+/* Aplica a todos los labels de ataque */
+#ataqueJugador,
+#ataqueEnemigo1,
+#ataqueEnemigo2,
+#ataqueEnemigo3 {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-color: rgba(0,0,0,0.7); /* Fondo negro semitransparente */
+    -fx-background-radius: 6;
+    -fx-padding: 3 10 3 10; /* Arriba, derecha, abajo, izquierda */
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #222, 8, 0.3, 0, 1);
+    -fx-border-color: #2ecc40; /* Borde verde para destacar el ataque */
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+}
+
+#defensaJugador{
+        -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-color: rgba(0,0,0,0.7); /* Fondo negro semitransparente */
+    -fx-background-radius: 6;
+    -fx-padding: 3 10 3 10; /* Arriba, derecha, abajo, izquierda */
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #222, 8, 0.3, 0, 1);
+    -fx-border-color: #3b82ff; /* Borde verde para destacar el ataque */
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+}
+
+#vidaJugador,
+#vidaEnemigo1,
+#vidaEnemigo2,
+#vidaEnemigo3 {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-color: rgba(0,0,0,0.7); /* Fondo negro semitransparente */
+    -fx-background-radius: 6;
+    -fx-padding: 3 10 3 10; /* Arriba, derecha, abajo, izquierda */
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #222, 8, 0.3, 0, 1);
+    -fx-border-color: #ff3b3b; /* Borde verde para destacar el ataque */
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+}
+
+#velocidadJugador,
+#velocidadEnemigo1,
+#velocidadEnemigo2,
+#velocidadEnemigo3, 
+#masVelocidad,
+#velocidadMedia,
+#masLento,
+#masMasLento {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-color: rgba(0,0,0,0.7); /* Fondo negro semitransparente */
+    -fx-background-radius: 6;
+    -fx-padding: 3 10 3 10; /* Arriba, derecha, abajo, izquierda */
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #222, 8, 0.3, 0, 1);
+    -fx-border-color: #ff3b3b; /* Borde verde para destacar el ataque */
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+}
+
+#labelTurno, 
+#teTocaTurno,
+#nombreJugador{
+        -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-color: rgba(0,0,0,0.7); /* Fondo negro semitransparente */
+    -fx-background-radius: 6;
+    -fx-padding: 3 10 3 10; /* Arriba, derecha, abajo, izquierda */
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #222, 8, 0.3, 0, 1);
+    -fx-border-color: #ffffff; /* Borde verde para destacar el ataque */
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+}
+

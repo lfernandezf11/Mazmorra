@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mazmorra.Controllers.JuegoController">
+   <children>
+      <VBox layoutX="517.0" prefHeight="450.0" prefWidth="183.0">
+         <children>
+            <HBox fx:id="tituloEstadisticasPlayer" alignment="CENTER" prefHeight="71.0" prefWidth="250.0">
+               <children>
+                  <ImageView fx:id="imagenJugador" fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="nombreJugador" prefHeight="30.0" prefWidth="75.0" text="Nombre" />
+                  <ImageView fx:id="corazon" fitHeight="30.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/heart.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="vidaJugador" prefHeight="30.0" prefWidth="40.0" text="1" />
+               </children>
+            </HBox>
+            <HBox fx:id="tituloEstadisticasPlayer1" alignment="CENTER" prefHeight="61.0" prefWidth="250.0">
+               <children>
+                  <ImageView fx:id="espada" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/sword.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="ataqueJugador" prefHeight="20.0" prefWidth="30.0" text="1" />
+                  <ImageView fx:id="escudo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/security.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="defensaJugador" prefHeight="20.0" prefWidth="30.0" text="1" />
+                  <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/lightning.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="velocidadJugador" prefHeight="20.0" prefWidth="30.0" text="1" />
+               </children>
+            </HBox>
+            <Separator prefHeight="0.0" prefWidth="250.0" />
+            <VBox alignment="CENTER" prefHeight="337.0" prefWidth="250.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0">
+                     <children>
+                        <ImageView fx:id="imagenEnemigo3" fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="corazon" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/heart.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="vidaEnemigo3" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="2" />
+                        <ImageView fx:id="espada" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/sword.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="ataqueEnemigo3" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/lightning.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="velocidadEnemigo3" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="47.0" prefWidth="250.0">
+                     <children>
+                        <ImageView fx:id="imagenEnemigo2" fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="corazon" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/heart.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="vidaEnemigo2" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="3" />
+                        <ImageView fx:id="espada" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/sword.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="ataqueEnemigo2" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="2" />
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/lightning.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="velocidadEnemigo2" alignment="CENTER" cache="true" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="30.0" text="2" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0">
+                     <children>
+                        <ImageView fx:id="imagenEnemigo1" fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="corazon" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/heart.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="vidaEnemigo1" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="2" />
+                        <ImageView fx:id="espada" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/sword.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="ataqueEnemigo1" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/lightning.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="velocidadEnemigo1" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
+                     </children>
+                  </HBox>
+                  <Separator prefHeight="0.0" prefWidth="250.0" />
+                  <Label fx:id="labelTurno" prefHeight="25.0" prefWidth="250.0" text="Turnos" />
+                  <Label fx:id="teTocaTurno" prefHeight="29.0" prefWidth="189.0" text="TURNO" />
+                  <Separator prefHeight="0.0" prefWidth="250.0" />
+                  <HBox prefHeight="27.0" prefWidth="250.0">
+                     <children>
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/lightning.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imagenMasVelocidad" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="masVelocidad" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="19.0" prefWidth="250.0">
+                     <children>
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/lightning.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imagenVelocidadMedia" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="velocidadMedia" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="27.0" prefWidth="250.0">
+                     <children>
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/lightning.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imagenMasLento" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="masLento" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="27.0" prefWidth="250.0">
+                     <children>
+                        <ImageView fx:id="rayo" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/lightning.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imagenMasMasLento" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="masMasLento" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="1" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children></VBox>
+      <AnchorPane id="anchorPaneJuego" fx:id="anchorPaneJuego" maxHeight="500.0" maxWidth="500.0" minHeight="500.0" minWidth="500.0" prefHeight="500.0" prefWidth="500.0">
+         <children>
+            <StackPane fx:id="stackPaneJuego" prefHeight="450.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <GridPane fx:id="gridPaneJuego" maxHeight="500.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+                  <GridPane fx:id="gridPanePersonajes" maxHeight="500.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </StackPane>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

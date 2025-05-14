@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mazmorra.Controllers.YouLoseController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/gameOver.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="salir" mnemonicParsing="false" text="Salir" translateX="-100.0" translateY="50.0" />
+      <Button fx:id="reintentar" mnemonicParsing="false" text="Reintentar" translateX="100.0" translateY="50.0" />
+   </children>
+</StackPane>
